@@ -8,6 +8,8 @@ class ConstColors {
   static const Color APP_COLOR = Colors.blue;
   static const Color APPBAR_FONT_COLOR = Colors.white;
   static const Color APP_FONT_COLOR = Colors.black;
+  static const Color ERROR_COLOR = Colors.red;
+  static const Color HINT_COLOR = Colors.grey;
 
   //MATERIAL TYPE COLOR
   static const MaterialColor PRIMARY_SWATCH_COLOR = Colors.blue;

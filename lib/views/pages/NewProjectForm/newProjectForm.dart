@@ -1,47 +1,49 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
-import 'package:bug_tracker/utils/appdrawer/appdrawer.dart';
-import 'package:bug_tracker/views/pages/NewProjectForm/newProjectForm.dart';
+import 'package:bug_tracker/views/widgets/projectFormWidget/projectFormWidget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
+class NewProjectForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: AppDrawer(),
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(
+            Icons.close,
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () {
-              // open new project form
-              Get.to(() => NewProjectForm());
+              // submit form and save in DB
             },
             icon: const Icon(
-              Icons.add,
+              Icons.check,
             ),
           ),
         ],
         titleSpacing: ConstValues.PADDING,
         backgroundColor: ConstColors.APPBAR_BACKGROUND_COLOR,
         title: const Text(
-          "Bug Tracker",
+          "Add Project",
           style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
               color: ConstColors.APPBAR_FONT_COLOR),
         ),
       ),
-      body: Center(
-        child: Text("BugTracker"),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            ProjectFormWidget(),
+          ],
+        ),
       ),
     );
   }

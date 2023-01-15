@@ -40,6 +40,8 @@ dependencies:
   android_intent_plus: ^3.1.5
   url_launcher: ^6.1.7
   font_awesome_flutter: ^10.3.0
+  get: ^4.6.5
+  getwidget: ^3.0.1
 
 dev_dependencies:
   flutter_test:
