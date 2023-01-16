@@ -1,34 +1,34 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
+import 'package:bug_tracker/views/pages/NewProjectForm/newProjectFormPage.dart';
 import 'package:bug_tracker/views/widgets/contributorDropdownWidget/contributorDropdownWidget.dart';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProjectFormWidget extends StatelessWidget {
-  final GlobalKey<FormState> _formKey = GlobalKey();
+  static GlobalKey<FormState> formKey = GlobalKey();
+  static late BuildContext currentContext;
 
-  String _projectName = "";
-  String _projectDetails = "";
-  List<String> _contributors = ["Rohan Sengupta", "Raj Sen"];
-
-  void onSubmitted(BuildContext context) {
-    final isValid = _formKey.currentState!.validate();
-    FocusScope.of(context).unfocus();
+  static void onSubmitted() {
+    final isValid = formKey.currentState!.validate();
 
     if (isValid) {
-      _formKey.currentState!.save();
+      print("----FORM VALID TOO----");
+      formKey.currentState!.save();
     }
-
-    mainSubmitFunction(_projectName, _projectDetails, _contributors);
+    print("-----FORM SAVED-----");
   }
 
   @override
   Widget build(BuildContext context) {
+    currentContext = context;
+
     return Padding(
       padding: const EdgeInsets.all(ConstValues.PADDING),
       child: Form(
-        key: _formKey,
+        key: formKey,
         child: Column(
           children: <Widget>[
             Container(
@@ -75,7 +75,7 @@ class ProjectFormWidget extends StatelessWidget {
                   ),
                 ),
                 onSaved: (value) {
-                  _projectName = value as String;
+                  NewProjectFormPage.projectName = value as String;
                 },
               ),
             ),
@@ -126,7 +126,7 @@ class ProjectFormWidget extends StatelessWidget {
                   ),
                 ),
                 onSaved: (value) {
-                  _projectDetails = value as String;
+                  NewProjectFormPage.projectDetails = value as String;
                 },
               ),
             ),
@@ -135,7 +135,7 @@ class ProjectFormWidget extends StatelessWidget {
             ),
 
             // CODE TO SELECT CONTRIBUTORS
-            ContributorDropdownWidget(_contributors),
+            ContributorDropdownWidget(),
 
             SizedBox(
               height: ConstValues.VALUE_16,

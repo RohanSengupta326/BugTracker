@@ -11,6 +11,9 @@ class ConstColors {
   static const Color ERROR_COLOR = Colors.red;
   static const Color HINT_COLOR = Colors.grey;
 
+  // alert box colors
+  static const Color ALERT_BOX_BACKGROUND_COLOR = Colors.white;
+
   //MATERIAL TYPE COLOR
   static const MaterialColor PRIMARY_SWATCH_COLOR = Colors.blue;
 }

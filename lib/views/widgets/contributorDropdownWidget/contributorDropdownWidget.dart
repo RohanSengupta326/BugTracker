@@ -1,18 +1,25 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
+import 'package:bug_tracker/views/pages/NewProjectForm/newProjectFormPage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
 class ContributorDropdownWidget extends StatelessWidget {
-  List<String> _contributors = ["Rohan Sengupta", "Raj Sen"];
-
   @override
   Widget build(BuildContext context) {
     return Container(
       child: GFMultiSelect(
-        items: _contributors,
+        items: NewProjectFormPage.contributors,
         onSelect: (value) {
-          // print('selected $value ');
+          // print('---SELECTED CONTRIBUTOR VALUE---- ${value[0]} ');
+          // print(
+          //     '---SELECTED CONTRIBUTOR---- ${NewProjectFormPage.selectedContributors[0]} ');
+
+          for (int i = 0; i < value.length; i++) {
+            NewProjectFormPage.selectedContributorsName[i] =
+                NewProjectFormPage.contributors[value[i]];
+          }
         },
         dropdownTitleTileText: '--Select--',
         dropdownTitleTileColor: ConstColors.HINT_COLOR,

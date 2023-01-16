@@ -1,7 +1,7 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:bug_tracker/utils/appdrawer/appdrawer.dart';
-import 'package:bug_tracker/views/pages/NewProjectForm/newProjectForm.dart';
+import 'package:bug_tracker/views/pages/NewProjectForm/newProjectFormPage.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             onPressed: () {
               // open new project form
-              Get.to(() => NewProjectForm());
+              Get.to(() => NewProjectFormPage());
             },
             icon: const Icon(
               Icons.add,
