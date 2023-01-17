@@ -1,6 +1,7 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:bug_tracker/views/pages/NewProjectForm/newProjectFormPage.dart';
+import 'package:bug_tracker/views/widgets/projectFormWidget/projectFormWidget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
@@ -17,7 +18,7 @@ class ContributorDropdownWidget extends StatelessWidget {
           //     '---SELECTED CONTRIBUTOR---- ${NewProjectFormPage.selectedContributors[0]} ');
 
           for (int i = 0; i < value.length; i++) {
-            NewProjectFormPage.selectedContributorsName[i] =
+            NewProjectFormPage.selectedContributorsName![i] =
                 NewProjectFormPage.contributors[value[i]];
           }
         },

@@ -1,6 +1,7 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:bug_tracker/controllers/ProjectDetailsController/projectDetailsController.dart';
+import 'package:bug_tracker/views/dialogs/dialogs.dart';
 import 'package:bug_tracker/views/widgets/alertBoxWidget/alertBoxWidget.dart';
 import 'package:bug_tracker/views/widgets/projectFormWidget/projectFormWidget.dart';
 
@@ -11,7 +12,7 @@ class NewProjectFormPage extends StatelessWidget {
   static String projectName = "";
   static String projectDetails = "";
 
-  static List<String> selectedContributorsName = [];
+  static List<String>? selectedContributorsName = [];
 
   // contributors list will be fetched from FIREBASE
   static List<String> contributors = ["Rohan Sengupta", "Raj Sen"];

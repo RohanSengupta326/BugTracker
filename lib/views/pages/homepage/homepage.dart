@@ -40,7 +40,8 @@ class _HomePageState extends State<HomePage> {
               color: ConstColors.APPBAR_FONT_COLOR),
         ),
       ),
-      body: Center(
+      body: // SHOW SAVED PROJECTS HERE
+          Center(
         child: Text("BugTracker"),
       ),
     );

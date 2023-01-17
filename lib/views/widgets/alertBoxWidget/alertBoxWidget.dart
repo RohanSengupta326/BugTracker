@@ -3,7 +3,7 @@ import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:flutter/material.dart';
 
 class AlertBoxWidget extends StatelessWidget {
-  dynamic error;
+  var error;
   AlertBoxWidget(this.error);
 
   @override
