@@ -3,9 +3,15 @@ import 'package:bug_tracker/views/pages/homepage/homepage.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // initializing firebase
+  runApp(
+    const MyApp(), // Wrap your app
+  );
 }
 
 class MyApp extends StatelessWidget {

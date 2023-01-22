@@ -12,10 +12,10 @@ class NewProjectFormPage extends StatelessWidget {
   static String projectName = "";
   static String projectDetails = "";
 
-  static List<String>? selectedContributorsName = [];
+  static List<String> selectedContributorsName = [];
 
   // contributors list will be fetched from FIREBASE
-  static List<String> contributors = ["Rohan Sengupta", "Raj Sen"];
+  static List<String> contributors = ["Rohan Sengupta"];
 
   final formSaveController = Get.put(ProjectDetailsController());
 
@@ -33,7 +33,11 @@ class NewProjectFormPage extends StatelessWidget {
           },
         );
       },
-    );
+    ).then((value) {
+      Get.back();
+      selectedContributorsName = [];
+      // for one project contributors are saved now for different projects' contributors shouldnt overlap
+    });
   }
 
   @override

@@ -11,8 +11,12 @@ class ProjectDetailsController extends GetxController {
   List<ProjectDetailModel> _projects = [];
   RxBool isProjectSaving = false.obs;
 
+  List<ProjectDetailModel> get projects {
+    return [..._projects];
+  }
+
   Future<void> saveProjectDetails(String projectName, String projectDetails,
-      List<String>? selectedContributors) async {
+      List<String> selectedContributors) async {
     try {
       isProjectSaving.value = true;
 
@@ -24,7 +28,8 @@ class ProjectDetailsController extends GetxController {
         {
           'projectName': projectName,
           'ProjectDetails': projectDetails,
-          'selectedContributors': selectedContributors,
+          'selectedContributors':
+              selectedContributors.isNotEmpty ? selectedContributors : null,
         },
       ).then((value) {
         _projects.add(
