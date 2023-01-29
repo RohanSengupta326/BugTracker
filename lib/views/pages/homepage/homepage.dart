@@ -59,6 +59,8 @@ class _HomePageState extends State<HomePage> {
                           projectName: controller.projects[index].projectName,
                           projectDetails:
                               controller.projects[index].projectDetails,
+                          contributors:
+                              controller.projects[index].selectedContributors,
                         );
                       }),
                       itemCount: controller.projects.length);

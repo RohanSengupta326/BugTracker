@@ -53,18 +53,30 @@ class NewProjectFormPage extends StatelessWidget {
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              // onSubmitted to save form and check errors
-              ProjectFormWidget.onSubmitted();
-              // getting the context from the ProjectFormWidget class
-              FocusScope.of(ProjectFormWidget.currentContext).unfocus();
-              onSubmit(context);
+          Obx(
+            () {
+              return IconButton(
+                onPressed: () {
+                  // onSubmitted to save form and check errors
+                  ProjectFormWidget.onSubmitted();
+                  // getting the context from the ProjectFormWidget class
+                  FocusScope.of(ProjectFormWidget.currentContext).unfocus();
+                  onSubmit(context);
+                },
+                icon: formSaveController.isProjectSaving.value
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                      )
+                    : const Icon(
+                        Icons.check,
+                      ),
+              );
             },
-            icon: const Icon(
-              Icons.check,
-            ),
-          ),
+          )
         ],
         titleSpacing: ConstValues.PADDING,
         backgroundColor: ConstColors.APPBAR_BACKGROUND_COLOR,
