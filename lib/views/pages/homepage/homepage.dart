@@ -1,6 +1,7 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
-import 'package:bug_tracker/controllers/ProjectDetailsController/projectDetailsController.dart';
+import 'package:bug_tracker/controllers/saveNewProjectController/projectController.dart';
+
 import 'package:bug_tracker/utils/appdrawer/appdrawer.dart';
 import 'package:bug_tracker/utils/project_list_viewer/project_list_viewer.dart';
 import 'package:bug_tracker/views/pages/NewProjectForm/newProjectFormPage.dart';
@@ -14,7 +15,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final controller = Get.put(ProjectDetailsController());
+  final saveNewProjectController = Get.put(ProjectsController());
+
+  @override
+  void initState() {
+    saveNewProjectController.fetchProject();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +42,7 @@ class _HomePageState extends State<HomePage> {
         titleSpacing: ConstValues.PADDING,
         backgroundColor: ConstColors.APPBAR_BACKGROUND_COLOR,
         title: const Text(
-          "Bug Tracker",
+          "Projects",
           style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
@@ -45,25 +52,30 @@ class _HomePageState extends State<HomePage> {
       body: // SHOW SAVED PROJECTS HERE
           Obx(
         (() {
-          return controller.isProjectSaving.value
+          return saveNewProjectController.isProjectFetching.value
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : controller.projects.isEmpty
+              : saveNewProjectController.isProjectSaving.value
                   ? const Center(
-                      child: Text("No projects to show !!"),
+                      child: CircularProgressIndicator(),
                     )
-                  : ListView.builder(
-                      itemBuilder: ((context, index) {
-                        return ProjectListViewer(
-                          projectName: controller.projects[index].projectName,
-                          projectDetails:
-                              controller.projects[index].projectDetails,
-                          contributors:
-                              controller.projects[index].selectedContributors,
-                        );
-                      }),
-                      itemCount: controller.projects.length);
+                  : saveNewProjectController.projects.isEmpty
+                      ? const Center(
+                          child: Text("No projects to show !!"),
+                        )
+                      : ListView.builder(
+                          itemBuilder: ((context, index) {
+                            return ProjectListViewer(
+                              projectName: saveNewProjectController
+                                  .projects[index].projectName,
+                              projectDetails: saveNewProjectController
+                                  .projects[index].projectDetails,
+                              contributors: saveNewProjectController
+                                  .projects[index].selectedContributors,
+                            );
+                          }),
+                          itemCount: saveNewProjectController.projects.length);
         }),
       ),
     );

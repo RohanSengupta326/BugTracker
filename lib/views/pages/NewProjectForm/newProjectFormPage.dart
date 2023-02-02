@@ -1,6 +1,6 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
-import 'package:bug_tracker/controllers/ProjectDetailsController/projectDetailsController.dart';
+import 'package:bug_tracker/controllers/saveNewProjectController/projectController.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
 import 'package:bug_tracker/views/widgets/alertBoxWidget/alertBoxWidget.dart';
 import 'package:bug_tracker/views/widgets/projectFormWidget/projectFormWidget.dart';
@@ -17,7 +17,7 @@ class NewProjectFormPage extends StatelessWidget {
   // contributors list will be fetched from FIREBASE
   static List<String> contributors = ["Rohan Sengupta"];
 
-  final formSaveController = Get.put(ProjectDetailsController());
+  final formSaveController = Get.put(ProjectsController());
 
   void onSubmit(BuildContext context) {
     // SUBMIT CONTROLLER FUNCTION CALL TO SAVE IN FIREBASE

@@ -4,10 +4,23 @@ import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:flutter/material.dart';
 
 class ProjectListViewer extends StatelessWidget {
-  final String? projectName;
-  final String? projectDetails;
-  final List<String>? contributors;
+  final projectName;
+  final projectDetails;
+  final contributors;
   ProjectListViewer({this.projectName, this.projectDetails, this.contributors});
+
+  List<Widget> currentContributors() {
+    List<Widget> names = [];
+    for (var i = 0; i < contributors.length; i++) {
+      names.add(Chip(
+        label: Text(
+          contributors[i],
+          style: TextStyle(fontSize: ConstValues.FONT_SIZE_12),
+        ),
+      ));
+    }
+    return names;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +29,7 @@ class ProjectListViewer extends StatelessWidget {
           left: ConstValues.MARGIN,
           right: ConstValues.MARGIN,
           top: ConstValues.MARGIN),
-      height: 150,
+      height: 152,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(ConstValues.MARGIN),
@@ -29,7 +42,7 @@ class ProjectListViewer extends StatelessWidget {
               Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  projectName!,
+                  projectName,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: ConstValues.HEADING_FONT_SIZE,
@@ -42,16 +55,19 @@ class ProjectListViewer extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.topLeft,
-                child: Text(projectDetails!.length > 50
-                    ? (projectDetails!.substring(0, 50) + "...")
-                    : projectDetails!),
+                child: Text(projectDetails.length > 50
+                    ? (projectDetails.substring(0, 50) + "...")
+                    : projectDetails),
               ),
               const SizedBox(
                 height: ConstValues.VALUE_16,
               ),
               Align(
-                alignment: Alignment.topLeft,
-                child: Text(),
+                alignment: Alignment.bottomLeft,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: currentContributors(),
+                ),
               )
             ],
           ),
