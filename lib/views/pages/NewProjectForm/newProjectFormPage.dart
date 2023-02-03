@@ -15,7 +15,7 @@ class NewProjectFormPage extends StatelessWidget {
   static List<String> selectedContributorsName = [];
 
   // contributors list will be fetched from FIREBASE
-  static List<String> contributors = ["Rohan Sengupta"];
+  static List<String> contributors = ["Rohan Sengupta", "Raj Sen"];
 
   final formSaveController = Get.put(ProjectsController());
 

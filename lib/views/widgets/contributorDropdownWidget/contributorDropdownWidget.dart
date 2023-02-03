@@ -17,12 +17,14 @@ class ContributorDropdownWidget extends StatelessWidget {
           // print(
           //     '---SELECTED CONTRIBUTOR---- ${NewProjectFormPage.selectedContributors[0]} ');
 
-          // for (int i = 0; i < value.length; i++) {
-          //   NewProjectFormPage.selectedContributorsName![i] =
-          //       NewProjectFormPage.contributors[value[i]];
-          // }
-          NewProjectFormPage.selectedContributorsName
-              .add(NewProjectFormPage.contributors[0]);
+          for (int i = 0; i < value.length; i++) {
+            NewProjectFormPage.selectedContributorsName
+                .add(NewProjectFormPage.contributors[value[i]]);
+          }
+          // NewProjectFormPage.selectedContributorsName
+          //     .add(NewProjectFormPage.contributors[0]);
+          // NewProjectFormPage.selectedContributorsName
+          //     .add(NewProjectFormPage.contributors[1]);
         },
         dropdownTitleTileText: '--Select--',
         dropdownTitleTileColor: ConstColors.HINT_COLOR,

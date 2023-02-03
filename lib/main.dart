@@ -1,12 +1,20 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
+import 'package:bug_tracker/views/pages/authPage/authPage.dart';
 import 'package:bug_tracker/views/pages/homepage/homepage.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // status bar color
+    ),
+  );
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(); // initializing firebase
   runApp(
@@ -25,7 +33,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: ConstColors.PRIMARY_SWATCH_COLOR,
       ),
-      home: HomePage(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: ((context, snapshot) {
+          if (snapshot.hasData) {
+            return HomePage();
+          } else {
+            return AuthPage();
+          }
+        }),
+      ),
     );
   }
 }

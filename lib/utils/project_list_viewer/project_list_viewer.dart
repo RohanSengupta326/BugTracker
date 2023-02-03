@@ -12,10 +12,13 @@ class ProjectListViewer extends StatelessWidget {
   List<Widget> currentContributors() {
     List<Widget> names = [];
     for (var i = 0; i < contributors.length; i++) {
-      names.add(Chip(
-        label: Text(
-          contributors[i],
-          style: TextStyle(fontSize: ConstValues.FONT_SIZE_12),
+      names.add(Container(
+        margin: EdgeInsets.only(right: ConstValues.VALUE_3),
+        child: Chip(
+          label: Text(
+            contributors[i],
+            style: TextStyle(fontSize: ConstValues.FONT_SIZE_12),
+          ),
         ),
       ));
     }
@@ -55,8 +58,8 @@ class ProjectListViewer extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.topLeft,
-                child: Text(projectDetails.length > 50
-                    ? (projectDetails.substring(0, 50) + "...")
+                child: Text(projectDetails.length > 48
+                    ? (projectDetails.substring(0, 48) + "...")
                     : projectDetails),
               ),
               const SizedBox(
@@ -64,9 +67,11 @@ class ProjectListViewer extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.bottomLeft,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: currentContributors(),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: currentContributors(),
+                  ),
                 ),
               )
             ],
