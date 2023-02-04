@@ -50,10 +50,11 @@ class ContributorDropdownWidget extends StatelessWidget {
         ),
         submitButton: Text('OK'),
         dropdownTitleTileTextStyle: const TextStyle(
-            fontSize: ConstValues.FONT_SIZE, color: Colors.black54),
+            fontSize: ConstValues.FONT_SIZE,
+            color: ConstColors.APPBAR_FONT_COLOR),
         padding: const EdgeInsets.all(6),
         margin: const EdgeInsets.all(6),
-        type: GFCheckboxType.basic,
+        type: GFCheckboxType.circle,
         activeBgColor: ConstColors.PRIMARY_SWATCH_COLOR,
         inactiveBorderColor: Colors.grey,
       ),
