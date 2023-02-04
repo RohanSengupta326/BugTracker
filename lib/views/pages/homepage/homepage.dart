@@ -1,5 +1,6 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
+import 'package:bug_tracker/controllers/fetchAllUsers/fetchAllUsersController.dart';
 import 'package:bug_tracker/controllers/saveNewProjectController/projectController.dart';
 
 import 'package:bug_tracker/utils/appdrawer/appdrawer.dart';
@@ -16,10 +17,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final saveNewProjectController = Get.put(ProjectsController());
+  final fetchAllUserController = Get.put(FetchAllUsers());
 
   @override
   void initState() {
     saveNewProjectController.fetchProject();
+    fetchAllUserController.fetchAllUsers();
     super.initState();
   }
 

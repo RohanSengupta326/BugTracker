@@ -1,30 +1,34 @@
+import 'dart:developer';
+
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
+import 'package:bug_tracker/controllers/fetchAllUsers/fetchAllUsersController.dart';
 import 'package:bug_tracker/views/pages/NewProjectForm/newProjectFormPage.dart';
 import 'package:bug_tracker/views/widgets/projectFormWidget/projectFormWidget.dart';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 
 class ContributorDropdownWidget extends StatelessWidget {
+  final FetchAllUsers allUserData = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: GFMultiSelect(
-        items: NewProjectFormPage.contributors,
+        items: allUserData.users,
         onSelect: (value) {
           // print('---SELECTED CONTRIBUTOR VALUE---- ${value[0]} ');
           // print(
           //     '---SELECTED CONTRIBUTOR---- ${NewProjectFormPage.selectedContributors[0]} ');
+          // for (int i = 0; i < value.length; i++) {
+          //   log("${value[i]} \n");
+          // }
 
-          for (int i = 0; i < value.length; i++) {
-            NewProjectFormPage.selectedContributorsName
-                .add(NewProjectFormPage.contributors[value[i]]);
-          }
-          // NewProjectFormPage.selectedContributorsName
-          //     .add(NewProjectFormPage.contributors[0]);
-          // NewProjectFormPage.selectedContributorsName
-          //     .add(NewProjectFormPage.contributors[1]);
+          NewProjectFormPage.selectedContributorsIndex = value;
+          // value is the list of indices of selected names from the allUsers list.
+          // finally all the final indices of names put into another list to access in newProjectFormPage.
         },
         dropdownTitleTileText: '--Select--',
         dropdownTitleTileColor: ConstColors.HINT_COLOR,

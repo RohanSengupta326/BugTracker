@@ -1,5 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:bug_tracker/controllers/fetchAllUsers/fetchAllUsersController.dart';
 import 'package:bug_tracker/models/currUserData/currUserData.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
 
@@ -10,6 +12,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AuthUserController extends GetxController {
+  final FetchAllUsers allUserFetchController = Get.put(FetchAllUsers());
+
   final _auth = FirebaseAuth.instance;
   RxBool isLoadingAuth = false.obs;
   List<UserData> currentUserData = [
@@ -57,6 +61,9 @@ class AuthUserController extends GetxController {
             'dpUrl': dpUrl,
           },
         );
+
+        await allUserFetchController.fetchAllUsers();
+        //new users signed up so update all users list
       }
 
       isLoadingAuth.value = false;
@@ -80,5 +87,12 @@ class AuthUserController extends GetxController {
       isLoadingAuth.value = false;
       throw Dialogs.GENERIC_ERROR_MESSAGE;
     }
+  }
+
+  Future<void> logOut() async {
+    _auth.signOut();
+    currentUserData = [
+      UserData('', ''),
+    ];
   }
 }

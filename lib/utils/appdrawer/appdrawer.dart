@@ -1,20 +1,22 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
+import 'package:bug_tracker/controllers/authUserController/authUserController.dart';
 
 import 'package:flutter/material.dart';
 
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:device_apps/device_apps.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppDrawer extends StatelessWidget {
-  const AppDrawer({super.key});
-
   final String developerInstaUrl = 'https://www.instagram.com/rohaaansen/';
   final String developerTwitterUrl = 'https://twitter.com/rohan_sen132';
   final String developerLinkedInUrl =
       'https://www.linkedin.com/in/rohan-sengupta-193bb916a/';
+
+  final AuthUserController authUserController = Get.find();
 
   Future<void> _launchUrl(String uri, String appPackageName) async {
     final Uri url = Uri.parse(uri);
@@ -96,7 +98,7 @@ class AppDrawer extends StatelessWidget {
                     ),
                     Divider(),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => authUserController.logOut(),
                       child: Text('LogOut'),
                     ),
                   ],

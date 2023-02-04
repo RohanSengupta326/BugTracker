@@ -9,6 +9,7 @@ class ConstValues {
   // const values
   static const double VALUE_3 = 3.00;
   static const double VALUE_16 = 16.00;
+  static const double VALUE_40 = 40.00;
   static const double VALUE_50 = 50.00;
 
   //CURVE RADIUS

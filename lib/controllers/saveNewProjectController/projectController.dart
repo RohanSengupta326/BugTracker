@@ -48,6 +48,7 @@ class ProjectsController extends GetxController {
 
   Future<void> fetchProject() async {
     _projects = [];
+
     try {
       isProjectFetching.value = true;
 

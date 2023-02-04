@@ -1,5 +1,6 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
+import 'package:bug_tracker/controllers/fetchAllUsers/fetchAllUsersController.dart';
 import 'package:bug_tracker/controllers/saveNewProjectController/projectController.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
 import 'package:bug_tracker/views/widgets/alertBoxWidget/alertBoxWidget.dart';
@@ -9,15 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NewProjectFormPage extends StatelessWidget {
+  final FetchAllUsers allUserData = Get.find();
+  final ProjectsController formSaveController = Get.put(ProjectsController());
+
   static String projectName = "";
   static String projectDetails = "";
 
   static List<String> selectedContributorsName = [];
-
-  // contributors list will be fetched from FIREBASE
-  static List<String> contributors = ["Rohan Sengupta", "Raj Sen"];
-
-  final formSaveController = Get.put(ProjectsController());
+  static List<dynamic> selectedContributorsIndex = [];
+  // to store indices of the selected names from allUsers list
 
   void onSubmit(BuildContext context) {
     // SUBMIT CONTROLLER FUNCTION CALL TO SAVE IN FIREBASE
@@ -57,6 +58,12 @@ class NewProjectFormPage extends StatelessWidget {
             () {
               return IconButton(
                 onPressed: () {
+                  // storing all the selected names in selected contributors list.
+                  for (int i = 0; i < selectedContributorsIndex.length; i++) {
+                    NewProjectFormPage.selectedContributorsName
+                        .add(allUserData.users[selectedContributorsIndex[i]]);
+                  }
+
                   // onSubmitted to save form and check errors
                   ProjectFormWidget.onSubmitted();
                   // getting the context from the ProjectFormWidget class

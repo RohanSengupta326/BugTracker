@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:bug_tracker/controllers/authUserController/authUserController.dart';
@@ -21,29 +23,29 @@ class _AuthPageState extends State<AuthPage> {
   String _userEmail = '';
   String _userName = '';
   String _userPassword = '';
-  RxBool isLogin = false.obs;
+  RxBool _isLogin = false.obs;
 
   XFile? _pickedImage; // picked user profile pic
 
-  void onSubmitted(BuildContext context) {
+  void onSubmitted() {
     final isValid = _formKey.currentState!.validate();
-    FocusScope.of(context).unfocus();
+    FocusScope.of(Get.context!).unfocus();
 
     if (isValid) {
       _formKey.currentState!.save();
 
-      if (_pickedImage == null && !isLogin.value) {
+      if (_pickedImage == null && !_isLogin.value) {
         // not registered user and also user dp picked null then alert user
         showDialog(
-          context: context,
-          builder: (BuildContext context) {
+          context: Get.context!,
+          builder: (_) {
             return AlertBoxWidget(Dialogs.UPLOAD_IMAGE_REQUEST);
           },
         );
       } else {
         // picked image not null
         XFile? userDp;
-        if (!isLogin.value) {
+        if (!_isLogin.value) {
           // if not logging in store picked image else send null image if phone no login
           userDp = _pickedImage as XFile;
         }
@@ -52,13 +54,13 @@ class _AuthPageState extends State<AuthPage> {
                 _userEmail.trim(),
                 _userName.trim(),
                 _userPassword.trim(),
-                isLogin.value,
+                _isLogin.value,
                 userDp) // calling provider function to sign user in
             .catchError(
           (error) {
             showDialog(
-              context: context,
-              builder: (BuildContext context) {
+              context: Get.context!,
+              builder: (_) {
                 return AlertBoxWidget(error);
               },
             );
@@ -85,7 +87,7 @@ class _AuthPageState extends State<AuthPage> {
               children: [
                 // design
                 const SizedBox(
-                  height: 40,
+                  height: ConstValues.VALUE_40,
                 ),
 
                 Align(
@@ -129,7 +131,7 @@ class _AuthPageState extends State<AuthPage> {
                       mainAxisSize: MainAxisSize.min,
                       //dont take as much space as possible but as minimum as needed
                       children: <Widget>[
-                        if (!isLogin.value)
+                        if (!_isLogin.value)
                           // registering user so upload image section else not
                           UploadImage(imagePicker),
                         const SizedBox(height: ConstValues.VALUE_16),
@@ -184,7 +186,7 @@ class _AuthPageState extends State<AuthPage> {
                         const SizedBox(
                           height: ConstValues.VALUE_16,
                         ),
-                        if (!isLogin.value)
+                        if (!_isLogin.value)
                           Container(
                             child: TextFormField(
                               style: const TextStyle(
@@ -201,7 +203,7 @@ class _AuthPageState extends State<AuthPage> {
                               decoration: InputDecoration(
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: ConstColors.PRIMARY_SWATCH_COLOR),
                                 ),
                                 enabledBorder: OutlineInputBorder(
@@ -272,7 +274,7 @@ class _AuthPageState extends State<AuthPage> {
                             },
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: ConstValues.VALUE_50,
                         ),
                         if (controller.isLoadingAuth.value == true)
@@ -284,7 +286,7 @@ class _AuthPageState extends State<AuthPage> {
                             height: 50,
                             width: 200,
                             child: ElevatedButton(
-                              onPressed: () => onSubmitted(context),
+                              onPressed: () => onSubmitted(),
                               style: ButtonStyle(
                                 shadowColor: const MaterialStatePropertyAll(
                                     ConstColors.PRIMARY_SWATCH_COLOR),
@@ -299,7 +301,7 @@ class _AuthPageState extends State<AuthPage> {
                                 backgroundColor: const MaterialStatePropertyAll(
                                     ConstColors.PRIMARY_SWATCH_COLOR),
                               ),
-                              child: Text(isLogin.value ? 'LogIn' : 'SignUp'),
+                              child: Text(_isLogin.value ? 'LogIn' : 'SignUp'),
                             ),
                           ),
                         const SizedBox(
@@ -309,7 +311,7 @@ class _AuthPageState extends State<AuthPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              isLogin.value
+                              _isLogin.value
                                   ? 'Dont\'t have an account ? '
                                   : 'Already have an account ?',
                               style: const TextStyle(
@@ -321,10 +323,11 @@ class _AuthPageState extends State<AuthPage> {
                                     ConstColors.PRIMARY_SWATCH_COLOR),
                               ),
                               onPressed: () {
-                                isLogin.value = !isLogin.value;
+                                _isLogin.value = !_isLogin.value;
+                                log(_isLogin.value.toString());
                               },
                               child: Text(
-                                isLogin.value ? 'Register' : 'LogIn',
+                                _isLogin.value ? 'Register' : 'LogIn',
                               ),
                             ),
                           ],
