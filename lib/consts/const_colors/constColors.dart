@@ -16,4 +16,6 @@ class ConstColors {
 
   //MATERIAL TYPE COLOR
   static const MaterialColor PRIMARY_SWATCH_COLOR = Colors.blue;
+
+  // RANDOM
 }

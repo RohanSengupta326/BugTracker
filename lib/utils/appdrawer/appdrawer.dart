@@ -1,6 +1,7 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:bug_tracker/controllers/authUserController/authUserController.dart';
+import 'package:bug_tracker/views/pages/homepage/homepage.dart';
 
 import 'package:flutter/material.dart';
 
@@ -83,7 +84,9 @@ class AppDrawer extends StatelessWidget {
                     Align(
                       alignment: Alignment.topLeft,
                       child: TextButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.to(HomePage());
+                        },
                         icon: const Icon(
                           Icons.dashboard,
                           color: ConstColors.PRIMARY_SWATCH_COLOR,
@@ -96,8 +99,11 @@ class AppDrawer extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Divider(),
+                    const Divider(),
                     ElevatedButton(
+                      style: const ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll(
+                              ConstColors.ERROR_COLOR)),
                       onPressed: () => authUserController.logOut(),
                       child: Text('LogOut'),
                     ),
@@ -106,11 +112,11 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 left: ConstValues.MARGIN,
                 bottom: ConstValues.MARGIN / 2,
               ),
-              child: Align(
+              child: const Align(
                 alignment: Alignment.bottomCenter,
                 child: Text(
                   'Created By Rohan Sengupta',

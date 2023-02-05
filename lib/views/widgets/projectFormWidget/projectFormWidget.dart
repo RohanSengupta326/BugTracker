@@ -84,7 +84,7 @@ class ProjectFormWidget extends StatelessWidget {
             ),
             Container(
               child: TextFormField(
-                maxLines: 5,
+                maxLines: 23,
                 // more height space to write
                 style: TextStyle(color: ConstColors.APP_FONT_COLOR),
                 cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,

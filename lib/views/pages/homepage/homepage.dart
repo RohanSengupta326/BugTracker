@@ -1,7 +1,7 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:bug_tracker/controllers/fetchAllUsers/fetchAllUsersController.dart';
-import 'package:bug_tracker/controllers/saveNewProjectController/projectController.dart';
+import 'package:bug_tracker/controllers/projectController/projectController.dart';
 
 import 'package:bug_tracker/utils/appdrawer/appdrawer.dart';
 import 'package:bug_tracker/utils/project_list_viewer/project_list_viewer.dart';

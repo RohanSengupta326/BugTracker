@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bug_tracker/models/projectDetailModel/projectDetailModel.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
 
@@ -30,6 +32,8 @@ class ProjectsController extends GetxController {
               selectedContributors.isNotEmpty ? selectedContributors : "",
         },
       ).then((value) {
+        log(FirebaseFirestore.instance.collection('project-details').id);
+
         _projects.add(
           ProjectDetailModel(
               projectName: projectName,
@@ -75,4 +79,6 @@ class ProjectsController extends GetxController {
       throw Dialogs.GENERIC_ERROR_MESSAGE;
     }
   }
+
+  Future<void> deleteProject() async {}
 }
