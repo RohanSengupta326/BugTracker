@@ -1,9 +1,11 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:bug_tracker/controllers/authUserController/authUserController.dart';
+import 'package:bug_tracker/controllers/fetchAllUsers/fetchAllUsersController.dart';
 import 'package:bug_tracker/views/pages/homepage/homepage.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:device_apps/device_apps.dart';
@@ -18,6 +20,7 @@ class AppDrawer extends StatelessWidget {
       'https://www.linkedin.com/in/rohan-sengupta-193bb916a/';
 
   final AuthUserController authUserController = Get.find();
+  final FetchAllUsers fetchAllUsersController = Get.find();
 
   Future<void> _launchUrl(String uri, String appPackageName) async {
     final Uri url = Uri.parse(uri);
@@ -58,15 +61,60 @@ class AppDrawer extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
+                        margin: const EdgeInsets.only(left: ConstValues.MARGIN),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Obx(() {
+                            return fetchAllUsersController
+                                    .isLoadingUserData.value
+                                ? const CupertinoActivityIndicator(
+                                    color: Colors.white,
+                                  )
+                                : CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: fetchAllUsersController
+                                                .currentUserData.isNotEmpty &&
+                                            fetchAllUsersController
+                                                    .currentUserData[0].dpUrl !=
+                                                ''
+                                        ? NetworkImage(fetchAllUsersController
+                                            .currentUserData[0].dpUrl)
+                                        : const AssetImage(
+                                                'assets/images/userdp.jpg')
+                                            as ImageProvider<Object>,
+                                  );
+                          }),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: ConstValues.VALUE_16,
+                      ),
+                      Container(
                         margin: EdgeInsets.only(left: ConstValues.MARGIN),
                         child: Align(
                           alignment: Alignment.topLeft,
-                          child: Text(
-                            "User",
-                            style: TextStyle(
-                                color: ConstColors.APPBAR_FONT_COLOR,
-                                fontSize: ConstValues.FONT_SIZE),
-                          ),
+                          child: Obx(() {
+                            return fetchAllUsersController
+                                    .isLoadingUserData.value
+                                ? const CupertinoActivityIndicator(
+                                    color: Colors.white,
+                                  )
+                                : Text(
+                                    fetchAllUsersController
+                                                .currentUserData.isNotEmpty &&
+                                            fetchAllUsersController
+                                                    .currentUserData[0]
+                                                    .username !=
+                                                ''
+                                        ? fetchAllUsersController
+                                            .currentUserData[0].username
+                                        : 'User',
+                                    style: const TextStyle(
+                                        fontSize: ConstValues.HEADING_FONT_SIZE,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  );
+                          }),
                         ),
                       ),
                     ],
@@ -74,7 +122,7 @@ class AppDrawer extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: ConstValues.PADDING),
+            const SizedBox(height: ConstValues.PADDING),
             Expanded(
               flex: 3,
               child: Padding(

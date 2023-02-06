@@ -4,11 +4,17 @@ class Dialogs {
   static const String SELECT_CONTRIBUTOR =
       "Please Select contributors to this project";
   static const String PROJECT_NOT_SAVED = "Sorry! Please try again later!";
+  static const String PROJECT_NOT_FETCHED = "Could not load projects!";
+  static const String PROJECT_NOT_DELETED = "Could not delete project!";
   static const String UPLOAD_IMAGE_REQUEST = 'Upload profile picture';
   static const String WRONG_USERNAME =
       'please enter username of atleast 4 characters';
   static const String WRONG_PASSWORD_STRUCT =
       'password should be atleast 7 characters long';
+  static const String USER_DATA_FETCH = 'Could not load user info';
+
+  static const String PROJECT_DELETE_CONFIRMATION =
+      'The project will be deleted';
 
   // firebase signup/login error messages
   static const String EMAIL_EXISTS = 'Email already exists.\nLogIn Instead.';

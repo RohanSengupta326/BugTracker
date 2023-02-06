@@ -1,9 +1,14 @@
+import 'dart:developer';
+
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
-import 'package:bug_tracker/utils/appdrawer/appdrawer.dart';
+import 'package:bug_tracker/controllers/projectController/projectController.dart';
 import 'package:bug_tracker/utils/projecDetailTab/projectDetailsTab.dart';
 import 'package:bug_tracker/utils/projectTeamTab/projectTeamTab.dart';
 import 'package:bug_tracker/utils/projectTicketTab/projectTicketTab.dart';
+import 'package:bug_tracker/views/dialogs/dialogs.dart';
+import 'package:bug_tracker/views/widgets/alertBoxWidget/alertBoxWidget.dart';
+import 'package:bug_tracker/views/widgets/confirmationAlertBoxWidget/confirmationAlertBoxWidget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,9 +17,17 @@ class DetailedTabPages extends StatelessWidget {
   final projectName;
   final projectDetails;
   final contributors;
-  DetailedTabPages({this.projectName, this.projectDetails, this.contributors});
+  final projectId;
+  DetailedTabPages(
+      {this.projectName,
+      this.projectDetails,
+      this.contributors,
+      this.projectId});
+
+  final ProjectsController projectsController = Get.find();
 
   var _controller;
+  static bool confirmDelete = false;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +43,7 @@ class DetailedTabPages extends StatelessWidget {
               titleSpacing: 0,
               actions: [
                 IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     size: 20,
                     Icons.edit,
                     color: Colors.black,
@@ -38,12 +51,44 @@ class DetailedTabPages extends StatelessWidget {
                   onPressed: () {},
                 ),
                 IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     size: 20,
                     Icons.delete,
                     color: ConstColors.ERROR_COLOR,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    // confirm delete check
+                    showDialog(
+                        context: context,
+                        builder: (_) {
+                          return ConfirmationAlertBoxWidget(
+                              Dialogs.PROJECT_DELETE_CONFIRMATION);
+                        }).then((value) {
+                      log(confirmDelete.toString());
+                      if (confirmDelete) {
+                        log("---INITIATING DELETE---");
+                        projectsController
+                            .deleteProject(projectId)
+                            .catchError((error) {
+                          return showDialog(
+                              context: Get.context!,
+                              builder: (_) {
+                                return AlertBoxWidget(error);
+                              });
+                        }).then((value) => Get.back());
+                      }
+                    });
+
+                    // projectsController
+                    //     .deleteProject(projectId)
+                    //     .catchError((error) {
+                    //   return showDialog(
+                    //       context: Get.context!,
+                    //       builder: (_) {
+                    //         return AlertBoxWidget(error);
+                    //       });
+                    // });
+                  },
                 ),
               ],
               title: const Text(

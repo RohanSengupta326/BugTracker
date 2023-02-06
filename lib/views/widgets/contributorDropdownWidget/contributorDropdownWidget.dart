@@ -30,7 +30,7 @@ class ContributorDropdownWidget extends StatelessWidget {
           // value is the list of indices of selected names from the allUsers list.
           // finally all the final indices of names put into another list to access in newProjectFormPage.
         },
-        dropdownTitleTileText: '--Select--',
+        dropdownTitleTileText: '----Assign to----',
         dropdownTitleTileColor: ConstColors.HINT_COLOR,
         dropdownTitleTileMargin: const EdgeInsets.all(
           ConstValues.MARGIN,

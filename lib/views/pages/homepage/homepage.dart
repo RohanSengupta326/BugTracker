@@ -23,6 +23,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     saveNewProjectController.fetchProject();
     fetchAllUserController.fetchAllUsers();
+    fetchAllUserController.fetchUserData();
+
     super.initState();
   }
 
@@ -76,6 +78,8 @@ class _HomePageState extends State<HomePage> {
                                   .projects[index].projectDetails,
                               contributors: saveNewProjectController
                                   .projects[index].selectedContributors,
+                              projectId: saveNewProjectController
+                                  .projects[index].projectId,
                             );
                           }),
                           itemCount: saveNewProjectController.projects.length);

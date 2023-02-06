@@ -3,8 +3,11 @@ import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:flutter/material.dart';
 
 class AlertBoxWidget extends StatelessWidget {
-  var error;
-  AlertBoxWidget(this.error);
+  var message;
+
+  AlertBoxWidget(
+    this.message,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,7 @@ class AlertBoxWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            error.toString(),
+            message.toString(),
             style: const TextStyle(
                 color: ConstColors.APP_FONT_COLOR,
                 fontWeight: FontWeight.bold,

@@ -8,14 +8,24 @@ import 'package:get/state_manager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:uuid/uuid.dart';
 
 class ProjectsController extends GetxController {
   List<ProjectDetailModel> _projects = [];
   RxBool isProjectSaving = false.obs;
   RxBool isProjectFetching = false.obs;
+  RxBool isProjectDeleting = false.obs;
+  String projectId = "";
 
   List<ProjectDetailModel> get projects {
     return [..._projects];
+  }
+
+  //timebased projectId
+  String generateUid() {
+    var uuid = Uuid();
+    projectId = uuid.v1();
+    return projectId;
   }
 
   Future<void> saveProjectDetails(String projectName, String projectDetails,
@@ -24,29 +34,29 @@ class ProjectsController extends GetxController {
       isProjectSaving.value = true;
 
       // FIREBASE OPERATIONS
-      await FirebaseFirestore.instance.collection('project-details').doc().set(
+      await FirebaseFirestore.instance
+          .collection('project-details')
+          .doc(generateUid())
+          .set(
         {
           'projectName': projectName,
           'projectDetails': projectDetails,
           'selectedContributors':
               selectedContributors.isNotEmpty ? selectedContributors : "",
+          'projectId': projectId,
         },
       ).then((value) {
-        log(FirebaseFirestore.instance.collection('project-details').id);
-
         _projects.add(
           ProjectDetailModel(
               projectName: projectName,
               projectDetails: projectDetails,
-              selectedContributors: selectedContributors),
+              selectedContributors: selectedContributors,
+              projectId: projectId),
         );
       });
       isProjectSaving.value = false;
-    } on FirebaseAuthException {
-      isProjectSaving.value = false;
-      throw Dialogs.PROJECT_NOT_SAVED;
     } catch (error) {
-      throw Dialogs.GENERIC_ERROR_MESSAGE;
+      throw Dialogs.PROJECT_NOT_SAVED;
     }
   }
 
@@ -64,21 +74,40 @@ class ProjectsController extends GetxController {
       for (var i = 0; i < savedProjects.docs.length; i++) {
         _projects.add(
           ProjectDetailModel(
-              projectName: savedProjects.docs[i].data()['projectName'],
-              projectDetails: savedProjects.docs[i].data()['projectDetails'],
-              selectedContributors:
-                  savedProjects.docs[i].data()['selectedContributors']),
+            projectName: savedProjects.docs[i].data()['projectName'],
+            projectDetails: savedProjects.docs[i].data()['projectDetails'],
+            selectedContributors:
+                savedProjects.docs[i].data()['selectedContributors'],
+            projectId: savedProjects.docs[i].data()['projectId'],
+          ),
         );
       }
 
       isProjectFetching.value = false;
-    } on FirebaseAuthException {
-      isProjectFetching.value = false;
-      throw Dialogs.PROJECT_NOT_SAVED;
     } catch (error) {
       throw Dialogs.GENERIC_ERROR_MESSAGE;
     }
   }
 
-  Future<void> deleteProject() async {}
+  Future<void> deleteProject(String projectId) async {
+    log(projectId);
+
+    try {
+      isProjectDeleting.value = true;
+
+      await FirebaseFirestore.instance
+          .collection('project-details')
+          .doc(projectId)
+          .delete()
+          .then((value) {
+        _projects.removeAt(
+          _projects.indexWhere((element) => element.projectId == projectId),
+        );
+      });
+
+      isProjectDeleting.value = false;
+    } catch (error) {
+      throw Dialogs.PROJECT_NOT_DELETED;
+    }
+  }
 }

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:bug_tracker/controllers/fetchAllUsers/fetchAllUsersController.dart';
@@ -16,9 +15,6 @@ class AuthUserController extends GetxController {
 
   final _auth = FirebaseAuth.instance;
   RxBool isLoadingAuth = false.obs;
-  List<UserData> currentUserData = [
-    UserData('', ''),
-  ];
 
   Future<void> authUser(String email, String username, String password,
       bool isLogin, XFile? image) async {
@@ -91,7 +87,7 @@ class AuthUserController extends GetxController {
 
   Future<void> logOut() async {
     _auth.signOut();
-    currentUserData = [
+    allUserFetchController.currentUserData = [
       UserData('', ''),
     ];
   }

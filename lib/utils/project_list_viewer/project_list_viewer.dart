@@ -9,7 +9,12 @@ class ProjectListViewer extends StatelessWidget {
   final projectName;
   final projectDetails;
   final contributors;
-  ProjectListViewer({this.projectName, this.projectDetails, this.contributors});
+  final projectId;
+  ProjectListViewer(
+      {this.projectName,
+      this.projectDetails,
+      this.contributors,
+      this.projectId});
 
   List<Widget> currentContributors() {
     // chip widget to show active contributors for particular projects
@@ -41,9 +46,11 @@ class ProjectListViewer extends StatelessWidget {
       child: GestureDetector(
         onTap: (() {
           Get.to(() => DetailedTabPages(
-              projectName: projectName,
-              projectDetails: projectDetails,
-              contributors: contributors));
+                projectName: projectName,
+                projectDetails: projectDetails,
+                contributors: contributors,
+                projectId: projectId,
+              ));
         }),
         child: Card(
           shape: RoundedRectangleBorder(

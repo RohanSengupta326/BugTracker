@@ -31,6 +31,9 @@ class ProjectFormWidget extends StatelessWidget {
         key: formKey,
         child: Column(
           children: <Widget>[
+            // CODE TO SELECT CONTRIBUTORS
+            ContributorDropdownWidget(),
+
             Container(
               child: TextFormField(
                 maxLines: 1,
@@ -133,9 +136,6 @@ class ProjectFormWidget extends StatelessWidget {
             SizedBox(
               height: ConstValues.VALUE_16,
             ),
-
-            // CODE TO SELECT CONTRIBUTORS
-            ContributorDropdownWidget(),
 
             SizedBox(
               height: ConstValues.VALUE_16,
