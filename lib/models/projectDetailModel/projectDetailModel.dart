@@ -1,8 +1,8 @@
 class ProjectDetailModel {
-  final projectName;
-  final projectDetails;
-  final selectedContributors;
-  final projectId;
+  var projectName;
+  var projectDetails;
+  var selectedContributors;
+  var projectId;
   ProjectDetailModel(
       {this.projectName,
       this.projectDetails,

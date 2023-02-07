@@ -7,6 +7,7 @@ import 'package:bug_tracker/utils/projecDetailTab/projectDetailsTab.dart';
 import 'package:bug_tracker/utils/projectTeamTab/projectTeamTab.dart';
 import 'package:bug_tracker/utils/projectTicketTab/projectTicketTab.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
+import 'package:bug_tracker/views/pages/editProjectFormPage/editProjectFormPage.dart';
 import 'package:bug_tracker/views/widgets/alertBoxWidget/alertBoxWidget.dart';
 import 'package:bug_tracker/views/widgets/confirmationAlertBoxWidget/confirmationAlertBoxWidget.dart';
 import 'package:bug_tracker/views/widgets/indicatorBox/indicatorBox.dart';
@@ -30,6 +31,32 @@ class DetailedTabPages extends StatelessWidget {
   var _controller;
   static bool confirmDelete = false;
 
+  void deleteProject() {
+    showDialog(
+        context: Get.context!,
+        builder: (_) {
+          return ConfirmationAlertBoxWidget(
+              Dialogs.PROJECT_DELETE_CONFIRMATION);
+        }).then((value) {
+      // if user clicked ok then confirmDelete value changed to true
+
+      if (confirmDelete) {
+        log("---INITIATING DELETE---");
+        projectsController.deleteProject(projectId).catchError((error) {
+          return showDialog(
+              context: Get.context!,
+              builder: (_) {
+                return AlertBoxWidget(error);
+              });
+        }).then((value) => Get.back());
+      }
+    });
+  }
+
+  void editProject() {
+    Get.to(EditProjectFormPage(projectName, projectDetails, projectId));
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -51,6 +78,7 @@ class DetailedTabPages extends StatelessWidget {
                   ),
                   onPressed: () {
                     //edit existing project
+                    editProject();
                   },
                 ),
                 IconButton(
@@ -61,27 +89,7 @@ class DetailedTabPages extends StatelessWidget {
                   ),
                   onPressed: () {
                     // confirm delete check
-                    showDialog(
-                        context: context,
-                        builder: (_) {
-                          return ConfirmationAlertBoxWidget(
-                              Dialogs.PROJECT_DELETE_CONFIRMATION);
-                        }).then((value) {
-                      // if user clicked ok then confirmDelete value changed to true
-
-                      if (confirmDelete) {
-                        log("---INITIATING DELETE---");
-                        projectsController
-                            .deleteProject(projectId)
-                            .catchError((error) {
-                          return showDialog(
-                              context: Get.context!,
-                              builder: (_) {
-                                return AlertBoxWidget(error);
-                              });
-                        }).then((value) => Get.back());
-                      }
-                    });
+                    deleteProject();
                   },
                 ),
               ],

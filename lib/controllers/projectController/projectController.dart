@@ -15,6 +15,7 @@ class ProjectsController extends GetxController {
   RxBool isProjectSaving = false.obs;
   RxBool isProjectFetching = false.obs;
   RxBool isProjectDeleting = false.obs;
+  RxBool isProjectEditing = false.obs;
   String projectId = "";
 
   List<ProjectDetailModel> get projects {
@@ -56,6 +57,7 @@ class ProjectsController extends GetxController {
       });
       isProjectSaving.value = false;
     } catch (error) {
+      isProjectSaving.value = false;
       throw Dialogs.PROJECT_NOT_SAVED;
     }
   }
@@ -85,6 +87,7 @@ class ProjectsController extends GetxController {
 
       isProjectFetching.value = false;
     } catch (error) {
+      isProjectFetching.value = false;
       throw Dialogs.GENERIC_ERROR_MESSAGE;
     }
   }
@@ -101,9 +104,41 @@ class ProjectsController extends GetxController {
         _projects.removeAt(
           _projects.indexWhere((element) => element.projectId == projectId),
         );
-      }).then((value) => isProjectDeleting.value = false);
+      });
+
+      isProjectDeleting.value = false;
     } catch (error) {
+      isProjectDeleting.value = false;
       throw Dialogs.PROJECT_NOT_DELETED;
+    }
+  }
+
+  Future<void> editProject(
+      String projectId, String projectName, String projectDetails) async {
+    try {
+      isProjectEditing.value = true;
+
+      // FIREBASE OPERATIONS
+      await FirebaseFirestore.instance
+          .collection('project-details')
+          .doc(projectId)
+          .set(
+        {
+          'projectName': projectName,
+          'projectDetails': projectDetails,
+        },
+      ).then((value) {
+        int index =
+            _projects.indexWhere((element) => element.projectId == projectId);
+
+        _projects[index].projectDetails = projectDetails;
+        _projects[index].projectName = projectName;
+      });
+
+      isProjectEditing.value = false;
+    } catch (error) {
+      isProjectEditing.value = false;
+      throw Dialogs.PROJECT_NOT_SAVED;
     }
   }
 }

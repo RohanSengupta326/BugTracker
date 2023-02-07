@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ],
-        titleSpacing: ConstValues.PADDING,
+        titleSpacing: 0,
         backgroundColor: ConstColors.APPBAR_BACKGROUND_COLOR,
         title: const Text(
           "Projects",
