@@ -9,22 +9,15 @@ import 'package:get/get.dart';
 
 class ProjectFormWidget extends StatelessWidget {
   static GlobalKey<FormState> formKey = GlobalKey();
-  static late BuildContext currentContext;
+
+  static bool isValid = false;
 
   static void onSubmitted() {
-    final isValid = formKey.currentState!.validate();
-
-    if (isValid) {
-      print("----FORM VALID TOO----");
-      formKey.currentState!.save();
-    }
-    print("-----FORM SAVED-----");
+    isValid = formKey.currentState!.validate();
   }
 
   @override
   Widget build(BuildContext context) {
-    currentContext = context;
-
     return Padding(
       padding: const EdgeInsets.all(ConstValues.PADDING),
       child: Form(
@@ -87,7 +80,7 @@ class ProjectFormWidget extends StatelessWidget {
             ),
             Container(
               child: TextFormField(
-                maxLines: 23,
+                maxLines: 20,
                 // more height space to write
                 style: TextStyle(color: ConstColors.APP_FONT_COLOR),
                 cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,

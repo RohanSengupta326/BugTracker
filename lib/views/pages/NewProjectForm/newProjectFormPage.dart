@@ -66,9 +66,15 @@ class NewProjectFormPage extends StatelessWidget {
 
                   // onSubmitted to save form and check errors
                   ProjectFormWidget.onSubmitted();
-                  // getting the context from the ProjectFormWidget class
-                  FocusScope.of(ProjectFormWidget.currentContext).unfocus();
-                  onSubmit(context);
+
+                  if (ProjectFormWidget.isValid) {
+                    // if user filled form correctly then progress else not
+                    ProjectFormWidget.formKey.currentState!.save();
+
+                    // getting the context from the ProjectFormWidget class
+                    FocusScope.of(Get.context!).unfocus();
+                    onSubmit(context);
+                  }
                 },
                 icon: formSaveController.isProjectSaving.value
                     ? const SizedBox(

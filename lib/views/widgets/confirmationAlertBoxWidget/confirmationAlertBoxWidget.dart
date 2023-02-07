@@ -33,12 +33,12 @@ class ConfirmationAlertBoxWidget extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
+                  DetailedTabPages.confirmDelete = false;
                   Get.back();
                 },
                 style: ButtonStyle(
                   shadowColor: MaterialStatePropertyAll(
                       ConstColors.PRIMARY_SWATCH_COLOR),
-                  elevation: MaterialStatePropertyAll(ConstValues.VALUE_16),
                   shape: MaterialStatePropertyAll(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(26),
@@ -57,7 +57,6 @@ class ConfirmationAlertBoxWidget extends StatelessWidget {
                 style: ButtonStyle(
                   shadowColor: MaterialStatePropertyAll(
                       ConstColors.PRIMARY_SWATCH_COLOR),
-                  elevation: MaterialStatePropertyAll(ConstValues.VALUE_16),
                   shape: MaterialStatePropertyAll(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(26),

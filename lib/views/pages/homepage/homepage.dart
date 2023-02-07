@@ -16,12 +16,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final saveNewProjectController = Get.put(ProjectsController());
+  final projectController = Get.put(ProjectsController());
   final fetchAllUserController = Get.put(FetchAllUsers());
 
   @override
   void initState() {
-    saveNewProjectController.fetchProject();
+    projectController.fetchProject();
     fetchAllUserController.fetchAllUsers();
     fetchAllUserController.fetchUserData();
 
@@ -57,32 +57,39 @@ class _HomePageState extends State<HomePage> {
       body: // SHOW SAVED PROJECTS HERE
           Obx(
         (() {
-          return saveNewProjectController.isProjectFetching.value
+          // while fetching saved projects
+          return projectController.isProjectFetching.value
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : saveNewProjectController.isProjectSaving.value
+              // while adding new project
+              : projectController.isProjectSaving.value
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : saveNewProjectController.projects.isEmpty
+                  // while deleting
+                  : projectController.isProjectDeleting.value
                       ? const Center(
-                          child: Text("No projects to show !!"),
+                          child: CircularProgressIndicator(),
                         )
-                      : ListView.builder(
-                          itemBuilder: ((context, index) {
-                            return ProjectListViewer(
-                              projectName: saveNewProjectController
-                                  .projects[index].projectName,
-                              projectDetails: saveNewProjectController
-                                  .projects[index].projectDetails,
-                              contributors: saveNewProjectController
-                                  .projects[index].selectedContributors,
-                              projectId: saveNewProjectController
-                                  .projects[index].projectId,
-                            );
-                          }),
-                          itemCount: saveNewProjectController.projects.length);
+                      : projectController.projects.isEmpty
+                          ? const Center(
+                              child: Text("No projects to show !!"),
+                            )
+                          : ListView.builder(
+                              itemBuilder: ((context, index) {
+                                return ProjectListViewer(
+                                  projectName: projectController
+                                      .projects[index].projectName,
+                                  projectDetails: projectController
+                                      .projects[index].projectDetails,
+                                  contributors: projectController
+                                      .projects[index].selectedContributors,
+                                  projectId: projectController
+                                      .projects[index].projectId,
+                                );
+                              }),
+                              itemCount: projectController.projects.length);
         }),
       ),
     );

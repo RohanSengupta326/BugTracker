@@ -90,8 +90,6 @@ class ProjectsController extends GetxController {
   }
 
   Future<void> deleteProject(String projectId) async {
-    log(projectId);
-
     try {
       isProjectDeleting.value = true;
 
@@ -103,9 +101,7 @@ class ProjectsController extends GetxController {
         _projects.removeAt(
           _projects.indexWhere((element) => element.projectId == projectId),
         );
-      });
-
-      isProjectDeleting.value = false;
+      }).then((value) => isProjectDeleting.value = false);
     } catch (error) {
       throw Dialogs.PROJECT_NOT_DELETED;
     }

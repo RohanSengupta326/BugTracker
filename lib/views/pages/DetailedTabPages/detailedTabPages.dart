@@ -9,6 +9,7 @@ import 'package:bug_tracker/utils/projectTicketTab/projectTicketTab.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
 import 'package:bug_tracker/views/widgets/alertBoxWidget/alertBoxWidget.dart';
 import 'package:bug_tracker/views/widgets/confirmationAlertBoxWidget/confirmationAlertBoxWidget.dart';
+import 'package:bug_tracker/views/widgets/indicatorBox/indicatorBox.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -48,7 +49,9 @@ class DetailedTabPages extends StatelessWidget {
                     Icons.edit,
                     color: Colors.black,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    //edit existing project
+                  },
                 ),
                 IconButton(
                   icon: const Icon(
@@ -64,7 +67,8 @@ class DetailedTabPages extends StatelessWidget {
                           return ConfirmationAlertBoxWidget(
                               Dialogs.PROJECT_DELETE_CONFIRMATION);
                         }).then((value) {
-                      log(confirmDelete.toString());
+                      // if user clicked ok then confirmDelete value changed to true
+
                       if (confirmDelete) {
                         log("---INITIATING DELETE---");
                         projectsController
@@ -78,16 +82,6 @@ class DetailedTabPages extends StatelessWidget {
                         }).then((value) => Get.back());
                       }
                     });
-
-                    // projectsController
-                    //     .deleteProject(projectId)
-                    //     .catchError((error) {
-                    //   return showDialog(
-                    //       context: Get.context!,
-                    //       builder: (_) {
-                    //         return AlertBoxWidget(error);
-                    //       });
-                    // });
                   },
                 ),
               ],
@@ -144,17 +138,29 @@ class DetailedTabPages extends StatelessWidget {
                 ],
               ),
             ),
-            body: TabBarView(
-              controller: _controller,
-              children: [
-                ProjectDetailTab(
-                    projectName: projectName, projectDetails: projectDetails),
-                ProjectTeamTab(
-                  contributors: contributors,
-                ),
-                ProjectTicketTab(),
-              ],
-            ),
+            body: Obx(() {
+              return Stack(
+                children: [
+                  TabBarView(
+                    controller: _controller,
+                    children: [
+                      ProjectDetailTab(
+                          projectName: projectName,
+                          projectDetails: projectDetails),
+                      ProjectTeamTab(
+                        contributors: contributors,
+                      ),
+                      ProjectTicketTab(),
+                    ],
+                  ),
+
+                  // while deleting show this on top of screen
+                  projectsController.isProjectDeleting.value
+                      ? IndicatorBox()
+                      : Center(),
+                ],
+              );
+            }),
           );
         }),
       ),
