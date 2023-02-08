@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:bug_tracker/controllers/fetchAllUsers/fetchAllUsersController.dart';
@@ -10,35 +12,80 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NewProjectFormPage extends StatelessWidget {
+  static String projectName = "";
+  static String projectDetails = "";
+  static List<dynamic> selectedContributorsName = [];
+  static List<int> selectedContributorsIndex = [];
+  // to store indices of the selected names from allUsers list
+
   final FetchAllUsers allUserData = Get.find();
   final ProjectsController formSaveController = Get.put(ProjectsController());
 
-  static String projectName = "";
-  static String projectDetails = "";
+  var savedProjectName;
+  var savedProjectDetails;
+  var savedContributors;
+  var savedProjectId;
+  NewProjectFormPage(
+      {this.savedProjectName,
+      this.savedProjectDetails,
+      this.savedContributors,
+      this.savedProjectId}) {
+    projectName = savedProjectName ?? "";
+    projectDetails = savedProjectDetails ?? "";
+    selectedContributorsName = savedContributors ?? [];
 
-  static List<String> selectedContributorsName = [];
-  static List<dynamic> selectedContributorsIndex = [];
-  // to store indices of the selected names from allUsers list
+    for (var i = 0; i < selectedContributorsName.length; i++) {
+      selectedContributorsIndex.add(allUserData.users
+          .indexWhere((element) => element == selectedContributorsName[i]));
+    }
+  }
 
-  void onSubmit(BuildContext context) {
+  void onSubmit() {
     // SUBMIT CONTROLLER FUNCTION CALL TO SAVE IN FIREBASE
-    formSaveController
-        .saveProjectDetails(
-            projectName, projectDetails, selectedContributorsName)
-        .catchError(
-      (error) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertBoxWidget(error);
-          },
-        );
-      },
-    ).then((value) {
-      Get.back();
-      selectedContributorsName = [];
-      // for one project contributors are saved now for different projects' contributors shouldnt overlap
-    });
+    if (savedProjectName == null) {
+      log("entering saving");
+      // if NOT editing project
+      formSaveController
+          .saveProjectDetails(
+              projectName, projectDetails, selectedContributorsName)
+          .catchError(
+        (error) {
+          showDialog(
+            context: Get.context!,
+            builder: (_) {
+              return AlertBoxWidget(error);
+            },
+          );
+        },
+      ).then((value) {
+        selectedContributorsName = [];
+        // for one project contributors are saved now for different projects' contributors shouldnt overlap
+        selectedContributorsIndex = [];
+        Get.back();
+      });
+    } else {
+      log("editing controller call");
+
+      // if editing project
+      formSaveController
+          .editProject(projectName, projectDetails, selectedContributorsName,
+              savedProjectId)
+          .catchError(
+        (error) {
+          showDialog(
+            context: Get.context!,
+            builder: (_) {
+              return AlertBoxWidget(error);
+            },
+          );
+        },
+      ).then((value) {
+        selectedContributorsIndex = [];
+        selectedContributorsName = [];
+        log("now get back");
+        Get.back();
+      });
+    }
   }
 
   @override
@@ -47,6 +94,10 @@ class NewProjectFormPage extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
+            selectedContributorsIndex = [];
+            selectedContributorsName = [];
+            //delete saved info or duplicate will occur
+
             Get.back();
           },
           icon: const Icon(
@@ -60,7 +111,7 @@ class NewProjectFormPage extends StatelessWidget {
                 onPressed: () {
                   // storing all the selected names in selected contributors list.
                   for (int i = 0; i < selectedContributorsIndex.length; i++) {
-                    NewProjectFormPage.selectedContributorsName
+                    selectedContributorsName
                         .add(allUserData.users[selectedContributorsIndex[i]]);
                   }
 
@@ -73,10 +124,12 @@ class NewProjectFormPage extends StatelessWidget {
 
                     // getting the context from the ProjectFormWidget class
                     FocusScope.of(Get.context!).unfocus();
-                    onSubmit(context);
+
+                    onSubmit();
                   }
                 },
-                icon: formSaveController.isProjectSaving.value
+                icon: formSaveController.isProjectSaving.value ||
+                        formSaveController.isProjectEditing.value
                     ? const SizedBox(
                         height: 20,
                         width: 20,
@@ -94,7 +147,7 @@ class NewProjectFormPage extends StatelessWidget {
         titleSpacing: ConstValues.PADDING,
         backgroundColor: ConstColors.APPBAR_BACKGROUND_COLOR,
         title: const Text(
-          "Add Project",
+          "Add/Edit Project",
           style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,

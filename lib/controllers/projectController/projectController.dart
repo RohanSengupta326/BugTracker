@@ -30,7 +30,7 @@ class ProjectsController extends GetxController {
   }
 
   Future<void> saveProjectDetails(String projectName, String projectDetails,
-      List<String> selectedContributors) async {
+      List<dynamic> selectedContributors) async {
     try {
       isProjectSaving.value = true;
 
@@ -47,6 +47,7 @@ class ProjectsController extends GetxController {
           'projectId': projectId,
         },
       ).then((value) {
+        log('inside then');
         _projects.add(
           ProjectDetailModel(
               projectName: projectName,
@@ -55,6 +56,7 @@ class ProjectsController extends GetxController {
               projectId: projectId),
         );
       });
+      log('outside then');
       isProjectSaving.value = false;
     } catch (error) {
       isProjectSaving.value = false;
@@ -113,28 +115,40 @@ class ProjectsController extends GetxController {
     }
   }
 
-  Future<void> editProject(
-      String projectId, String projectName, String projectDetails) async {
+  Future<void> editProject(String projectName, String projectDetails,
+      List<dynamic> selectedContributors, String editProjectId) async {
+    log("entered function");
+    log(editProjectId);
+    for (var i = 0; i < selectedContributors.length; i++) {
+      log(selectedContributors[i]);
+    }
+
     try {
       isProjectEditing.value = true;
+      log("isProjectEditing = $isProjectEditing");
 
       // FIREBASE OPERATIONS
       await FirebaseFirestore.instance
           .collection('project-details')
-          .doc(projectId)
-          .set(
+          .doc(editProjectId)
+          .update(
         {
           'projectName': projectName,
           'projectDetails': projectDetails,
+          'selectedContributors':
+              selectedContributors.isNotEmpty ? selectedContributors : "",
         },
       ).then((value) {
+        log('firebase operation done');
         int index =
             _projects.indexWhere((element) => element.projectId == projectId);
 
         _projects[index].projectDetails = projectDetails;
         _projects[index].projectName = projectName;
+        _projects[index].selectedContributors = selectedContributors;
       });
 
+      log("all done");
       isProjectEditing.value = false;
     } catch (error) {
       isProjectEditing.value = false;

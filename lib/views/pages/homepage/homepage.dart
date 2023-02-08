@@ -72,24 +72,28 @@ class _HomePageState extends State<HomePage> {
                       ? const Center(
                           child: CircularProgressIndicator(),
                         )
-                      : projectController.projects.isEmpty
+                      : projectController.isProjectEditing.value
                           ? const Center(
-                              child: Text("No projects to show !!"),
+                              child: CircularProgressIndicator(),
                             )
-                          : ListView.builder(
-                              itemBuilder: ((context, index) {
-                                return ProjectListViewer(
-                                  projectName: projectController
-                                      .projects[index].projectName,
-                                  projectDetails: projectController
-                                      .projects[index].projectDetails,
-                                  contributors: projectController
-                                      .projects[index].selectedContributors,
-                                  projectId: projectController
-                                      .projects[index].projectId,
-                                );
-                              }),
-                              itemCount: projectController.projects.length);
+                          : projectController.projects.isEmpty
+                              ? const Center(
+                                  child: Text("No projects to show !!"),
+                                )
+                              : ListView.builder(
+                                  itemBuilder: ((context, index) {
+                                    return ProjectListViewer(
+                                      projectName: projectController
+                                          .projects[index].projectName,
+                                      projectDetails: projectController
+                                          .projects[index].projectDetails,
+                                      contributors: projectController
+                                          .projects[index].selectedContributors,
+                                      projectId: projectController
+                                          .projects[index].projectId,
+                                    );
+                                  }),
+                                  itemCount: projectController.projects.length);
         }),
       ),
     );

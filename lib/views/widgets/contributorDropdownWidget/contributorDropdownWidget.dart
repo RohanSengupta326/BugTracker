@@ -17,6 +17,10 @@ class ContributorDropdownWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: GFMultiSelect(
+        initialSelectedItemsIndex:
+            NewProjectFormPage.selectedContributorsIndex.isEmpty
+                ? null
+                : NewProjectFormPage.selectedContributorsIndex,
         items: allUserData.users,
         onSelect: (value) {
           // print('---SELECTED CONTRIBUTOR VALUE---- ${value[0]} ');
@@ -26,7 +30,12 @@ class ContributorDropdownWidget extends StatelessWidget {
           //   log("${value[i]} \n");
           // }
 
-          NewProjectFormPage.selectedContributorsIndex = value;
+          List<int> temp = [];
+          for (var i = 0; i < value.length; i++) {
+            temp.add(value[i]);
+          }
+
+          NewProjectFormPage.selectedContributorsIndex = temp;
           // value is the list of indices of selected names from the allUsers list.
           // finally all the final indices of names put into another list to access in newProjectFormPage.
         },

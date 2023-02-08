@@ -38,6 +38,7 @@ class ProjectFormWidget extends StatelessWidget {
                   }
                   return null;
                 },
+                initialValue: NewProjectFormPage.projectName,
                 key: ValueKey('Project Name'),
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
@@ -91,6 +92,7 @@ class ProjectFormWidget extends StatelessWidget {
                   return null;
                 },
                 key: ValueKey('Project Details'),
+                initialValue: NewProjectFormPage.projectDetails,
                 decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -126,10 +128,6 @@ class ProjectFormWidget extends StatelessWidget {
                 },
               ),
             ),
-            SizedBox(
-              height: ConstValues.VALUE_16,
-            ),
-
             SizedBox(
               height: ConstValues.VALUE_16,
             ),

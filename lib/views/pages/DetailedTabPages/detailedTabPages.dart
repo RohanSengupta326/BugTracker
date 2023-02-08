@@ -7,7 +7,7 @@ import 'package:bug_tracker/utils/projecDetailTab/projectDetailsTab.dart';
 import 'package:bug_tracker/utils/projectTeamTab/projectTeamTab.dart';
 import 'package:bug_tracker/utils/projectTicketTab/projectTicketTab.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
-import 'package:bug_tracker/views/pages/editProjectFormPage/editProjectFormPage.dart';
+import 'package:bug_tracker/views/pages/NewProjectForm/newProjectFormPage.dart';
 import 'package:bug_tracker/views/widgets/alertBoxWidget/alertBoxWidget.dart';
 import 'package:bug_tracker/views/widgets/confirmationAlertBoxWidget/confirmationAlertBoxWidget.dart';
 import 'package:bug_tracker/views/widgets/indicatorBox/indicatorBox.dart';
@@ -53,10 +53,6 @@ class DetailedTabPages extends StatelessWidget {
     });
   }
 
-  void editProject() {
-    Get.to(EditProjectFormPage(projectName, projectDetails, projectId));
-  }
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -78,7 +74,13 @@ class DetailedTabPages extends StatelessWidget {
                   ),
                   onPressed: () {
                     //edit existing project
-                    editProject();
+                    Get.to(
+                      NewProjectFormPage(
+                          savedProjectName: projectName,
+                          savedProjectDetails: projectDetails,
+                          savedContributors: contributors,
+                          savedProjectId: projectId),
+                    );
                   },
                 ),
                 IconButton(
