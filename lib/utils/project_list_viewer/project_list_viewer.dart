@@ -46,10 +46,7 @@ class ProjectListViewer extends StatelessWidget {
       child: GestureDetector(
         onTap: (() {
           Get.to(() => DetailedTabPages(
-                projectName: projectName,
-                projectDetails: projectDetails,
-                contributors: contributors,
-                projectId: projectId,
+                fetchedProjectId: projectId,
               ));
         }),
         child: Card(

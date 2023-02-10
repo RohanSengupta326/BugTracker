@@ -3,12 +3,12 @@ import 'dart:developer';
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:bug_tracker/controllers/projectController/projectController.dart';
+import 'package:bug_tracker/models/projectDetailModel/projectDetailModel.dart';
 import 'package:bug_tracker/utils/projecDetailTab/projectDetailsTab.dart';
 import 'package:bug_tracker/utils/projectTeamTab/projectTeamTab.dart';
 import 'package:bug_tracker/utils/projectTicketTab/projectTicketTab.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
 import 'package:bug_tracker/views/pages/NewProjectForm/newProjectFormPage.dart';
-import 'package:bug_tracker/views/widgets/alertBoxWidget/alertBoxWidget.dart';
 import 'package:bug_tracker/views/widgets/confirmationAlertBoxWidget/confirmationAlertBoxWidget.dart';
 import 'package:bug_tracker/views/widgets/indicatorBox/indicatorBox.dart';
 
@@ -16,20 +16,29 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DetailedTabPages extends StatelessWidget {
-  final projectName;
-  final projectDetails;
-  final contributors;
-  final projectId;
-  DetailedTabPages(
-      {this.projectName,
-      this.projectDetails,
-      this.contributors,
-      this.projectId});
+  final fetchedProjectId;
+  DetailedTabPages({this.fetchedProjectId});
 
   final ProjectsController projectsController = Get.find();
 
   var _controller;
   static bool confirmDelete = false;
+
+  List<ProjectDetailModel> fetchedProjectDescList = [];
+  // to store current project Item
+
+  void fetchProjectDescFunc() {
+    fetchedProjectDescList = [];
+    // emptying it so no duplication occurs
+
+    final projectSource = projectsController.projects;
+
+    fetchedProjectDescList.add(projectSource.elementAt(projectSource
+        .indexWhere((element) => element.projectId == fetchedProjectId)));
+    // fetch current project details like this, not with constructor
+    //so that we can fetch it and reflect it on current screen
+    // not possible with constructor values
+  }
 
   void deleteProject() {
     showDialog(
@@ -42,13 +51,9 @@ class DetailedTabPages extends StatelessWidget {
 
       if (confirmDelete) {
         log("---INITIATING DELETE---");
-        projectsController.deleteProject(projectId).catchError((error) {
-          return showDialog(
-              context: Get.context!,
-              builder: (_) {
-                return AlertBoxWidget(error);
-              });
-        }).then((value) => Get.back());
+        projectsController
+            .deleteProject(fetchedProjectId)
+            .then((value) => Get.back());
       }
     });
   }
@@ -76,10 +81,13 @@ class DetailedTabPages extends StatelessWidget {
                     //edit existing project
                     Get.to(
                       NewProjectFormPage(
-                          savedProjectName: projectName,
-                          savedProjectDetails: projectDetails,
-                          savedContributors: contributors,
-                          savedProjectId: projectId),
+                          savedProjectName:
+                              fetchedProjectDescList[0].projectName,
+                          savedProjectDetails:
+                              fetchedProjectDescList[0].projectDetails,
+                          savedContributors:
+                              fetchedProjectDescList[0].selectedContributors,
+                          savedProjectId: fetchedProjectId),
                     );
                   },
                 ),
@@ -149,16 +157,24 @@ class DetailedTabPages extends StatelessWidget {
               ),
             ),
             body: Obx(() {
+              fetchProjectDescFunc();
+              // will rebuild after editing value changes , and updated proj will be fetched
+
               return Stack(
                 children: [
                   TabBarView(
                     controller: _controller,
                     children: [
-                      ProjectDetailTab(
-                          projectName: projectName,
-                          projectDetails: projectDetails),
+                      projectsController.isProjectEditing.value
+                          ? CircularProgressIndicator()
+                          : ProjectDetailTab(
+                              projectName:
+                                  fetchedProjectDescList[0].projectName,
+                              projectDetails:
+                                  fetchedProjectDescList[0].projectDetails),
                       ProjectTeamTab(
-                        contributors: contributors,
+                        contributors:
+                            fetchedProjectDescList[0].selectedContributors,
                       ),
                       ProjectTicketTab(),
                     ],

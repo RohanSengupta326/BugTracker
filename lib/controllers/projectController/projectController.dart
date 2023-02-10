@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:bug_tracker/models/projectDetailModel/projectDetailModel.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
+import 'package:bug_tracker/views/widgets/alertBoxWidget/alertBoxWidget.dart';
+import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
@@ -43,24 +45,32 @@ class ProjectsController extends GetxController {
           'projectName': projectName,
           'projectDetails': projectDetails,
           'selectedContributors':
-              selectedContributors.isNotEmpty ? selectedContributors : "",
+              selectedContributors.isNotEmpty ? selectedContributors : [],
           'projectId': projectId,
         },
-      ).then((value) {
-        log('inside then');
-        _projects.add(
-          ProjectDetailModel(
-              projectName: projectName,
-              projectDetails: projectDetails,
-              selectedContributors: selectedContributors,
-              projectId: projectId),
-        );
-      });
+      );
+
+      _projects.add(
+        ProjectDetailModel(
+            projectName: projectName,
+            projectDetails: projectDetails,
+            selectedContributors: selectedContributors,
+            projectId: projectId),
+      );
+
       log('outside then');
       isProjectSaving.value = false;
     } catch (error) {
+      log(error.toString());
+
+      showDialog(
+        context: Get.context!,
+        builder: (_) {
+          return AlertBoxWidget(Dialogs.PROJECT_NOT_SAVED);
+        },
+      );
+
       isProjectSaving.value = false;
-      throw Dialogs.PROJECT_NOT_SAVED;
     }
   }
 
@@ -89,8 +99,16 @@ class ProjectsController extends GetxController {
 
       isProjectFetching.value = false;
     } catch (error) {
+      log(error.toString());
+
+      showDialog(
+        context: Get.context!,
+        builder: (_) {
+          return AlertBoxWidget(Dialogs.GENERIC_ERROR_MESSAGE);
+        },
+      );
+
       isProjectFetching.value = false;
-      throw Dialogs.GENERIC_ERROR_MESSAGE;
     }
   }
 
@@ -101,17 +119,24 @@ class ProjectsController extends GetxController {
       await FirebaseFirestore.instance
           .collection('project-details')
           .doc(projectId)
-          .delete()
-          .then((value) {
-        _projects.removeAt(
-          _projects.indexWhere((element) => element.projectId == projectId),
-        );
-      });
+          .delete();
+
+      _projects.removeAt(
+        _projects.indexWhere((element) => element.projectId == projectId),
+      );
 
       isProjectDeleting.value = false;
     } catch (error) {
+      log(error.toString());
+
+      showDialog(
+        context: Get.context!,
+        builder: (_) {
+          return AlertBoxWidget(Dialogs.PROJECT_NOT_DELETED);
+        },
+      );
+
       isProjectDeleting.value = false;
-      throw Dialogs.PROJECT_NOT_DELETED;
     }
   }
 
@@ -131,28 +156,36 @@ class ProjectsController extends GetxController {
       await FirebaseFirestore.instance
           .collection('project-details')
           .doc(editProjectId)
-          .update(
+          .set(
         {
           'projectName': projectName,
           'projectDetails': projectDetails,
           'selectedContributors':
-              selectedContributors.isNotEmpty ? selectedContributors : "",
+              selectedContributors.isNotEmpty ? selectedContributors : [],
         },
-      ).then((value) {
-        log('firebase operation done');
-        int index =
-            _projects.indexWhere((element) => element.projectId == projectId);
+      );
 
-        _projects[index].projectDetails = projectDetails;
-        _projects[index].projectName = projectName;
-        _projects[index].selectedContributors = selectedContributors;
-      });
+      log('firebase operation done');
+      int index =
+          _projects.indexWhere((element) => element.projectId == editProjectId);
+
+      _projects[index].projectDetails = projectDetails;
+      _projects[index].projectName = projectName;
+      _projects[index].selectedContributors = selectedContributors;
 
       log("all done");
       isProjectEditing.value = false;
     } catch (error) {
+      log(error.toString());
+
+      showDialog(
+        context: Get.context!,
+        builder: (BuildContext ctx) {
+          return AlertBoxWidget(Dialogs.PROJECT_NOT_SAVED);
+        },
+      );
+
       isProjectEditing.value = false;
-      throw Dialogs.PROJECT_NOT_SAVED;
     }
   }
 }

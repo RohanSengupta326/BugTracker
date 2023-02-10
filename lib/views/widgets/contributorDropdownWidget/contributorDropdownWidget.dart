@@ -26,13 +26,21 @@ class ContributorDropdownWidget extends StatelessWidget {
           // print('---SELECTED CONTRIBUTOR VALUE---- ${value[0]} ');
           // print(
           //     '---SELECTED CONTRIBUTOR---- ${NewProjectFormPage.selectedContributors[0]} ');
-          // for (int i = 0; i < value.length; i++) {
-          //   log("${value[i]} \n");
-          // }
+          for (int i = 0; i < value.length; i++) {
+            log("${value[i]} \n");
+          }
+
+          // initiallysectedIndex are getting reselected, have to unselect them if they are already selected
 
           List<int> temp = [];
           for (var i = 0; i < value.length; i++) {
             temp.add(value[i]);
+          }
+          // value is List<dynamic> but initial selectedIndex is list<int> so we'll be needing list int
+          // thats why doing this
+          print('temp');
+          for (var i = 0; i < temp.length; i++) {
+            log(temp[i].toString());
           }
 
           NewProjectFormPage.selectedContributorsIndex = temp;

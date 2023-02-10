@@ -40,7 +40,7 @@ class NewProjectFormPage extends StatelessWidget {
     }
   }
 
-  void onSubmit() {
+  void onSubmit(BuildContext context) {
     // SUBMIT CONTROLLER FUNCTION CALL TO SAVE IN FIREBASE
     if (savedProjectName == null) {
       log("entering saving");
@@ -48,16 +48,7 @@ class NewProjectFormPage extends StatelessWidget {
       formSaveController
           .saveProjectDetails(
               projectName, projectDetails, selectedContributorsName)
-          .catchError(
-        (error) {
-          showDialog(
-            context: Get.context!,
-            builder: (_) {
-              return AlertBoxWidget(error);
-            },
-          );
-        },
-      ).then((value) {
+          .then((value) {
         selectedContributorsName = [];
         // for one project contributors are saved now for different projects' contributors shouldnt overlap
         selectedContributorsIndex = [];
@@ -70,19 +61,10 @@ class NewProjectFormPage extends StatelessWidget {
       formSaveController
           .editProject(projectName, projectDetails, selectedContributorsName,
               savedProjectId)
-          .catchError(
-        (error) {
-          showDialog(
-            context: Get.context!,
-            builder: (_) {
-              return AlertBoxWidget(error);
-            },
-          );
-        },
-      ).then((value) {
+          .then((value) {
+        log("now get back");
         selectedContributorsIndex = [];
         selectedContributorsName = [];
-        log("now get back");
         Get.back();
       });
     }
@@ -125,7 +107,7 @@ class NewProjectFormPage extends StatelessWidget {
                     // getting the context from the ProjectFormWidget class
                     FocusScope.of(Get.context!).unfocus();
 
-                    onSubmit();
+                    onSubmit(context);
                   }
                 },
                 icon: formSaveController.isProjectSaving.value ||
