@@ -91,6 +91,13 @@ class NewProjectFormPage extends StatelessWidget {
             () {
               return IconButton(
                 onPressed: () {
+                  selectedContributorsName = [];
+                  // already saved name is also getting reselected thats why emptying it and resetting it
+                  // below for no duplicacy, if no new name selected then also selectedContributorsIndex
+                  // is intact so again readding already selected names inside selectedContributorsName
+                  // else if selectedContributorsIndex is changes then also adding new names with old names
+                  // to selectedContributorsName
+
                   // storing all the selected names in selected contributors list.
                   for (int i = 0; i < selectedContributorsIndex.length; i++) {
                     selectedContributorsName

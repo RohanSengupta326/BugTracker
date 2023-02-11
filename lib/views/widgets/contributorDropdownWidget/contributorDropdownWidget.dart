@@ -12,6 +12,7 @@ import 'package:getwidget/getwidget.dart';
 
 class ContributorDropdownWidget extends StatelessWidget {
   final FetchAllUsers allUserData = Get.find();
+  List<int> temp = [];
 
   @override
   Widget build(BuildContext context) {
@@ -23,27 +24,26 @@ class ContributorDropdownWidget extends StatelessWidget {
                 : NewProjectFormPage.selectedContributorsIndex,
         items: allUserData.users,
         onSelect: (value) {
-          // print('---SELECTED CONTRIBUTOR VALUE---- ${value[0]} ');
-          // print(
-          //     '---SELECTED CONTRIBUTOR---- ${NewProjectFormPage.selectedContributors[0]} ');
-          for (int i = 0; i < value.length; i++) {
-            log("${value[i]} \n");
-          }
+          // for (int i = 0; i < value.length; i++) {
+          //   log("${value[i]} \n");
+          // }
 
-          // initiallysectedIndex are getting reselected, have to unselect them if they are already selected
+          // onSelect is getting called multiple times so same indices are adding again and again, so
+          // emptying and readding new values
+          temp = [];
 
-          List<int> temp = [];
           for (var i = 0; i < value.length; i++) {
             temp.add(value[i]);
           }
           // value is List<dynamic> but initial selectedIndex is list<int> so we'll be needing list int
-          // thats why doing this
-          print('temp');
-          for (var i = 0; i < temp.length; i++) {
-            log(temp[i].toString());
-          }
+          // thats why this extra for loop from value to temp
+
+          // for (var i = 0; i < temp.length; i++) {
+          //   log(temp[i].toString());
+          // }
 
           NewProjectFormPage.selectedContributorsIndex = temp;
+          // will be set multiple times, as many times as onSelect gets called
           // value is the list of indices of selected names from the allUsers list.
           // finally all the final indices of names put into another list to access in newProjectFormPage.
         },

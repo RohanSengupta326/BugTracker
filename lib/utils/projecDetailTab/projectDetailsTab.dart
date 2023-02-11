@@ -19,7 +19,8 @@ class ProjectDetailTab extends StatelessWidget {
               padding: const EdgeInsets.all(ConstValues.PADDING),
               child: Text(
                 projectName,
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
               ),
             ),
           ),
