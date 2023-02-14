@@ -22,7 +22,7 @@ class ContributorDropdownWidget extends StatelessWidget {
             NewProjectFormPage.selectedContributorsIndex.isEmpty
                 ? null
                 : NewProjectFormPage.selectedContributorsIndex,
-        items: allUserData.users,
+        items: allUserData.users.map((user) => user.name).toList(),
         onSelect: (value) {
           // for (int i = 0; i < value.length; i++) {
           //   log("${value[i]} \n");

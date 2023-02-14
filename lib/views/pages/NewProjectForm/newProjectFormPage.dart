@@ -4,6 +4,7 @@ import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:bug_tracker/controllers/fetchAllUsers/fetchAllUsersController.dart';
 import 'package:bug_tracker/controllers/projectController/projectController.dart';
+import 'package:bug_tracker/models/usersDetails/usersDetails.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
 import 'package:bug_tracker/views/widgets/alertBoxWidget/alertBoxWidget.dart';
 import 'package:bug_tracker/views/widgets/projectFormWidget/projectFormWidget.dart';
@@ -14,7 +15,7 @@ import 'package:get/get.dart';
 class NewProjectFormPage extends StatelessWidget {
   static String projectName = "";
   static String projectDetails = "";
-  static List<dynamic> selectedContributorsName = [];
+  static List<UsersDetails> selectedContributorsName = [];
   static List<int> selectedContributorsIndex = [];
   // to store indices of the selected names from allUsers list
 
@@ -23,20 +24,20 @@ class NewProjectFormPage extends StatelessWidget {
 
   var savedProjectName;
   var savedProjectDetails;
-  var savedContributors;
+  List<UsersDetails>? savedContributors;
   var savedProjectId;
   NewProjectFormPage(
       {this.savedProjectName,
       this.savedProjectDetails,
-      this.savedContributors,
+      required this.savedContributors,
       this.savedProjectId}) {
     projectName = savedProjectName ?? "";
     projectDetails = savedProjectDetails ?? "";
     selectedContributorsName = savedContributors ?? [];
 
     for (var i = 0; i < selectedContributorsName.length; i++) {
-      selectedContributorsIndex.add(allUserData.users
-          .indexWhere((element) => element == selectedContributorsName[i]));
+      selectedContributorsIndex.add(allUserData.users.indexWhere(
+          (element) => element.name == selectedContributorsName[i]));
     }
   }
 
@@ -45,6 +46,15 @@ class NewProjectFormPage extends StatelessWidget {
     if (savedProjectName == null) {
       log("entering saving");
       // if NOT editing project
+      log(selectedContributorsName.length.toString());
+
+      for (var i = 0; i < selectedContributorsIndex.length; i++) {
+        log(selectedContributorsIndex[i].toString());
+      }
+
+      if (selectedContributorsIndex.length > 0)
+        log(selectedContributorsName[0].name.toString());
+
       formSaveController
           .saveProjectDetails(
               projectName, projectDetails, selectedContributorsName)
@@ -56,6 +66,7 @@ class NewProjectFormPage extends StatelessWidget {
       });
     } else {
       log("editing controller call");
+      // log('$projectName $projectDetails \n${savedProjectId.toString()}');
 
       // if editing project
       formSaveController
@@ -100,8 +111,12 @@ class NewProjectFormPage extends StatelessWidget {
 
                   // storing all the selected names in selected contributors list.
                   for (int i = 0; i < selectedContributorsIndex.length; i++) {
-                    selectedContributorsName
-                        .add(allUserData.users[selectedContributorsIndex[i]]);
+                    selectedContributorsName.add(
+                      UsersDetails(
+                          allUserData.users[selectedContributorsIndex[i]].name,
+                          allUserData
+                              .users[selectedContributorsIndex[i]].email),
+                    );
                   }
 
                   // onSubmitted to save form and check errors

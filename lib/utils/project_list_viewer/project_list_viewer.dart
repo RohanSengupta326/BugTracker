@@ -1,5 +1,6 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
+import 'package:bug_tracker/models/usersDetails/usersDetails.dart';
 import 'package:bug_tracker/views/pages/DetailedTabPages/detailedTabPages.dart';
 
 import 'package:flutter/material.dart';
@@ -8,12 +9,12 @@ import 'package:get/get.dart';
 class ProjectListViewer extends StatelessWidget {
   final projectName;
   final projectDetails;
-  final contributors;
+  final List<UsersDetails> contributors;
   final projectId;
   ProjectListViewer(
       {this.projectName,
       this.projectDetails,
-      this.contributors,
+      required this.contributors,
       this.projectId});
 
   List<Widget> currentContributors() {
@@ -24,7 +25,7 @@ class ProjectListViewer extends StatelessWidget {
         margin: EdgeInsets.only(right: ConstValues.VALUE_3),
         child: Chip(
           label: Text(
-            contributors[i],
+            contributors[i].name,
             style: TextStyle(fontSize: ConstValues.FONT_SIZE_12),
           ),
         ),

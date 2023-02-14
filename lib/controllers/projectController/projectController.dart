@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:bug_tracker/models/projectDetailModel/projectDetailModel.dart';
+import 'package:bug_tracker/models/usersDetails/usersDetails.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
 import 'package:bug_tracker/views/widgets/alertBoxWidget/alertBoxWidget.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,9 @@ class ProjectsController extends GetxController {
   }
 
   Future<void> saveProjectDetails(String projectName, String projectDetails,
-      List<dynamic> selectedContributors) async {
+      List<UsersDetails> selectedContributors) async {
+    log("Starting saving");
+
     try {
       isProjectSaving.value = true;
 
@@ -44,8 +47,14 @@ class ProjectsController extends GetxController {
         {
           'projectName': projectName,
           'projectDetails': projectDetails,
-          'selectedContributors':
-              selectedContributors.isNotEmpty ? selectedContributors : [],
+          'selectedContributors': selectedContributors.isNotEmpty
+              ? selectedContributors
+                  .map((user) => {
+                        'name': user.name,
+                        'email': user.email,
+                      })
+                  .toList()
+              : [],
           'projectId': projectId,
         },
       );
@@ -84,14 +93,29 @@ class ProjectsController extends GetxController {
           await FirebaseFirestore.instance.collection('project-details').get();
 
       // log(savedProjects.docs[0].data()['ProjectDetails']);
+      List<UsersDetails> savedContributors = [];
 
       for (var i = 0; i < savedProjects.docs.length; i++) {
+        // converting firestore map to UsersDetails type first then storing locally
+        if (savedProjects.docs[i].data()['selectedContributors'] != []) {
+          final List contributorsList =
+              savedProjects.docs[i].data()['selectedContributors'];
+
+          for (var contributor in contributorsList) {
+            final name = contributor['name'];
+            final email = contributor['email'];
+            final user = UsersDetails(name, email);
+            savedContributors.add(user);
+          }
+        } else {
+          savedContributors = [];
+        }
+
         _projects.add(
           ProjectDetailModel(
             projectName: savedProjects.docs[i].data()['projectName'],
             projectDetails: savedProjects.docs[i].data()['projectDetails'],
-            selectedContributors:
-                savedProjects.docs[i].data()['selectedContributors'],
+            selectedContributors: savedContributors,
             projectId: savedProjects.docs[i].data()['projectId'],
           ),
         );
@@ -141,12 +165,12 @@ class ProjectsController extends GetxController {
   }
 
   Future<void> editProject(String projectName, String projectDetails,
-      List<dynamic> selectedContributors, String editProjectId) async {
-    log("entered function");
-    log(editProjectId);
-    for (var i = 0; i < selectedContributors.length; i++) {
-      log(selectedContributors[i]);
-    }
+      List<UsersDetails> selectedContributors, String editProjectId) async {
+    // log("entered function");
+    // log(editProjectId);
+    // for (var i = 0; i < selectedContributors.length; i++) {
+    //   log(selectedContributors[i].name);
+    // }
 
     try {
       isProjectEditing.value = true;

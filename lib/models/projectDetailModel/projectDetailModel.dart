@@ -1,11 +1,13 @@
+import 'package:bug_tracker/models/usersDetails/usersDetails.dart';
+
 class ProjectDetailModel {
   var projectName;
   var projectDetails;
-  var selectedContributors;
+  List<UsersDetails> selectedContributors;
   var projectId;
   ProjectDetailModel(
       {this.projectName,
       this.projectDetails,
-      this.selectedContributors,
+      required this.selectedContributors,
       this.projectId});
 }

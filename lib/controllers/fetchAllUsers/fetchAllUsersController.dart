@@ -1,4 +1,5 @@
 import 'package:bug_tracker/models/currUserData/currUserData.dart';
+import 'package:bug_tracker/models/usersDetails/usersDetails.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,7 +8,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 
 class FetchAllUsers extends GetxController {
-  List<String> _users = [];
+  List<UsersDetails> _users = [];
   List<UserData> currentUserData = [
     UserData('', ''),
   ];
@@ -15,7 +16,7 @@ class FetchAllUsers extends GetxController {
   RxBool isUserFetching = false.obs;
   RxBool isLoadingUserData = false.obs;
 
-  List<String> get users {
+  List<UsersDetails> get users {
     return [..._users];
   }
 
@@ -30,7 +31,10 @@ class FetchAllUsers extends GetxController {
 
       for (var i = 0; i < allUsers.docs.length; i++) {
         _users.add(
-          allUsers.docs[i].data()['username'],
+          UsersDetails(
+            allUsers.docs[i].data()['username'],
+            allUsers.docs[i].data()['email'],
+          ),
         );
       }
 

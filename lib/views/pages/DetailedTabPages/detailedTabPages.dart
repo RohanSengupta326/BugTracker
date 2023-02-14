@@ -81,13 +81,13 @@ class DetailedTabPages extends StatelessWidget {
                     //edit existing project
                     Get.to(
                       NewProjectFormPage(
-                          savedProjectName:
-                              fetchedProjectDescList[0].projectName,
-                          savedProjectDetails:
-                              fetchedProjectDescList[0].projectDetails,
-                          savedContributors:
-                              fetchedProjectDescList[0].selectedContributors,
-                          savedProjectId: fetchedProjectId),
+                        savedProjectName: fetchedProjectDescList[0].projectName,
+                        savedProjectDetails:
+                            fetchedProjectDescList[0].projectDetails,
+                        savedContributors:
+                            fetchedProjectDescList[0].selectedContributors,
+                        savedProjectId: fetchedProjectDescList[0].projectId,
+                      ),
                     );
                   },
                 ),
@@ -165,13 +165,10 @@ class DetailedTabPages extends StatelessWidget {
                   TabBarView(
                     controller: _controller,
                     children: [
-                      projectsController.isProjectEditing.value
-                          ? CircularProgressIndicator()
-                          : ProjectDetailTab(
-                              projectName:
-                                  fetchedProjectDescList[0].projectName,
-                              projectDetails:
-                                  fetchedProjectDescList[0].projectDetails),
+                      ProjectDetailTab(
+                          projectName: fetchedProjectDescList[0].projectName,
+                          projectDetails:
+                              fetchedProjectDescList[0].projectDetails),
                       ProjectTeamTab(
                         contributors:
                             fetchedProjectDescList[0].selectedContributors,

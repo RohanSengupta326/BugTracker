@@ -37,7 +37,9 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             onPressed: () {
               // open new project form
-              Get.to(() => NewProjectFormPage());
+              Get.to(() => NewProjectFormPage(
+                    savedContributors: null,
+                  ));
             },
             icon: const Icon(
               Icons.add,
