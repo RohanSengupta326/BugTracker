@@ -1,11 +1,12 @@
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
+import 'package:bug_tracker/models/usersDetails/usersDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class ProjectTeamTab extends StatelessWidget {
-  final contributors;
-  ProjectTeamTab({this.contributors});
+  final List<UsersDetails> contributors;
+  ProjectTeamTab({required this.contributors});
 
   List<Widget> activeContributors() {
     List<Widget> temp = [];
@@ -19,13 +20,15 @@ class ProjectTeamTab extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
+                  flex: 1,
                   child: Text(
-                    contributors[i],
+                    contributors[i].name,
                   ),
                 ),
                 Flexible(
+                  flex: 2,
                   child: Text(
-                    'senguptarohan34@gmail.comafsdfadfadfadfadfs',
+                    contributors[i].email,
                   ),
                 ),
               ],

@@ -36,9 +36,13 @@ class NewProjectFormPage extends StatelessWidget {
     selectedContributorsName = savedContributors ?? [];
 
     for (var i = 0; i < selectedContributorsName.length; i++) {
-      selectedContributorsIndex.add(allUserData.users.indexWhere(
-          (element) => element.name == selectedContributorsName[i]));
+      selectedContributorsIndex.add(
+        allUserData.users.indexWhere(
+          (element) => element.name == selectedContributorsName[i].name,
+        ),
+      );
     }
+    // log("${selectedContributorsIndex[0]} \n");
   }
 
   void onSubmit(BuildContext context) {

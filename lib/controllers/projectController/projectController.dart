@@ -184,8 +184,15 @@ class ProjectsController extends GetxController {
         {
           'projectName': projectName,
           'projectDetails': projectDetails,
-          'selectedContributors':
-              selectedContributors.isNotEmpty ? selectedContributors : [],
+          'selectedContributors': selectedContributors.isNotEmpty
+              ? selectedContributors
+                  .map((user) => {
+                        'name': user.name,
+                        'email': user.email,
+                      })
+                  .toList()
+              : [],
+          'projectId': editProjectId,
         },
       );
 
@@ -202,14 +209,14 @@ class ProjectsController extends GetxController {
     } catch (error) {
       log(error.toString());
 
+      isProjectEditing.value = false;
+
       showDialog(
         context: Get.context!,
         builder: (BuildContext ctx) {
           return AlertBoxWidget(Dialogs.PROJECT_NOT_SAVED);
         },
       );
-
-      isProjectEditing.value = false;
     }
   }
 }

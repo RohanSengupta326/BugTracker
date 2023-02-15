@@ -78,9 +78,14 @@ class DetailedTabPages extends StatelessWidget {
                     color: Colors.black,
                   ),
                   onPressed: () {
+                    log("going to editing page");
+
+                    // log(fetchedProjectDescList[0].projectName.toString());
+                    // log(fetchedProjectDescList[0].projectDetails.toString());
+
                     //edit existing project
                     Get.to(
-                      NewProjectFormPage(
+                      () => NewProjectFormPage(
                         savedProjectName: fetchedProjectDescList[0].projectName,
                         savedProjectDetails:
                             fetchedProjectDescList[0].projectDetails,
@@ -165,14 +170,19 @@ class DetailedTabPages extends StatelessWidget {
                   TabBarView(
                     controller: _controller,
                     children: [
-                      ProjectDetailTab(
-                          projectName: fetchedProjectDescList[0].projectName,
-                          projectDetails:
-                              fetchedProjectDescList[0].projectDetails),
-                      ProjectTeamTab(
-                        contributors:
-                            fetchedProjectDescList[0].selectedContributors,
-                      ),
+                      projectsController.isProjectEditing.value
+                          ? CircularProgressIndicator()
+                          : ProjectDetailTab(
+                              projectName:
+                                  fetchedProjectDescList[0].projectName,
+                              projectDetails:
+                                  fetchedProjectDescList[0].projectDetails),
+                      projectsController.isProjectEditing.value
+                          ? CircularProgressIndicator()
+                          : ProjectTeamTab(
+                              contributors: fetchedProjectDescList[0]
+                                  .selectedContributors,
+                            ),
                       ProjectTicketTab(),
                     ],
                   ),
