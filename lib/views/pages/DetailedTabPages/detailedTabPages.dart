@@ -10,7 +10,6 @@ import 'package:bug_tracker/utils/projectTicketTab/projectTicketTab.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
 import 'package:bug_tracker/views/pages/NewProjectForm/newProjectFormPage.dart';
 import 'package:bug_tracker/views/widgets/confirmationAlertBoxWidget/confirmationAlertBoxWidget.dart';
-import 'package:bug_tracker/views/widgets/indicatorBox/indicatorBox.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,22 +39,21 @@ class DetailedTabPages extends StatelessWidget {
     // not possible with constructor values
   }
 
-  void deleteProject() {
-    showDialog(
+  void deleteProject() async {
+    await showDialog(
         context: Get.context!,
         builder: (_) {
           return ConfirmationAlertBoxWidget(
               Dialogs.PROJECT_DELETE_CONFIRMATION);
-        }).then((value) {
-      // if user clicked ok then confirmDelete value changed to true
+        });
+    // if user clicked ok then confirmDelete value changed to true
 
-      if (confirmDelete) {
-        log("---INITIATING DELETE---");
-        projectsController
-            .deleteProject(fetchedProjectId)
-            .then((value) => Get.back());
-      }
-    });
+    if (confirmDelete) {
+      log("---INITIATING DELETE---");
+      projectsController.deleteProject(fetchedProjectId);
+      // dont wait for deletion to complete before Get.back()
+      Get.back();
+    }
   }
 
   @override
@@ -186,11 +184,6 @@ class DetailedTabPages extends StatelessWidget {
                       ProjectTicketTab(),
                     ],
                   ),
-
-                  // while deleting show this on top of screen
-                  projectsController.isProjectDeleting.value
-                      ? IndicatorBox()
-                      : Center(),
                 ],
               );
             }),
