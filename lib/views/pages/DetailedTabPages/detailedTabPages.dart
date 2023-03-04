@@ -168,6 +168,7 @@ class DetailedTabPages extends StatelessWidget {
                   TabBarView(
                     controller: _controller,
                     children: [
+                      // project details tab
                       projectsController.isProjectEditing.value
                           ? CircularProgressIndicator()
                           : ProjectDetailTab(
@@ -175,12 +176,16 @@ class DetailedTabPages extends StatelessWidget {
                                   fetchedProjectDescList[0].projectName,
                               projectDetails:
                                   fetchedProjectDescList[0].projectDetails),
+
+                      // project's team tab
                       projectsController.isProjectEditing.value
                           ? CircularProgressIndicator()
                           : ProjectTeamTab(
                               contributors: fetchedProjectDescList[0]
                                   .selectedContributors,
                             ),
+
+                      // project's Tickets tab
                       ProjectTicketTab(),
                     ],
                   ),
