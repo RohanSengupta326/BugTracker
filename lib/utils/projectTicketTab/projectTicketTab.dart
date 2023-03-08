@@ -3,15 +3,19 @@ import "package:flutter/material.dart";
 
 class ProjectTicketTab extends StatelessWidget {
   static String ticketTitle = "";
+  static String ticketDesc = "";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      body: Column(
-        children: [Text('Tickets')],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text('Tickets'),
+          ],
+        ),
       ),
-      floatingActionButton: Container(
+      floatingActionButton: SizedBox(
         width: 120,
         height: 40,
         child: FloatingActionButton(

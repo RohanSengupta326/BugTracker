@@ -64,6 +64,7 @@ class DetailedTabPages extends StatelessWidget {
       child: Builder(
         builder: ((context) {
           return Scaffold(
+            resizeToAvoidBottomInset: true,
             appBar: AppBar(
               backgroundColor: Colors.white,
               centerTitle: false,
