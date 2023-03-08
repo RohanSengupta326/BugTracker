@@ -1,5 +1,6 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
+import 'package:bug_tracker/utils/TicketpriorityDropDown/ticketPriorityDropDown.dart';
 import 'package:bug_tracker/utils/projectTicketTab/projectTicketTab.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
 import 'package:flutter/material.dart';
@@ -159,7 +160,38 @@ class NewTicketForm extends StatelessWidget {
                         ProjectTicketTab.ticketDesc = value as String;
                       },
                     ),
-                  )
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    children: const [
+                      Expanded(
+                        flex: 2,
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Priority',
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Status',
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(flex: 2, child: TicketPriorityDropDown()),
+                      Expanded(flex: 2, child: TicketPriorityDropDown())
+                    ],
+                  ),
                 ],
               ),
             )
