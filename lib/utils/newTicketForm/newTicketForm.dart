@@ -188,8 +188,8 @@ class NewTicketForm extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Expanded(flex: 2, child: TicketPriorityDropDown()),
-                      Expanded(flex: 2, child: TicketPriorityDropDown())
+                      Flexible(flex: 2, child: TicketPriorityDropDown()),
+                      Flexible(flex: 2, child: TicketPriorityDropDown())
                     ],
                   ),
                 ],
