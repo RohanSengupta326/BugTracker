@@ -1,6 +1,7 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
-import 'package:bug_tracker/utils/TicketpriorityDropDown/ticketPriorityDropDown.dart';
+import 'package:bug_tracker/utils/ticketStatusDropdown/ticketStatusDropdown.dart';
+import 'package:bug_tracker/utils/ticketpriorityDropDown/ticketPriorityDropDown.dart';
 import 'package:bug_tracker/utils/projectTicketTab/projectTicketTab.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
 import 'package:flutter/material.dart';
@@ -31,12 +32,30 @@ class NewTicketForm extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Add-Edit Tickets',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'Add-Edit Tickets',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: ElevatedButton(
+                    onPressed: (() {
+                      // submit button logic
+                    }),
+                    child: Text('Submit'),
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(Colors.green),
+                        shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)))),
+                  ),
+                )
+              ],
             ),
             SizedBox(height: 30),
             Form(
@@ -169,7 +188,7 @@ class NewTicketForm extends StatelessWidget {
                       Expanded(
                         flex: 2,
                         child: Align(
-                          alignment: Alignment.topLeft,
+                          alignment: Alignment.topCenter,
                           child: Text(
                             'Priority',
                           ),
@@ -178,7 +197,7 @@ class NewTicketForm extends StatelessWidget {
                       Expanded(
                         flex: 2,
                         child: Align(
-                          alignment: Alignment.topLeft,
+                          alignment: Alignment.topCenter,
                           child: Text(
                             'Status',
                           ),
@@ -189,7 +208,7 @@ class NewTicketForm extends StatelessWidget {
                   Row(
                     children: [
                       Flexible(flex: 2, child: TicketPriorityDropDown()),
-                      Flexible(flex: 2, child: TicketPriorityDropDown())
+                      Flexible(flex: 2, child: TicketStatusDropDown())
                     ],
                   ),
                 ],

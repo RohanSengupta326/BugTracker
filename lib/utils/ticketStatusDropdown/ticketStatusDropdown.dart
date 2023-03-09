@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:getwidget/getwidget.dart';
 
-class TicketPriorityDropDown extends StatelessWidget {
+class TicketStatusDropDown extends StatelessWidget {
   List<int> temp = [];
 
   @override
@@ -14,7 +14,7 @@ class TicketPriorityDropDown extends StatelessWidget {
       //     NewProjectFormPage.selectedContributorsIndex.isEmpty
       //         ? null
       //         : NewProjectFormPage.selectedContributorsIndex,
-      items: const ['High', 'Low'],
+      items: const ['resolved', 'in-progress', 'new'],
       onSelect: (value) {
         // for (int i = 0; i < value.length; i++) {
         //   log("${value[i]} \n");
@@ -39,7 +39,7 @@ class TicketPriorityDropDown extends StatelessWidget {
         // value is the list of indices of selected names from the allUsers list.
         // finally all the final indices of names put into another list to access in newProjectFormPage.
       },
-      dropdownTitleTileText: 'Priority',
+      dropdownTitleTileText: 'Status',
       dropdownTitleTileColor: Colors.white,
       dropdownTitleTilePadding: const EdgeInsets.all(5),
 
