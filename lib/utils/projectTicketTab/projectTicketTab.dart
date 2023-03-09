@@ -5,6 +5,9 @@ class ProjectTicketTab extends StatelessWidget {
   static String ticketTitle = "";
   static String ticketDesc = "";
 
+  static String priorityTicketIndex = "";
+  static String statusTicket = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
