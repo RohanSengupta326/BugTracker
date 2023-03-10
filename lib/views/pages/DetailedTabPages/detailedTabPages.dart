@@ -187,7 +187,7 @@ class DetailedTabPages extends StatelessWidget {
                             ),
 
                       // project's Tickets tab
-                      ProjectTicketTab(),
+                      ProjectTicketTab(fetchedProjectId),
                     ],
                   ),
                 ],

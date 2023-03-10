@@ -1,3 +1,4 @@
+import 'package:bug_tracker/utils/newTicketForm/newTicketForm.dart';
 import 'package:bug_tracker/utils/projectTicketTab/projectTicketTab.dart';
 
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class TicketStatusDropDown extends StatelessWidget {
             onChanged: (String? value) {
               // This is called when the user selects an item.
               _dropdownValue.value = value!;
-              ProjectTicketTab.statusTicket = _dropdownValue.value;
+              NewTicketForm.statusTicket = _dropdownValue.value;
             },
             items: status.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(

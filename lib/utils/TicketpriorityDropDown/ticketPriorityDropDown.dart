@@ -23,7 +23,7 @@ class TicketPriorityDropDown extends StatelessWidget {
             onChanged: (String? value) {
               // This is called when the user selects an item.
               _dropdownValue.value = value!;
-              ProjectTicketTab.priorityTicketIndex = _dropdownValue.value;
+              NewTicketForm.priorityTicket = _dropdownValue.value;
             },
             items: priorityList.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(

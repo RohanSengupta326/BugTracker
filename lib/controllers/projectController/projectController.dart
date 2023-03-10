@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:bug_tracker/models/projectDetailModel/projectDetailModel.dart';
+import 'package:bug_tracker/models/ticketDetails/ticketDetails.dart';
 import 'package:bug_tracker/models/usersDetails/usersDetails.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
 import 'package:bug_tracker/views/widgets/alertBoxWidget/alertBoxWidget.dart';
@@ -19,6 +20,7 @@ class ProjectsController extends GetxController {
   RxBool isProjectFetching = false.obs;
   RxBool isProjectDeleting = false.obs;
   RxBool isProjectEditing = false.obs;
+  RxBool isTickeSaving = false.obs;
   String projectId = "";
 
   List<ProjectDetailModel> get projects {
@@ -32,8 +34,11 @@ class ProjectsController extends GetxController {
     return projectId;
   }
 
-  Future<void> saveProjectDetails(String projectName, String projectDetails,
-      List<UsersDetails> selectedContributors) async {
+  Future<void> saveProjectDetails(
+    String projectName,
+    String projectDetails,
+    List<UsersDetails> selectedContributors,
+  ) async {
     log("Starting saving");
 
     try {
@@ -64,6 +69,7 @@ class ProjectsController extends GetxController {
             projectName: projectName,
             projectDetails: projectDetails,
             selectedContributors: selectedContributors,
+            ticketDetails: [],
             projectId: projectId),
       );
 
@@ -116,6 +122,7 @@ class ProjectsController extends GetxController {
             projectName: savedProjects.docs[i].data()['projectName'],
             projectDetails: savedProjects.docs[i].data()['projectDetails'],
             selectedContributors: savedContributors,
+            ticketDetails: [],
             projectId: savedProjects.docs[i].data()['projectId'],
           ),
         );
@@ -215,6 +222,54 @@ class ProjectsController extends GetxController {
         context: Get.context!,
         builder: (BuildContext ctx) {
           return AlertBoxWidget(Dialogs.PROJECT_NOT_SAVED);
+        },
+      );
+    }
+  }
+
+  Future<void> saveTicketDetails(String ticketProjectId, String ticketTitle,
+      String ticketDesc, String ticketPriority, String ticketStatus) async {
+    try {
+      isTickeSaving.value = true;
+
+      await FirebaseFirestore.instance
+          .collection('project-details')
+          .doc(ticketProjectId)
+          .update(
+        {
+          'ticketDetails': [
+            {
+              'ticketTitle': ticketTitle,
+              'ticketDescription': ticketDesc,
+              'ticketPriority': ticketPriority,
+              'ticketStatus': ticketStatus,
+            }
+          ]
+        },
+      );
+
+      int projectIndex = _projects
+          .indexWhere((element) => element.projectId == ticketProjectId);
+
+      _projects[projectIndex].ticketDetails.add(
+            TicketDetails(
+              ticketTitle,
+              ticketDesc,
+              ticketPriority,
+              ticketStatus,
+            ),
+          );
+
+      isTickeSaving.value = false;
+    } catch (error) {
+      log(error.toString());
+
+      isTickeSaving.value = false;
+
+      showDialog(
+        context: Get.context!,
+        builder: (BuildContext ctx) {
+          return AlertBoxWidget(Dialogs.GENERIC_ERROR_MESSAGE);
         },
       );
     }

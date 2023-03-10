@@ -1,13 +1,18 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
+import 'package:bug_tracker/controllers/projectController/projectController.dart';
 import 'package:bug_tracker/utils/ticketStatusDropdown/ticketStatusDropdown.dart';
 import 'package:bug_tracker/utils/ticketpriorityDropDown/ticketPriorityDropDown.dart';
 import 'package:bug_tracker/utils/projectTicketTab/projectTicketTab.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
+import 'package:bug_tracker/views/widgets/alertBoxWidget/alertBoxWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NewTicketForm extends StatelessWidget {
+  final fetchedProjectid;
+  NewTicketForm(this.fetchedProjectid);
+
   static GlobalKey<FormState> formKey = GlobalKey<FormState>();
   /* 
   If you declared the GlobalKey<FormState> as non-static and you have multiple instances of the same widget,
@@ -18,6 +23,27 @@ class NewTicketForm extends StatelessWidget {
   ensuring that the state of the form is properly maintained. This can help prevent issues like the 
   keyboard popping back down when you submit a form.
    */
+
+  static String ticketTitle = "";
+  static String ticketDesc = "";
+
+  static String priorityTicket = "";
+  static String statusTicket = "";
+
+  final ProjectsController controller = Get.find();
+
+  void onSubmit() async {
+    bool isValid = formKey.currentState!.validate();
+
+    if (isValid) {
+      formKey.currentState!.save();
+
+      await controller.saveTicketDetails(fetchedProjectid, ticketTitle,
+          ticketDesc, priorityTicket, statusTicket);
+
+      Navigator.of(Get.context!).pop();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,25 +61,39 @@ class NewTicketForm extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Align(
+                const Align(
                   alignment: Alignment.topLeft,
                   child: Text(
                     'Add-Edit Tickets',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: ElevatedButton(
-                    onPressed: (() {
-                      // submit button logic
-                    }),
-                    child: Text('Submit'),
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(Colors.green),
-                        shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)))),
-                  ),
+                Obx(
+                  () {
+                    return Align(
+                      alignment: Alignment.topRight,
+                      child: controller.isTickeSaving.value
+                          ? Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.green,
+                              ),
+                            )
+                          : ElevatedButton(
+                              onPressed: (() {
+                                // submit button logic
+                                onSubmit();
+                              }),
+                              child: Text('Submit'),
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStatePropertyAll(Colors.green),
+                                  shape: MaterialStatePropertyAll(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20)))),
+                            ),
+                    );
+                  },
                 )
               ],
             ),
@@ -116,7 +156,7 @@ class NewTicketForm extends StatelessWidget {
                         ),
                       ),
                       onSaved: (value) {
-                        ProjectTicketTab.ticketTitle = value as String;
+                        ticketTitle = value as String;
                       },
                     ),
                   ),
@@ -176,7 +216,7 @@ class NewTicketForm extends StatelessWidget {
                         ),
                       ),
                       onSaved: (value) {
-                        ProjectTicketTab.ticketDesc = value as String;
+                        ticketDesc = value as String;
                       },
                     ),
                   ),
