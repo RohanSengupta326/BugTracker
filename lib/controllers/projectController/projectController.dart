@@ -60,6 +60,7 @@ class ProjectsController extends GetxController {
                       })
                   .toList()
               : [],
+          'ticketDetails': [],
           'projectId': projectId,
         },
       );
@@ -100,9 +101,14 @@ class ProjectsController extends GetxController {
 
       // log(savedProjects.docs[0].data()['ProjectDetails']);
       List<UsersDetails> savedContributors = [];
+      List<TicketDetails> savedTickets = [];
 
+      // converting firestore map to UsersDetails type first then storing locally
       for (var i = 0; i < savedProjects.docs.length; i++) {
-        // converting firestore map to UsersDetails type first then storing locally
+        savedContributors = [];
+        savedTickets = [];
+        // for every project's for loop iteration dont store previous project's data is not stored
+
         if (savedProjects.docs[i].data()['selectedContributors'] != []) {
           final List contributorsList =
               savedProjects.docs[i].data()['selectedContributors'];
@@ -110,6 +116,7 @@ class ProjectsController extends GetxController {
           for (var contributor in contributorsList) {
             final name = contributor['name'];
             final email = contributor['email'];
+
             final user = UsersDetails(name, email);
             savedContributors.add(user);
           }
@@ -117,12 +124,29 @@ class ProjectsController extends GetxController {
           savedContributors = [];
         }
 
+        if (savedProjects.docs[i].data()['ticketDetails'] != []) {
+          final List ticketList = savedProjects.docs[i].data()['ticketDetails'];
+
+          for (var tickets in ticketList) {
+            final titleTicket = tickets['ticketTitle'];
+            final descTicket = tickets['ticketDescription'];
+            final priorityTicket = tickets['ticketPriority'];
+            final statusTicket = tickets['ticketStatus'];
+
+            final allTicket = TicketDetails(
+                titleTicket, descTicket, priorityTicket, statusTicket);
+            savedTickets.add(allTicket);
+          }
+        } else {
+          savedTickets = [];
+        }
+
         _projects.add(
           ProjectDetailModel(
             projectName: savedProjects.docs[i].data()['projectName'],
             projectDetails: savedProjects.docs[i].data()['projectDetails'],
             selectedContributors: savedContributors,
-            ticketDetails: [],
+            ticketDetails: savedTickets,
             projectId: savedProjects.docs[i].data()['projectId'],
           ),
         );
