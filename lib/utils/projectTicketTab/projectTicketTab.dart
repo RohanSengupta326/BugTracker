@@ -1,5 +1,6 @@
 import 'package:bug_tracker/controllers/projectController/projectController.dart';
 import 'package:bug_tracker/utils/newTicketForm/newTicketForm.dart';
+import 'package:bug_tracker/utils/ticketDesign/ticketDesign.dart';
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
 
@@ -29,15 +30,15 @@ class ProjectTicketTab extends StatelessWidget {
                     )
                   : ListView.builder(
                       itemBuilder: (context, index) {
-                        return SizedBox(
-                          height: 50,
-                          width: 300,
-                          child: Card(
-                            child: Center(
-                              child: Text(controller.projects[projectIndex]
-                                  .ticketDetails[index].ticketTitle),
-                            ),
-                          ),
+                        return TicketDesign(
+                          ticketTitle: controller.projects[projectIndex]
+                              .ticketDetails[index].ticketTitle,
+                          ticketDesc: controller.projects[projectIndex]
+                              .ticketDetails[index].ticketDesc,
+                          ticketPriority: controller.projects[projectIndex]
+                              .ticketDetails[index].ticketPriority,
+                          ticketStatus: controller.projects[projectIndex]
+                              .ticketDetails[index].ticketStatus,
                         );
                       },
                       itemCount: controller
