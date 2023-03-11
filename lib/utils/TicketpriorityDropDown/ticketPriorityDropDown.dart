@@ -14,6 +14,9 @@ class TicketPriorityDropDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    NewTicketForm.priorityTicket = _dropdownValue.value;
+    // take default value if not changed
+
     return Align(
       alignment: Alignment.topCenter,
       child: Obx(

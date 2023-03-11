@@ -11,6 +11,9 @@ class TicketStatusDropDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    NewTicketForm.statusTicket = _dropdownValue.value;
+    // default value saved.
+
     return Align(
       alignment: Alignment.topCenter,
       child: Obx(
