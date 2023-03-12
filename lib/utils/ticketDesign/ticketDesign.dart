@@ -1,5 +1,8 @@
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
+import 'package:bug_tracker/views/pages/ticketDetailPage/ticketDetailPage.dart';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TicketDesign extends StatelessWidget {
   final String ticketTitle;

@@ -164,32 +164,27 @@ class DetailedTabPages extends StatelessWidget {
               fetchProjectDescFunc();
               // will rebuild after editing value changes , and updated proj will be fetched
 
-              return Stack(
+              return TabBarView(
+                controller: _controller,
                 children: [
-                  TabBarView(
-                    controller: _controller,
-                    children: [
-                      // project details tab
-                      projectsController.isProjectEditing.value
-                          ? CircularProgressIndicator()
-                          : ProjectDetailTab(
-                              projectName:
-                                  fetchedProjectDescList[0].projectName,
-                              projectDetails:
-                                  fetchedProjectDescList[0].projectDetails),
+                  // project details tab
+                  projectsController.isProjectEditing.value
+                      ? CircularProgressIndicator()
+                      : ProjectDetailTab(
+                          projectName: fetchedProjectDescList[0].projectName,
+                          projectDetails:
+                              fetchedProjectDescList[0].projectDetails),
 
-                      // project's team tab
-                      projectsController.isProjectEditing.value
-                          ? CircularProgressIndicator()
-                          : ProjectTeamTab(
-                              contributors: fetchedProjectDescList[0]
-                                  .selectedContributors,
-                            ),
+                  // project's team tab
+                  projectsController.isProjectEditing.value
+                      ? CircularProgressIndicator()
+                      : ProjectTeamTab(
+                          contributors:
+                              fetchedProjectDescList[0].selectedContributors,
+                        ),
 
-                      // project's Tickets tab
-                      ProjectTicketTab(fetchedProjectId),
-                    ],
-                  ),
+                  // project's Tickets tab
+                  ProjectTicketTab(fetchedProjectId),
                 ],
               );
             }),

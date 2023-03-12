@@ -30,15 +30,18 @@ class ProjectTicketTab extends StatelessWidget {
                     )
                   : ListView.builder(
                       itemBuilder: (context, index) {
-                        return TicketDesign(
-                          ticketTitle: controller.projects[projectIndex]
-                              .ticketDetails[index].ticketTitle,
-                          ticketDesc: controller.projects[projectIndex]
-                              .ticketDetails[index].ticketDesc,
-                          ticketPriority: controller.projects[projectIndex]
-                              .ticketDetails[index].ticketPriority,
-                          ticketStatus: controller.projects[projectIndex]
-                              .ticketDetails[index].ticketStatus,
+                        return GestureDetector(
+                          onTap: () {},
+                          child: TicketDesign(
+                            ticketTitle: controller.projects[projectIndex]
+                                .ticketDetails[index].ticketTitle,
+                            ticketDesc: controller.projects[projectIndex]
+                                .ticketDetails[index].ticketDesc,
+                            ticketPriority: controller.projects[projectIndex]
+                                .ticketDetails[index].ticketPriority,
+                            ticketStatus: controller.projects[projectIndex]
+                                .ticketDetails[index].ticketStatus,
+                          ),
                         );
                       },
                       itemCount: controller
