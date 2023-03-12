@@ -9,6 +9,7 @@ import 'package:bug_tracker/utils/projectTeamTab/projectTeamTab.dart';
 import 'package:bug_tracker/utils/projectTicketTab/projectTicketTab.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
 import 'package:bug_tracker/views/pages/NewProjectForm/newProjectFormPage.dart';
+import 'package:bug_tracker/views/pages/ticketDetailPage/ticketDetailPage.dart';
 import 'package:bug_tracker/views/widgets/confirmationAlertBoxWidget/confirmationAlertBoxWidget.dart';
 
 import 'package:flutter/material.dart';
@@ -17,6 +18,8 @@ import 'package:get/get.dart';
 class DetailedTabPages extends StatelessWidget {
   final fetchedProjectId;
   DetailedTabPages({this.fetchedProjectId});
+
+  static RxBool showTicketDetailPage = false.obs;
 
   final ProjectsController projectsController = Get.find();
 
@@ -184,7 +187,9 @@ class DetailedTabPages extends StatelessWidget {
                         ),
 
                   // project's Tickets tab
-                  ProjectTicketTab(fetchedProjectId),
+                  showTicketDetailPage.value
+                      ? TicketDetailPage()
+                      : ProjectTicketTab(fetchedProjectId),
                 ],
               );
             }),
