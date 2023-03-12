@@ -253,6 +253,8 @@ class ProjectsController extends GetxController {
 
   Future<void> saveTicketDetails(String ticketProjectId, String ticketTitle,
       String ticketDesc, String ticketPriority, String ticketStatus) async {
+    // List<String> ticketDetailsAlls = [];
+
     try {
       isTickeSaving.value = true;
 
@@ -261,14 +263,17 @@ class ProjectsController extends GetxController {
           .doc(ticketProjectId)
           .update(
         {
-          'ticketDetails': [
-            {
-              'ticketTitle': ticketTitle,
-              'ticketDescription': ticketDesc,
-              'ticketPriority': ticketPriority,
-              'ticketStatus': ticketStatus,
-            }
-          ]
+          'ticketDetails': FieldValue.arrayUnion(
+            // without this it was just rewriting the list value, with .arrayUnion it appends only.
+            [
+              {
+                'ticketTitle': ticketTitle,
+                'ticketDescription': ticketDesc,
+                'ticketPriority': ticketPriority,
+                'ticketStatus': ticketStatus,
+              },
+            ],
+          )
         },
       );
 
@@ -290,12 +295,7 @@ class ProjectsController extends GetxController {
 
       isTickeSaving.value = false;
 
-      showDialog(
-        context: Get.context!,
-        builder: (BuildContext ctx) {
-          return AlertBoxWidget(Dialogs.GENERIC_ERROR_MESSAGE);
-        },
-      );
+      rethrow;
     }
   }
 }

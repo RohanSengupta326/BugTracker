@@ -11,7 +11,8 @@ import 'package:get/get.dart';
 
 class NewTicketForm extends StatelessWidget {
   final fetchedProjectid;
-  NewTicketForm(this.fetchedProjectid);
+  final BuildContext ctx;
+  NewTicketForm(this.fetchedProjectid, this.ctx);
 
   static GlobalKey<FormState> formKey = GlobalKey<FormState>();
   /* 
@@ -38,8 +39,17 @@ class NewTicketForm extends StatelessWidget {
     if (isValid) {
       formKey.currentState!.save();
 
-      await controller.saveTicketDetails(fetchedProjectid, ticketTitle,
-          ticketDesc, priorityTicket, statusTicket);
+      await controller
+          .saveTicketDetails(fetchedProjectid, ticketTitle, ticketDesc,
+              priorityTicket, statusTicket)
+          .catchError((error) {
+        return showDialog(
+          context: ctx,
+          builder: (_) {
+            return AlertBoxWidget(Dialogs.GENERIC_ERROR_MESSAGE);
+          },
+        );
+      });
 
       Navigator.of(Get.context!).pop();
     }

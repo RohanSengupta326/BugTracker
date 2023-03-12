@@ -54,8 +54,8 @@ class ProjectTicketTab extends StatelessWidget {
             // add ticket
             showModalBottomSheet(
               context: context,
-              builder: (_) {
-                return NewTicketForm(fetchedProjectId);
+              builder: (BuildContext ctx) {
+                return NewTicketForm(fetchedProjectId, ctx);
               },
             );
           },
