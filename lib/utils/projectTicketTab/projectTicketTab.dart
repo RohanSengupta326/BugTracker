@@ -1,6 +1,8 @@
 import 'package:bug_tracker/controllers/projectController/projectController.dart';
 import 'package:bug_tracker/utils/newTicketForm/newTicketForm.dart';
 import 'package:bug_tracker/utils/ticketDesign/ticketDesign.dart';
+import 'package:bug_tracker/views/pages/DetailedTabPages/detailedTabPages.dart';
+import 'package:bug_tracker/views/pages/ticketDetailPage/ticketDetailPage.dart';
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
 
@@ -31,7 +33,22 @@ class ProjectTicketTab extends StatelessWidget {
                   : ListView.builder(
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Get.to(
+                              () => TicketDetailPage(
+                                ticketTitle: controller.projects[projectIndex]
+                                    .ticketDetails[index].ticketTitle,
+                                ticketDesc: controller.projects[projectIndex]
+                                    .ticketDetails[index].ticketDesc,
+                                ticketPriority: controller
+                                    .projects[projectIndex]
+                                    .ticketDetails[index]
+                                    .ticketPriority,
+                                ticketStatus: controller.projects[projectIndex]
+                                    .ticketDetails[index].ticketStatus,
+                              ),
+                            );
+                          },
                           child: TicketDesign(
                             ticketTitle: controller.projects[projectIndex]
                                 .ticketDetails[index].ticketTitle,

@@ -19,8 +19,6 @@ class DetailedTabPages extends StatelessWidget {
   final fetchedProjectId;
   DetailedTabPages({this.fetchedProjectId});
 
-  static RxBool showTicketDetailPage = false.obs;
-
   final ProjectsController projectsController = Get.find();
 
   var _controller;
@@ -194,9 +192,7 @@ class DetailedTabPages extends StatelessWidget {
                         ),
 
                   // project's Tickets tab
-                  showTicketDetailPage.value
-                      ? TicketDetailPage()
-                      : ProjectTicketTab(fetchedProjectId),
+                  ProjectTicketTab(fetchedProjectId),
                 ],
               );
             }),

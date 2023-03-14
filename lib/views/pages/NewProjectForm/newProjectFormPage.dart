@@ -86,7 +86,7 @@ class NewProjectFormPage extends StatelessWidget {
             return AlertBoxWidget(Dialogs.PROJECT_NOT_SAVED);
           },
         ).then(
-          (value) => Get.back(),
+          (_) => Get.back(),
         );
         // this is when error box shows, then after user selects ok, get back.
       }).then((value) {
