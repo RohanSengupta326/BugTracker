@@ -256,12 +256,7 @@ class ProjectsController extends GetxController {
 
       isProjectEditing.value = false;
 
-      showDialog(
-        context: Get.context!,
-        builder: (BuildContext ctx) {
-          return AlertBoxWidget(Dialogs.PROJECT_NOT_SAVED);
-        },
-      );
+      rethrow;
     }
   }
 
