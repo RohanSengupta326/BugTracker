@@ -195,8 +195,12 @@ class ProjectsController extends GetxController {
     }
   }
 
-  Future<void> editProject(String projectName, String projectDetails,
-      List<UsersDetails> selectedContributors, String editProjectId) async {
+  Future<void> editProject(
+      String projectName,
+      String projectDetails,
+      List<UsersDetails> selectedContributors,
+      String editProjectId,
+      List<TicketDetails>? savedTicketDetails) async {
     // log("entered function");
     // log(editProjectId);
     // for (var i = 0; i < selectedContributors.length; i++) {
@@ -211,7 +215,7 @@ class ProjectsController extends GetxController {
       await FirebaseFirestore.instance
           .collection('project-details')
           .doc(editProjectId)
-          .set(
+          .update(
         {
           'projectName': projectName,
           'projectDetails': projectDetails,
@@ -223,6 +227,16 @@ class ProjectsController extends GetxController {
                       })
                   .toList()
               : [],
+          'ticketDetails': savedTicketDetails!.isEmpty
+              ? savedTicketDetails
+              : savedTicketDetails
+                  .map((ele) => {
+                        'ticketDescription': ele.ticketDesc,
+                        'ticketPriority': ele.ticketPriority,
+                        'ticketStatus': ele.ticketStatus,
+                        'ticketTitle': ele.ticketTitle,
+                      })
+                  .toList(),
           'projectId': editProjectId,
         },
       );

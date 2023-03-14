@@ -35,8 +35,13 @@ class DetailedTabPages extends StatelessWidget {
 
     final projectSource = projectsController.projects;
 
-    fetchedProjectDescList.add(projectSource.elementAt(projectSource
-        .indexWhere((element) => element.projectId == fetchedProjectId)));
+    fetchedProjectDescList.add(
+      projectSource.elementAt(
+        projectSource.indexWhere(
+          (element) => element.projectId == fetchedProjectId,
+        ),
+      ),
+    );
     // fetch current project details like this, not with constructor
     //so that we can fetch it and reflect it on current screen
     // not possible with constructor values
@@ -94,6 +99,8 @@ class DetailedTabPages extends StatelessWidget {
                         savedContributors:
                             fetchedProjectDescList[0].selectedContributors,
                         savedProjectId: fetchedProjectDescList[0].projectId,
+                        savedTicketDetails:
+                            fetchedProjectDescList[0].ticketDetails,
                       ),
                     );
                   },

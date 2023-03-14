@@ -4,6 +4,7 @@ import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:bug_tracker/controllers/fetchAllUsers/fetchAllUsersController.dart';
 import 'package:bug_tracker/controllers/projectController/projectController.dart';
+import 'package:bug_tracker/models/ticketDetails/ticketDetails.dart';
 import 'package:bug_tracker/models/usersDetails/usersDetails.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
 import 'package:bug_tracker/views/widgets/alertBoxWidget/alertBoxWidget.dart';
@@ -25,11 +26,13 @@ class NewProjectFormPage extends StatelessWidget {
   var savedProjectName;
   var savedProjectDetails;
   List<UsersDetails>? savedContributors;
+  List<TicketDetails>? savedTicketDetails;
   var savedProjectId;
   NewProjectFormPage(
       {this.savedProjectName,
       this.savedProjectDetails,
       required this.savedContributors,
+      required this.savedTicketDetails,
       this.savedProjectId}) {
     projectName = savedProjectName ?? "";
     projectDetails = savedProjectDetails ?? "";
@@ -75,7 +78,7 @@ class NewProjectFormPage extends StatelessWidget {
       // if editing project
       formSaveController
           .editProject(projectName, projectDetails, selectedContributorsName,
-              savedProjectId)
+              savedProjectId, savedTicketDetails)
           .then((value) {
         log("now get back");
         selectedContributorsIndex = [];

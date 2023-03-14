@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> {
               // open new project form
               Get.to(() => NewProjectFormPage(
                     savedContributors: null,
+                    savedTicketDetails: const [],
                   ));
             },
             icon: const Icon(
