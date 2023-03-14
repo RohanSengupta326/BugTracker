@@ -48,7 +48,7 @@ class NewProjectFormPage extends StatelessWidget {
     // log("${selectedContributorsIndex[0]} \n");
   }
 
-  void onSubmit(BuildContext context) {
+  void onSubmit(BuildContext ctx) {
     // SUBMIT CONTROLLER FUNCTION CALL TO SAVE IN FIREBASE
     if (savedProjectName == null) {
       log("entering saving");
@@ -79,7 +79,17 @@ class NewProjectFormPage extends StatelessWidget {
       formSaveController
           .editProject(projectName, projectDetails, selectedContributorsName,
               savedProjectId, savedTicketDetails)
-          .then((value) {
+          .catchError((_) {
+        showDialog(
+          context: ctx,
+          builder: (BuildContext ctx) {
+            return AlertBoxWidget(Dialogs.PROJECT_NOT_SAVED);
+          },
+        ).then(
+          (value) => Get.back(),
+        );
+        // this is when error box shows, then after user selects ok, get back.
+      }).then((value) {
         log("now get back");
         selectedContributorsIndex = [];
         selectedContributorsName = [];
