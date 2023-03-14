@@ -94,7 +94,7 @@ class TicketDesign extends StatelessWidget {
                       child: Text(ticketStatus),
                     ),
                   ),
-                )
+                ),
               ],
             )
           ],
