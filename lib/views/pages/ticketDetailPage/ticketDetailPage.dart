@@ -1,17 +1,29 @@
+import 'dart:developer';
+
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
+import 'package:bug_tracker/controllers/projectController/projectController.dart';
+import 'package:bug_tracker/utils/newTicketForm/newTicketForm.dart';
 import 'package:bug_tracker/views/pages/DetailedTabPages/detailedTabPages.dart';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TicketDetailPage extends StatelessWidget {
   final String ticketTitle;
   final String ticketDesc;
   final String ticketPriority;
   final String ticketStatus;
+  final String fetchedProjectId;
+  final int ticketIndex;
   TicketDetailPage(
       {required this.ticketTitle,
       required this.ticketDesc,
       required this.ticketPriority,
-      required this.ticketStatus});
+      required this.ticketStatus,
+      required this.fetchedProjectId,
+      required this.ticketIndex});
+
+  final ProjectsController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +33,15 @@ class TicketDetailPage extends StatelessWidget {
         backgroundColor: Colors.grey,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext ctx) {
+                  return NewTicketForm(fetchedProjectId, ctx, ticketIndex,
+                      isEdit: true);
+                },
+              );
+            },
             icon: const Icon(
               Icons.edit,
             ),
@@ -29,94 +49,104 @@ class TicketDetailPage extends StatelessWidget {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              margin: const EdgeInsets.all(ConstValues.MARGIN),
-              padding: const EdgeInsets.all(ConstValues.PADDING),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: FittedBox(
-                      child: Text(
-                        'Priority : ',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+      body: Obx(
+        () {
+// fetch new project details
+
+          return controller.isTicketEditing.value
+              ? CircularProgressIndicator()
+              : SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.all(ConstValues.MARGIN),
+                        padding: const EdgeInsets.all(ConstValues.PADDING),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              flex: 1,
+                              child: FittedBox(
+                                child: Text(
+                                  'Priority : ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                            Flexible(
+                              flex: 1,
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                color: ticketPriority.toLowerCase() == 'high'
+                                    ? Colors.red.shade200
+                                    : Colors.blue.shade200,
+                                child: Container(
+                                    padding: EdgeInsets.all(5),
+                                    child: Text(ticketPriority)),
+                              ),
+                            ),
+                            Flexible(
+                              flex: 1,
+                              child: Text(
+                                'Status : ',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Flexible(
+                              flex: 2,
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                color:
+                                    ticketStatus.toLowerCase() == 'in-progress'
+                                        ? Colors.green.shade400
+                                        : ticketStatus == 'resolved'
+                                            ? Colors.purple.shade200
+                                            : Colors.amber.shade200,
+                                child: Container(
+                                  padding: EdgeInsets.all(5),
+                                  child: Text(ticketStatus),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Container(
+                          margin: const EdgeInsets.all(ConstValues.MARGIN),
+                          padding: const EdgeInsets.all(ConstValues.PADDING),
+                          child: Text(
+                            ticketTitle,
+                            style: const TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ),
-                      color: ticketPriority.toLowerCase() == 'high'
-                          ? Colors.red.shade200
-                          : Colors.blue.shade200,
-                      child: Container(
-                          padding: EdgeInsets.all(5),
-                          child: Text(ticketPriority)),
-                    ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Container(
+                          margin: const EdgeInsets.only(
+                              left: ConstValues.MARGIN,
+                              right: ConstValues.MARGIN),
+                          padding: const EdgeInsets.all(ConstValues.PADDING),
+                          child: Text(
+                            ticketDesc,
+                            style: const TextStyle(
+                              fontSize: ConstValues.FONT_SIZE,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                  Flexible(
-                    flex: 1,
-                    child: Text(
-                      'Status : ',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Flexible(
-                    flex: 2,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      color: ticketStatus.toLowerCase() == 'in-progress'
-                          ? Colors.green.shade400
-                          : ticketStatus == 'resolved'
-                              ? Colors.purple.shade200
-                              : Colors.amber.shade200,
-                      child: Container(
-                        padding: EdgeInsets.all(5),
-                        child: Text(ticketStatus),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Container(
-                margin: const EdgeInsets.all(ConstValues.MARGIN),
-                padding: const EdgeInsets.all(ConstValues.PADDING),
-                child: Text(
-                  ticketTitle,
-                  style: const TextStyle(
-                      fontSize: 25, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Container(
-                margin: const EdgeInsets.only(
-                    left: ConstValues.MARGIN, right: ConstValues.MARGIN),
-                padding: const EdgeInsets.all(ConstValues.PADDING),
-                child: Text(
-                  ticketDesc,
-                  style: const TextStyle(
-                    fontSize: ConstValues.FONT_SIZE,
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
+                );
+        },
       ),
     );
   }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:bug_tracker/controllers/projectController/projectController.dart';
@@ -10,9 +12,33 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NewTicketForm extends StatelessWidget {
+  static String ticketTitle = "";
+  static String ticketDesc = "";
+
+  static String priorityTicket = "";
+  static String statusTicket = "";
+
+  final ProjectsController controller = Get.find();
+
   final fetchedProjectid;
   final BuildContext ctx;
-  NewTicketForm(this.fetchedProjectid, this.ctx);
+  final bool isEdit;
+  final int? ticketIndex;
+  NewTicketForm(this.fetchedProjectid, this.ctx, this.ticketIndex,
+      {this.isEdit = false}) {
+    if (isEdit) {
+      log('-- EDIT  --');
+
+      ticketTitle = controller
+          .projects[fetchedProjectid].ticketDetails[ticketIndex!].ticketTitle;
+      ticketDesc = controller
+          .projects[fetchedProjectid].ticketDetails[ticketIndex!].ticketDesc;
+      priorityTicket = controller.projects[fetchedProjectid]
+          .ticketDetails[ticketIndex!].ticketPriority;
+      statusTicket = controller
+          .projects[fetchedProjectid].ticketDetails[ticketIndex!].ticketStatus;
+    }
+  }
 
   static GlobalKey<FormState> formKey = GlobalKey<FormState>();
   /* 
@@ -25,31 +51,37 @@ class NewTicketForm extends StatelessWidget {
   keyboard popping back down when you submit a form.
    */
 
-  static String ticketTitle = "";
-  static String ticketDesc = "";
-
-  static String priorityTicket = "";
-  static String statusTicket = "";
-
-  final ProjectsController controller = Get.find();
-
   void onSubmit() async {
     bool isValid = formKey.currentState!.validate();
 
     if (isValid) {
       formKey.currentState!.save();
 
-      await controller
-          .saveTicketDetails(fetchedProjectid, ticketTitle, ticketDesc,
-              priorityTicket, statusTicket)
-          .catchError((error) {
-        return showDialog(
-          context: ctx,
-          builder: (_) {
-            return AlertBoxWidget(Dialogs.GENERIC_ERROR_MESSAGE);
-          },
-        );
-      });
+      if (isEdit) {
+        await controller
+            .editTicketDetails(fetchedProjectid, ticketTitle, ticketDesc,
+                priorityTicket, statusTicket, ticketIndex!)
+            .catchError((error) {
+          return showDialog(
+            context: ctx,
+            builder: (_) {
+              return AlertBoxWidget(Dialogs.GENERIC_ERROR_MESSAGE);
+            },
+          );
+        });
+      } else {
+        await controller
+            .saveTicketDetails(fetchedProjectid, ticketTitle, ticketDesc,
+                priorityTicket, statusTicket)
+            .catchError((error) {
+          return showDialog(
+            context: ctx,
+            builder: (_) {
+              return AlertBoxWidget(Dialogs.GENERIC_ERROR_MESSAGE);
+            },
+          );
+        });
+      }
 
       Navigator.of(Get.context!).pop();
     }
@@ -125,6 +157,7 @@ class NewTicketForm extends StatelessWidget {
                   SizedBox(
                     height: 30,
                     child: TextFormField(
+                      initialValue: ticketTitle,
                       maxLines: 1,
                       style: TextStyle(color: Colors.black),
                       cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
@@ -185,6 +218,7 @@ class NewTicketForm extends StatelessWidget {
                   SizedBox(
                     height: 60,
                     child: TextFormField(
+                      initialValue: ticketDesc,
                       maxLines: 3,
                       style: TextStyle(color: Colors.black),
                       cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,

@@ -21,6 +21,7 @@ class ProjectsController extends GetxController {
   RxBool isProjectDeleting = false.obs;
   RxBool isProjectEditing = false.obs;
   RxBool isTickeSaving = false.obs;
+  RxBool isTicketEditing = false.obs;
   String projectId = "";
 
   List<ProjectDetailModel> get projects {
@@ -303,6 +304,53 @@ class ProjectsController extends GetxController {
       log(error.toString());
 
       isTickeSaving.value = false;
+
+      rethrow;
+    }
+  }
+
+  Future<void> editTicketDetails(
+      String editTicketProjectId,
+      String ticketTitle,
+      String ticketDesc,
+      String ticketPriority,
+      String ticketStatus,
+      int ticketIndex) async {
+    // List<String> ticketDetailsAlls = [];
+
+    try {
+      isTicketEditing.value = true;
+
+      final doc = await FirebaseFirestore.instance
+          .collection('project-details')
+          .doc(editTicketProjectId)
+          .get();
+
+      final ticketList =
+          doc.data()!['ticketDetails'] as List<Map<String, String>>;
+
+      ticketList[ticketIndex]['ticketDescription'] = ticketDesc;
+      ticketList[ticketIndex]['ticketPriority'] = ticketPriority;
+      ticketList[ticketIndex]['ticketStatus'] = ticketStatus;
+      ticketList[ticketIndex]['ticketTitle'] = ticketTitle;
+
+      await doc.reference.update({'ticketDetails': ticketList});
+
+      int projectIndex = _projects
+          .indexWhere((element) => element.projectId == editTicketProjectId);
+
+      _projects[projectIndex].ticketDetails[ticketIndex] = TicketDetails(
+        ticketTitle,
+        ticketDesc,
+        ticketPriority,
+        ticketStatus,
+      );
+
+      isTicketEditing.value = false;
+    } catch (error) {
+      log(error.toString());
+
+      isTicketEditing.value = false;
 
       rethrow;
     }

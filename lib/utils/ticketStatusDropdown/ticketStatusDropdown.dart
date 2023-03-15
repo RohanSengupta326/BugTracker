@@ -11,7 +11,9 @@ class TicketStatusDropDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    NewTicketForm.statusTicket = _dropdownValue.value;
+    NewTicketForm.statusTicket = NewTicketForm.statusTicket.isEmpty
+        ? _dropdownValue.value
+        : NewTicketForm.statusTicket;
     // default value saved.
 
     return Align(
@@ -19,7 +21,9 @@ class TicketStatusDropDown extends StatelessWidget {
       child: Obx(
         () {
           return DropdownButton<String>(
-            value: _dropdownValue.value,
+            value: NewTicketForm.statusTicket.isEmpty
+                ? _dropdownValue.value
+                : NewTicketForm.statusTicket,
             onChanged: (String? value) {
               // This is called when the user selects an item.
               _dropdownValue.value = value!;

@@ -20,7 +20,8 @@ class ProjectTicketTab extends StatelessWidget {
     return Scaffold(
       body: Obx(
         () {
-          return controller.isTickeSaving.value
+          return controller.isTickeSaving.value ||
+                  controller.isTicketEditing.value
               ? Center(
                   child: CircularProgressIndicator(
                     color: Colors.blue,
@@ -32,33 +33,17 @@ class ProjectTicketTab extends StatelessWidget {
                     )
                   : ListView.builder(
                       itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Get.to(
-                              () => TicketDetailPage(
-                                ticketTitle: controller.projects[projectIndex]
-                                    .ticketDetails[index].ticketTitle,
-                                ticketDesc: controller.projects[projectIndex]
-                                    .ticketDetails[index].ticketDesc,
-                                ticketPriority: controller
-                                    .projects[projectIndex]
-                                    .ticketDetails[index]
-                                    .ticketPriority,
-                                ticketStatus: controller.projects[projectIndex]
-                                    .ticketDetails[index].ticketStatus,
-                              ),
-                            );
-                          },
-                          child: TicketDesign(
-                            ticketTitle: controller.projects[projectIndex]
-                                .ticketDetails[index].ticketTitle,
-                            ticketDesc: controller.projects[projectIndex]
-                                .ticketDetails[index].ticketDesc,
-                            ticketPriority: controller.projects[projectIndex]
-                                .ticketDetails[index].ticketPriority,
-                            ticketStatus: controller.projects[projectIndex]
-                                .ticketDetails[index].ticketStatus,
-                          ),
+                        return TicketDesign(
+                          ticketTitle: controller.projects[projectIndex]
+                              .ticketDetails[index].ticketTitle,
+                          ticketDesc: controller.projects[projectIndex]
+                              .ticketDetails[index].ticketDesc,
+                          ticketPriority: controller.projects[projectIndex]
+                              .ticketDetails[index].ticketPriority,
+                          ticketStatus: controller.projects[projectIndex]
+                              .ticketDetails[index].ticketStatus,
+                          fetchedProjectId: fetchedProjectId,
+                          ticketIndex: index,
                         );
                       },
                       itemCount: controller
@@ -75,7 +60,7 @@ class ProjectTicketTab extends StatelessWidget {
             showModalBottomSheet(
               context: context,
               builder: (BuildContext ctx) {
-                return NewTicketForm(fetchedProjectId, ctx);
+                return NewTicketForm(fetchedProjectId, ctx, null);
               },
             );
           },
