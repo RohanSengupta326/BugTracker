@@ -43,6 +43,8 @@ class AuthUserController extends GetxController {
 
         await refPath.putFile(
           File(image!.path),
+          SettableMetadata(contentEncoding: 'identity'),
+          // doesnt compress image , so quality is maintained
         );
 
         final dpUrl = await refPath.getDownloadURL();
