@@ -2,6 +2,7 @@ import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:bug_tracker/controllers/authUserController/authUserController.dart';
 import 'package:bug_tracker/controllers/fetchAllUsers/fetchAllUsersController.dart';
+import 'package:bug_tracker/utils/profilePictureView/profilePictureView.dart';
 import 'package:bug_tracker/views/pages/homepage/homepage.dart';
 
 import 'package:flutter/material.dart';
@@ -70,18 +71,31 @@ class AppDrawer extends StatelessWidget {
                                 ? const CupertinoActivityIndicator(
                                     color: Colors.white,
                                   )
-                                : CircleAvatar(
-                                    radius: 30,
-                                    backgroundImage: fetchAllUsersController
-                                                .currentUserData.isNotEmpty &&
-                                            fetchAllUsersController
-                                                    .currentUserData[0].dpUrl !=
-                                                ''
-                                        ? NetworkImage(fetchAllUsersController
-                                            .currentUserData[0].dpUrl)
-                                        : const AssetImage(
-                                                'assets/images/userdp.jpg')
-                                            as ImageProvider<Object>,
+                                : GestureDetector(
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (_) {
+                                          return ProfilePictureView(
+                                              fetchAllUsersController
+                                                  .currentUserData[0].dpUrl);
+                                        },
+                                      );
+                                    },
+                                    child: CircleAvatar(
+                                      radius: 30,
+                                      backgroundImage: fetchAllUsersController
+                                                  .currentUserData.isNotEmpty &&
+                                              fetchAllUsersController
+                                                      .currentUserData[0]
+                                                      .dpUrl !=
+                                                  ''
+                                          ? NetworkImage(fetchAllUsersController
+                                              .currentUserData[0].dpUrl)
+                                          : const AssetImage(
+                                                  'assets/images/userdp.jpg')
+                                              as ImageProvider<Object>,
+                                    ),
                                   );
                           }),
                         ),
