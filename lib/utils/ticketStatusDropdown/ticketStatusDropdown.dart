@@ -16,14 +16,16 @@ class TicketStatusDropDown extends StatelessWidget {
         : NewTicketForm.statusTicket;
     // default value saved.
 
+    _dropdownValue.value = NewTicketForm.statusTicket.isEmpty
+        ? _dropdownValue.value
+        : NewTicketForm.statusTicket;
+
     return Align(
       alignment: Alignment.topCenter,
       child: Obx(
         () {
           return DropdownButton<String>(
-            value: NewTicketForm.statusTicket.isEmpty
-                ? _dropdownValue.value
-                : NewTicketForm.statusTicket,
+            value: _dropdownValue.value,
             onChanged: (String? value) {
               // This is called when the user selects an item.
               _dropdownValue.value = value!;

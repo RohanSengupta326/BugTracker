@@ -326,8 +326,7 @@ class ProjectsController extends GetxController {
           .doc(editTicketProjectId)
           .get();
 
-      final ticketList =
-          doc.data()!['ticketDetails'] as List<Map<String, String>>;
+      final ticketList = doc.data()!['ticketDetails'] as List<dynamic>;
 
       ticketList[ticketIndex]['ticketDescription'] = ticketDesc;
       ticketList[ticketIndex]['ticketPriority'] = ticketPriority;

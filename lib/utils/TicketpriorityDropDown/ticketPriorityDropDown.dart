@@ -19,14 +19,16 @@ class TicketPriorityDropDown extends StatelessWidget {
         : NewTicketForm.priorityTicket;
     // take default value if not changed
 
+    _dropdownValue.value = NewTicketForm.priorityTicket.isEmpty
+        ? _dropdownValue.value
+        : NewTicketForm.priorityTicket;
+
     return Align(
       alignment: Alignment.topCenter,
       child: Obx(
         () {
           return DropdownButton<String>(
-            value: NewTicketForm.priorityTicket.isEmpty
-                ? _dropdownValue.value
-                : NewTicketForm.priorityTicket,
+            value: _dropdownValue.value,
             onChanged: (String? value) {
               // This is called when the user selects an item.
               _dropdownValue.value = value!;

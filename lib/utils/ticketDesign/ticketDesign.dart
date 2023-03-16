@@ -25,10 +25,6 @@ class TicketDesign extends StatelessWidget {
       onTap: () {
         Get.to(
           () => TicketDetailPage(
-            ticketTitle: ticketTitle,
-            ticketDesc: ticketDesc,
-            ticketPriority: ticketPriority,
-            ticketStatus: ticketStatus,
             fetchedProjectId: fetchedProjectId,
             ticketIndex: ticketIndex,
           ),

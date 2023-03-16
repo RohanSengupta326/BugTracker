@@ -26,17 +26,22 @@ class NewTicketForm extends StatelessWidget {
   final int? ticketIndex;
   NewTicketForm(this.fetchedProjectid, this.ctx, this.ticketIndex,
       {this.isEdit = false}) {
+    //
+
+    int projectIndex = controller.projects
+        .indexWhere((element) => element.projectId == fetchedProjectid);
+
     if (isEdit) {
       log('-- EDIT  --');
 
       ticketTitle = controller
-          .projects[fetchedProjectid].ticketDetails[ticketIndex!].ticketTitle;
+          .projects[projectIndex].ticketDetails[ticketIndex!].ticketTitle;
       ticketDesc = controller
-          .projects[fetchedProjectid].ticketDetails[ticketIndex!].ticketDesc;
-      priorityTicket = controller.projects[fetchedProjectid]
-          .ticketDetails[ticketIndex!].ticketPriority;
+          .projects[projectIndex].ticketDetails[ticketIndex!].ticketDesc;
+      priorityTicket = controller
+          .projects[projectIndex].ticketDetails[ticketIndex!].ticketPriority;
       statusTicket = controller
-          .projects[fetchedProjectid].ticketDetails[ticketIndex!].ticketStatus;
+          .projects[projectIndex].ticketDetails[ticketIndex!].ticketStatus;
     }
   }
 
@@ -114,7 +119,8 @@ class NewTicketForm extends StatelessWidget {
                   () {
                     return Align(
                       alignment: Alignment.topRight,
-                      child: controller.isTickeSaving.value
+                      child: controller.isTickeSaving.value ||
+                              controller.isTicketEditing.value
                           ? Center(
                               child: CircularProgressIndicator(
                                 color: Colors.green,
@@ -292,7 +298,7 @@ class NewTicketForm extends StatelessWidget {
                   Row(
                     children: [
                       Flexible(flex: 2, child: TicketPriorityDropDown()),
-                      Flexible(flex: 2, child: TicketStatusDropDown())
+                      Flexible(flex: 2, child: TicketStatusDropDown()),
                     ],
                   ),
                 ],
