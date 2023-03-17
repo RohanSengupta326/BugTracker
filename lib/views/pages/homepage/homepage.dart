@@ -1,6 +1,7 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
-import 'package:bug_tracker/controllers/fetchAllUsers/fetchAllUsersController.dart';
+import 'package:bug_tracker/controllers/authUserController/authUserController.dart';
+
 import 'package:bug_tracker/controllers/projectController/projectController.dart';
 
 import 'package:bug_tracker/utils/appdrawer/appdrawer.dart';
@@ -17,7 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final projectController = Get.put(ProjectsController());
-  final fetchAllUserController = Get.put(FetchAllUsers());
+  final fetchAllUserController = Get.put(AuthUserController());
 
   @override
   void initState() {

@@ -1,9 +1,10 @@
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:bug_tracker/controllers/authUserController/authUserController.dart';
-import 'package:bug_tracker/controllers/fetchAllUsers/fetchAllUsersController.dart';
+
 import 'package:bug_tracker/utils/profilePictureView/profilePictureView.dart';
 import 'package:bug_tracker/views/pages/homepage/homepage.dart';
+import 'package:bug_tracker/views/pages/profileEditPage/profileEditPage.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,7 +22,7 @@ class AppDrawer extends StatelessWidget {
       'https://www.linkedin.com/in/rohan-sengupta-193bb916a/';
 
   final AuthUserController authUserController = Get.find();
-  final FetchAllUsers fetchAllUsersController = Get.find();
+  final AuthUserController fetchAllUsersController = Get.find();
 
   Future<void> _launchUrl(String uri, String appPackageName) async {
     final Uri url = Uri.parse(uri);
@@ -155,6 +156,25 @@ class AppDrawer extends StatelessWidget {
                         ),
                         label: const Text(
                           'DashBoard',
+                          style: TextStyle(
+                              fontSize: ConstValues.FONT_SIZE,
+                              color: ConstColors.APP_FONT_COLOR),
+                        ),
+                      ),
+                    ),
+                    const Divider(),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: TextButton.icon(
+                        onPressed: () {
+                          Get.to(ProfileEditScreen());
+                        },
+                        icon: const Icon(
+                          Icons.manage_accounts_sharp,
+                          color: ConstColors.PRIMARY_SWATCH_COLOR,
+                        ),
+                        label: const Text(
+                          'Profile',
                           style: TextStyle(
                               fontSize: ConstValues.FONT_SIZE,
                               color: ConstColors.APP_FONT_COLOR),

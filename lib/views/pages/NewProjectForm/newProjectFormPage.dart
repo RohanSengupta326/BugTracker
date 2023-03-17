@@ -2,7 +2,8 @@ import 'dart:developer';
 
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
-import 'package:bug_tracker/controllers/fetchAllUsers/fetchAllUsersController.dart';
+import 'package:bug_tracker/controllers/authUserController/authUserController.dart';
+
 import 'package:bug_tracker/controllers/projectController/projectController.dart';
 import 'package:bug_tracker/models/ticketDetails/ticketDetails.dart';
 import 'package:bug_tracker/models/usersDetails/usersDetails.dart';
@@ -20,7 +21,7 @@ class NewProjectFormPage extends StatelessWidget {
   static List<int> selectedContributorsIndex = [];
   // to store indices of the selected names from allUsers list
 
-  final FetchAllUsers allUserData = Get.find();
+  final AuthUserController allUserData = Get.find();
   final ProjectsController formSaveController = Get.put(ProjectsController());
 
   var savedProjectName;

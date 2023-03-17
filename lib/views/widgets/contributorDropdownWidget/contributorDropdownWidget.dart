@@ -2,7 +2,8 @@ import 'dart:developer';
 
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
-import 'package:bug_tracker/controllers/fetchAllUsers/fetchAllUsersController.dart';
+import 'package:bug_tracker/controllers/authUserController/authUserController.dart';
+
 import 'package:bug_tracker/views/pages/NewProjectForm/newProjectFormPage.dart';
 import 'package:bug_tracker/views/widgets/projectFormWidget/projectFormWidget.dart';
 
@@ -11,7 +12,7 @@ import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 
 class ContributorDropdownWidget extends StatelessWidget {
-  final FetchAllUsers allUserData = Get.find();
+  final AuthUserController allUserData = Get.find();
   List<int> temp = [];
 
   @override
