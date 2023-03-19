@@ -144,24 +144,6 @@ class AppDrawer extends StatelessWidget {
                 padding: const EdgeInsets.only(left: ConstValues.PADDING),
                 child: Column(
                   children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: TextButton.icon(
-                        onPressed: () {
-                          Get.to(HomePage());
-                        },
-                        icon: const Icon(
-                          Icons.dashboard,
-                          color: ConstColors.PRIMARY_SWATCH_COLOR,
-                        ),
-                        label: const Text(
-                          'DashBoard',
-                          style: TextStyle(
-                              fontSize: ConstValues.FONT_SIZE,
-                              color: ConstColors.APP_FONT_COLOR),
-                        ),
-                      ),
-                    ),
                     const Divider(),
                     Align(
                       alignment: Alignment.topLeft,
