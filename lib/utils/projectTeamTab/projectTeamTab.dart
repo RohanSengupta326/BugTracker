@@ -22,13 +22,13 @@ class ProjectTeamTab extends StatelessWidget {
                 Flexible(
                   flex: 1,
                   child: Text(
-                    contributors[i].name,
+                    contributors[i].name.toString(),
                   ),
                 ),
                 Flexible(
                   flex: 2,
                   child: Text(
-                    contributors[i].email,
+                    contributors[i].email.toString(),
                   ),
                 ),
               ],
