@@ -20,12 +20,15 @@ class _HomePageState extends State<HomePage> {
   final projectController = Get.put(ProjectsController());
   final fetchAllUserController = Get.put(AuthUserController());
 
-  @override
-  void initState() {
+  Future<void> fetchDetails() async {
     projectController.fetchProject();
     fetchAllUserController.fetchAllUsers();
     fetchAllUserController.fetchUserData();
+  }
 
+  @override
+  void initState() {
+    fetchDetails();
     super.initState();
   }
 
@@ -59,46 +62,51 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: // SHOW SAVED PROJECTS HERE
-          Obx(
-        (() {
-          // while fetching saved projects
-          return projectController.isProjectFetching.value
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              // while adding new project
-              : projectController.isProjectSaving.value
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  // while deleting
-                  : projectController.isProjectDeleting.value
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : projectController.isProjectEditing.value
-                          ? const Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : projectController.projects.isEmpty
-                              ? const Center(
-                                  child: Text("No projects to show !!"),
-                                )
-                              : ListView.builder(
-                                  itemBuilder: ((context, index) {
-                                    return ProjectListViewer(
-                                      projectName: projectController
-                                          .projects[index].projectName,
-                                      projectDetails: projectController
-                                          .projects[index].projectDetails,
-                                      contributors: projectController
-                                          .projects[index].selectedContributors,
-                                      projectId: projectController
-                                          .projects[index].projectId,
-                                    );
-                                  }),
-                                  itemCount: projectController.projects.length);
-        }),
+          RefreshIndicator(
+        onRefresh: (() => fetchDetails()),
+        child: Obx(
+          (() {
+            // while fetching saved projects
+            return projectController.isProjectFetching.value
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                // while adding new project
+                : projectController.isProjectSaving.value
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    // while deleting
+                    : projectController.isProjectDeleting.value
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : projectController.isProjectEditing.value
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : projectController.projects.isEmpty
+                                ? const Center(
+                                    child: Text("No projects to show !!"),
+                                  )
+                                : ListView.builder(
+                                    itemBuilder: ((context, index) {
+                                      return ProjectListViewer(
+                                        projectName: projectController
+                                            .projects[index].projectName,
+                                        projectDetails: projectController
+                                            .projects[index].projectDetails,
+                                        contributors: projectController
+                                            .projects[index]
+                                            .selectedContributors,
+                                        projectId: projectController
+                                            .projects[index].projectId,
+                                      );
+                                    }),
+                                    itemCount:
+                                        projectController.projects.length);
+          }),
+        ),
       ),
     );
   }

@@ -29,12 +29,15 @@ class NewProjectFormPage extends StatelessWidget {
   List<UsersDetails>? savedContributors;
   List<TicketDetails>? savedTicketDetails;
   var savedProjectId;
+
   NewProjectFormPage(
       {this.savedProjectName,
       this.savedProjectDetails,
       required this.savedContributors,
       required this.savedTicketDetails,
       this.savedProjectId}) {
+    //
+
     projectName = savedProjectName ?? "";
     projectDetails = savedProjectDetails ?? "";
     selectedContributorsName = savedContributors ?? [];
