@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               // open new project form
               Get.to(() => NewProjectFormPage(
-                    savedContributors: null,
+                    savedContributors: const [],
                     savedTicketDetails: const [],
                   ));
             },

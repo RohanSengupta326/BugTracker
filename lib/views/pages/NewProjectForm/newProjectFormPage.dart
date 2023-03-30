@@ -26,7 +26,7 @@ class NewProjectFormPage extends StatelessWidget {
 
   var savedProjectName;
   var savedProjectDetails;
-  List<UsersDetails>? savedContributors;
+  List<UsersDetails> savedContributors;
   List<TicketDetails>? savedTicketDetails;
   var savedProjectId;
 
@@ -40,15 +40,26 @@ class NewProjectFormPage extends StatelessWidget {
 
     projectName = savedProjectName ?? "";
     projectDetails = savedProjectDetails ?? "";
-    selectedContributorsName = savedContributors ?? [];
+    selectedContributorsName =
+        savedContributors.isEmpty ? [] : savedContributors;
 
-    for (var i = 0; i < selectedContributorsName.length; i++) {
-      selectedContributorsIndex.add(
-        allUserData.users.indexWhere(
-          (element) => element.name == selectedContributorsName[i].name,
-        ),
-      );
+    if (selectedContributorsName.isNotEmpty) {
+      log('---SelectedContributorsName is Not empty---');
+      log(selectedContributorsName.length.toString());
+      log(selectedContributorsName[0].name.toString());
+      log(selectedContributorsName[0].email.toString());
+
+      for (var i = 0; i < selectedContributorsName.length; i++) {
+        selectedContributorsIndex.add(
+          allUserData.users.indexWhere(
+            (element) => element.name == selectedContributorsName[i].name,
+          ),
+        );
+      }
+      log('---SELECTEDCONTRIBUTORSINDEX IS READY ----');
+      log(selectedContributorsIndex[0].toString());
     }
+
     // log("${selectedContributorsIndex[0]} \n");
   }
 
@@ -63,8 +74,8 @@ class NewProjectFormPage extends StatelessWidget {
         log(selectedContributorsIndex[i].toString());
       }
 
-      if (selectedContributorsIndex.length > 0)
-        log(selectedContributorsName[0].name.toString());
+      // if (selectedContributorsIndex.isNotEmpty)
+      //   log(selectedContributorsName[0].name.toString());
 
       formSaveController
           .saveProjectDetails(
