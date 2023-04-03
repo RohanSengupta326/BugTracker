@@ -44,11 +44,6 @@ class NewProjectFormPage extends StatelessWidget {
         savedContributors.isEmpty ? [] : savedContributors;
 
     if (selectedContributorsName.isNotEmpty) {
-      log('---SelectedContributorsName is Not empty---');
-      log(selectedContributorsName.length.toString());
-      log(selectedContributorsName[0].name.toString());
-      log(selectedContributorsName[0].email.toString());
-
       for (var i = 0; i < selectedContributorsName.length; i++) {
         selectedContributorsIndex.add(
           allUserData.users.indexWhere(
@@ -56,8 +51,6 @@ class NewProjectFormPage extends StatelessWidget {
           ),
         );
       }
-      log('---SELECTEDCONTRIBUTORSINDEX IS READY ----');
-      log(selectedContributorsIndex[0].toString());
     }
 
     // log("${selectedContributorsIndex[0]} \n");
