@@ -369,7 +369,7 @@ class _AuthPageState extends State<AuthPage> {
                           ),
                         ),
                       SizedBox(
-                        height: Get.height * 0.03,
+                        height: Get.height * 0.001,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -396,7 +396,79 @@ class _AuthPageState extends State<AuthPage> {
                         ],
                       ),
                       SizedBox(
-                        height: Get.height * 0.03,
+                        height: Get.height * 0.001,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Divider(
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: Get.height * 0.01),
+                            child: Text(
+                              "or",
+                              style: TextStyle(
+                                  fontSize: Get.height * 0.018,
+                                  color: Colors.grey.shade400),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Divider(color: Colors.grey.shade400),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: Get.height * 0.02,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey.shade400),
+                            borderRadius: BorderRadius.circular(25)),
+                        height: Get.height * 0.06,
+                        width: Get.width,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                            elevation: const MaterialStatePropertyAll(0),
+                            shape: MaterialStatePropertyAll(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                            ),
+                            backgroundColor:
+                                MaterialStatePropertyAll(Colors.white),
+                          ),
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
+                                WidgetSpan(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        right: Get.width * 0.02),
+                                    child: Image.asset(
+                                      'assets/images/google_sign_in.png',
+                                      height: Get.height * 0.02,
+                                      width: Get.width * 0.05,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: 'Sign Up with Google',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
