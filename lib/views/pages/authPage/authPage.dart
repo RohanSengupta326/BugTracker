@@ -87,227 +87,148 @@ class _AuthPageState extends State<AuthPage> {
           return Column(
             children: [
               // design
-              const SizedBox(
-                height: ConstValues.VALUE_40,
+              SizedBox(
+                height: Get.height * 0.1,
               ),
 
               Align(
                 alignment: Alignment.topLeft,
                 child: Container(
-                  margin: const EdgeInsets.only(left: ConstValues.VALUE_16),
-                  child: const Text(
+                  margin: EdgeInsets.only(left: Get.height * 0.03),
+                  child: Text(
                     'Welcome to ',
                     textAlign: TextAlign.start,
                     style: TextStyle(
                         color: ConstColors.APP_FONT_COLOR,
-                        fontSize: 25,
+                        fontSize: Get.height * 0.03,
                         fontWeight: FontWeight.w500),
                   ),
                 ),
               ),
-              const SizedBox(height: ConstValues.VALUE_16 / 2),
+              SizedBox(height: Get.height * 0.01),
               Align(
                 alignment: Alignment.topLeft,
                 child: Container(
-                  margin: const EdgeInsets.only(left: ConstValues.VALUE_16),
-                  child: const Text(
+                  margin: EdgeInsets.only(left: Get.height * 0.03),
+                  child: Text(
                     'BugTracker',
                     textAlign: TextAlign.start,
                     style: TextStyle(
                         color: ConstColors.APP_FONT_COLOR,
-                        fontSize: 30,
+                        fontSize: Get.height * 0.04,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
 
-              const SizedBox(height: 30),
+              SizedBox(height: Get.height * 0.05),
 
               Container(
-                margin: const EdgeInsets.symmetric(
-                    horizontal: ConstValues.VALUE_16),
+                margin: EdgeInsets.symmetric(horizontal: Get.width * 0.03),
                 child: Form(
                   key: _formKey,
                   onChanged: isValidDetails,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     //dont take as much space as possible but as minimum as needed
+
                     children: <Widget>[
                       if (!_isLogin.value)
                         // registering user so upload image section else not
                         UploadImage(imagePicker),
-                      const SizedBox(height: ConstValues.VALUE_16),
-                      SizedBox(
-                        child: TextFormField(
-                          style: const TextStyle(
-                            color: ConstColors.APP_FONT_COLOR,
-                            fontSize: 14,
-                          ),
-                          cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
-                          validator: (value) {
-                            if (value!.isEmpty || !value.contains('@')) {
-                              return Dialogs.INVALID_EMAIL;
-                            }
-                            return null;
-                          },
-                          key: const ValueKey('email'),
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.only(
-                                left: 16, top: 14, bottom: 14, right: 16),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25.0),
-                              borderSide: BorderSide(color: Colors.grey),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25.0),
-                              borderSide: BorderSide(
-                                color: Colors.grey.shade400,
-                              ),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25.0),
-                              borderSide: BorderSide(
-                                color: Colors.grey.shade400,
-                              ),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25.0),
-                              borderSide: BorderSide(
-                                color: Colors.grey.shade400,
-                              ),
-                            ),
-                            isDense: true,
-                            // to size the textformfield dont use sizedBox, use contentpadding to give padding to top and bottom and isDense: true,
-                            // by default its false, it means textformfield should take smaller space than default
-
-                            focusColor: ConstColors.PRIMARY_SWATCH_COLOR,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
-                                color: Colors.grey.shade400,
-                              ),
-                            ),
-                            hintText: 'youremail@gmail.com',
-                            hintStyle: TextStyle(
-                              color: Colors.grey.shade400,
-                              fontSize: 14,
-                            ),
-                          ),
-                          onSaved: (value) {
-                            _userEmail = value as String;
-                          },
+                      SizedBox(height: Get.height * 0.02),
+                      TextFormField(
+                        style: TextStyle(
+                          color: ConstColors.APP_FONT_COLOR,
+                          fontSize: Get.height * 0.018,
                         ),
+                        cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
+                        validator: (value) {
+                          if (value!.isEmpty || !value.contains('@')) {
+                            return Dialogs.INVALID_EMAIL;
+                          }
+                          return null;
+                        },
+                        key: const ValueKey('email'),
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(
+                              left: Get.width * 0.04,
+                              top: Get.height * 0.02,
+                              bottom: Get.height * 0.02,
+                              right: Get.width * 0.04),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                            ),
+                          ),
+                          isDense: true,
+                          // to size the textformfield dont use sizedBox, use contentpadding to give padding to top and bottom and isDense: true,
+                          // by default its false, it means textformfield should take smaller space than default
+
+                          focusColor: ConstColors.PRIMARY_SWATCH_COLOR,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                          hintText: 'youremail@gmail.com',
+                          hintStyle: TextStyle(
+                            color: Colors.grey.shade400,
+                            fontSize: Get.height * 0.018,
+                          ),
+                        ),
+                        onSaved: (value) {
+                          _userEmail = value as String;
+                        },
                       ),
-                      const SizedBox(
-                        height: 25,
+                      SizedBox(
+                        height: Get.height * 0.03,
                       ),
                       if (!_isLogin.value)
-                        Container(
-                          child: TextFormField(
-                            style: const TextStyle(
-                              color: ConstColors.APP_FONT_COLOR,
-                              fontSize: 14,
-                            ),
-                            cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
-                            validator: (value) {
-                              if (value!.isEmpty || value.length < 4) {
-                                return Dialogs.WRONG_USERNAME;
-                              }
-
-                              return null;
-                            },
-                            key: const ValueKey('Name'),
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.only(
-                                  left: 16, top: 14, bottom: 14, right: 16),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide:
-                                    BorderSide(color: Colors.grey.shade400),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                  color: Colors.grey.shade400,
-                                ),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                  color: Colors.grey.shade400,
-                                ),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                  color: Colors.grey.shade400,
-                                ),
-                              ),
-                              isDense: true,
-                              focusColor: ConstColors.PRIMARY_SWATCH_COLOR,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(
-                                  color: Colors.grey.shade400,
-                                ),
-                              ),
-                              hintText: 'Your Name',
-                              hintStyle: TextStyle(
-                                color: Colors.grey.shade400,
-                                fontSize: 14,
-                              ),
-                            ),
-                            onSaved: (value) {
-                              _userName = value as String;
-                            },
+                        TextFormField(
+                          style: TextStyle(
+                            color: ConstColors.APP_FONT_COLOR,
+                            fontSize: Get.height * 0.018,
                           ),
-                        ),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      Container(
-                        child: TextFormField(
-                          style: const TextStyle(
-                              color: ConstColors.APP_FONT_COLOR, fontSize: 14),
                           cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
                           validator: (value) {
-                            if (value!.isEmpty || value.length < 7) {
-                              return Dialogs.WRONG_PASSWORD_STRUCT;
+                            if (value!.isEmpty || value.length < 4) {
+                              return Dialogs.WRONG_USERNAME;
                             }
+
                             return null;
                           },
-                          key: const ValueKey('password'),
+                          key: const ValueKey('Name'),
                           decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                isPasswordVisible.value =
-                                    !isPasswordVisible.value;
-                              },
-                              icon: isPasswordVisible.value
-                                  ? Icon(Icons.visibility)
-                                  : Icon(Icons.visibility_off),
-                            ),
-                            contentPadding: const EdgeInsets.only(
-                                left: 16, top: 14, bottom: 14, right: 16),
+                            contentPadding: EdgeInsets.only(
+                                left: Get.width * 0.04,
+                                top: Get.height * 0.02,
+                                bottom: Get.height * 0.02,
+                                right: Get.width * 0.04),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25.0),
-                              borderSide: BorderSide(color: Colors.grey),
+                              borderSide: BorderSide(color: Colors.blue),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25.0),
-                              borderSide: BorderSide(
-                                color: Colors.grey.shade400,
-                              ),
-                            ),
-                            focusColor: ConstColors.PRIMARY_SWATCH_COLOR,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
-                                color: Colors.grey.shade400,
-                              ),
-                            ),
-                            errorBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25.0),
                               borderSide: BorderSide(
                                 color: Colors.grey.shade400,
@@ -316,33 +237,113 @@ class _AuthPageState extends State<AuthPage> {
                             focusedErrorBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25.0),
                               borderSide: BorderSide(
+                                color: Colors.blue,
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25.0),
+                              borderSide: BorderSide(
                                 color: Colors.grey.shade400,
                               ),
                             ),
                             isDense: true,
-                            hintText: 'Password (min. 7 characters)',
+                            focusColor: ConstColors.PRIMARY_SWATCH_COLOR,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(
+                                color: Colors.grey.shade400,
+                              ),
+                            ),
+                            hintText: 'Your Name',
                             hintStyle: TextStyle(
                               color: Colors.grey.shade400,
-                              fontSize: 14,
+                              fontSize: Get.height * 0.018,
                             ),
                           ),
-                          obscureText: !isPasswordVisible.value,
                           onSaved: (value) {
-                            _userPassword = value as String;
+                            _userName = value as String;
                           },
                         ),
+                      SizedBox(
+                        height: Get.height * 0.03,
                       ),
-                      const SizedBox(
-                        height: ConstValues.PADDING * 2,
+                      TextFormField(
+                        style: TextStyle(
+                            color: ConstColors.APP_FONT_COLOR,
+                            fontSize: Get.height * 0.018),
+                        cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
+                        validator: (value) {
+                          if (value!.isEmpty || value.length < 7) {
+                            return Dialogs.WRONG_PASSWORD_STRUCT;
+                          }
+                          return null;
+                        },
+                        key: const ValueKey('password'),
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              isPasswordVisible.value =
+                                  !isPasswordVisible.value;
+                            },
+                            icon: isPasswordVisible.value
+                                ? Icon(Icons.visibility)
+                                : Icon(Icons.visibility_off),
+                          ),
+                          contentPadding: EdgeInsets.only(
+                              left: Get.width * 0.04,
+                              top: Get.height * 0.02,
+                              bottom: Get.height * 0.02,
+                              right: Get.width * 0.04),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                          focusColor: ConstColors.PRIMARY_SWATCH_COLOR,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                            ),
+                          ),
+                          isDense: true,
+                          hintText: 'Password (min. 7 characters)',
+                          hintStyle: TextStyle(
+                            color: Colors.grey.shade400,
+                            fontSize: Get.height * 0.018,
+                          ),
+                        ),
+                        obscureText: !isPasswordVisible.value,
+                        onSaved: (value) {
+                          _userPassword = value as String;
+                        },
                       ),
+                      SizedBox(height: Get.height * 0.03),
                       if (controller.isLoadingAuth.value == true)
                         const CircularProgressIndicator(
                           color: ConstColors.PRIMARY_SWATCH_COLOR,
                         ),
                       if (controller.isLoadingAuth.value == false)
                         SizedBox(
-                          height: 45,
-                          width: double.infinity,
+                          height: Get.height * 0.06,
+                          width: Get.width,
                           child: ElevatedButton(
                             onPressed: () {
                               isActiveSubmitButton.value ? onSubmitted() : null;
@@ -367,8 +368,8 @@ class _AuthPageState extends State<AuthPage> {
                             ),
                           ),
                         ),
-                      const SizedBox(
-                        height: 25,
+                      SizedBox(
+                        height: Get.height * 0.03,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -377,8 +378,7 @@ class _AuthPageState extends State<AuthPage> {
                             _isLogin.value
                                 ? 'Dont\'t have an account ? '
                                 : 'Already have an account ?',
-                            style: const TextStyle(
-                                color: ConstColors.APP_FONT_COLOR),
+                            style: TextStyle(color: ConstColors.APP_FONT_COLOR),
                           ),
                           TextButton(
                             style: const ButtonStyle(
@@ -395,8 +395,8 @@ class _AuthPageState extends State<AuthPage> {
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 25,
+                      SizedBox(
+                        height: Get.height * 0.03,
                       ),
                     ],
                   ),
