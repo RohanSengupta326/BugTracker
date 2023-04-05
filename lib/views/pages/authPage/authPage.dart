@@ -136,7 +136,6 @@ class _AuthPageState extends State<AuthPage> {
                       if (!_isLogin.value)
                         // registering user so upload image section else not
                         UploadImage(imagePicker),
-                      SizedBox(height: Get.height * 0.02),
                       TextFormField(
                         style: TextStyle(
                           color: ConstColors.APP_FONT_COLOR,
@@ -201,7 +200,7 @@ class _AuthPageState extends State<AuthPage> {
                         },
                       ),
                       SizedBox(
-                        height: Get.height * 0.03,
+                        height: Get.height * 0.01,
                       ),
                       if (!_isLogin.value)
                         TextFormField(
@@ -265,7 +264,7 @@ class _AuthPageState extends State<AuthPage> {
                           },
                         ),
                       SizedBox(
-                        height: Get.height * 0.03,
+                        height: _isLogin.value ? 0 : Get.height * 0.01,
                       ),
                       TextFormField(
                         style: TextStyle(
@@ -335,7 +334,7 @@ class _AuthPageState extends State<AuthPage> {
                           _userPassword = value as String;
                         },
                       ),
-                      SizedBox(height: Get.height * 0.03),
+                      SizedBox(height: Get.height * 0.02),
                       if (controller.isLoadingAuth.value == true)
                         const CircularProgressIndicator(
                           color: ConstColors.PRIMARY_SWATCH_COLOR,
