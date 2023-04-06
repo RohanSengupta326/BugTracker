@@ -103,6 +103,9 @@ class AuthUserController extends GetxController {
   }
 
   Future<void> googleUserSignUp(bool isLogin) async {
+    developer.log(
+        '------GOOGLE SIGNUP CONTROLLER FUNCTION ISLOGIN = ${isLogin.toString()}');
+
     final GoogleSignIn googleSignIn = GoogleSignIn();
     UserCredential userCredential;
 
@@ -130,27 +133,15 @@ class AuthUserController extends GetxController {
       }
 
       if (!isLogin) {
-        final refPath = FirebaseStorage.instance
-            .ref()
-            .child('user-image')
-            .child("${userCredential.user!.uid} + .jpg");
-
-        await refPath.putFile(
-          File(googleUser.photoUrl ?? ''),
-          SettableMetadata(contentEncoding: 'identity'),
-          // doesnt compress image , so quality is maintained
-        );
-
-        final dpUrl = await refPath.getDownloadURL();
-
+        // if logging in then no need to save image and name
         await FirebaseFirestore.instance
             .collection('users')
             .doc(userCredential.user!.uid)
             .set(
           {
-            'username': googleUser.displayName,
+            'username': googleUser.displayName ?? '',
             'email': googleUser.email,
-            'dpUrl': dpUrl,
+            'dpUrl': googleUser.photoUrl ?? '',
           },
         );
 
