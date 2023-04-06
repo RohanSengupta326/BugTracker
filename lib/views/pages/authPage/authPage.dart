@@ -34,6 +34,17 @@ class _AuthPageState extends State<AuthPage> {
     isValid ? isActiveSubmitButton.value = true : false;
   }
 
+  void googleUserSignUP(BuildContext ctx) {
+    controller.googleUserSignUp(_isLogin.value).catchError((error) {
+      showDialog(
+        context: ctx,
+        builder: (_) {
+          return AlertBoxWidget(error);
+        },
+      );
+    });
+  }
+
   void onSubmitted() {
     FocusScope.of(Get.context!).unfocus();
 
@@ -424,51 +435,60 @@ class _AuthPageState extends State<AuthPage> {
                       SizedBox(
                         height: Get.height * 0.02,
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey.shade400),
-                            borderRadius: BorderRadius.circular(25)),
-                        height: Get.height * 0.06,
-                        width: Get.width,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ButtonStyle(
-                            elevation: const MaterialStatePropertyAll(0),
-                            shape: MaterialStatePropertyAll(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                            ),
-                            backgroundColor:
-                                MaterialStatePropertyAll(Colors.white),
-                          ),
-                          child: RichText(
-                            text: TextSpan(
-                              children: [
-                                WidgetSpan(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        right: Get.width * 0.02),
-                                    child: Image.asset(
-                                      'assets/images/google_sign_in.png',
-                                      height: Get.height * 0.02,
-                                      width: Get.width * 0.05,
-                                      fit: BoxFit.cover,
+                      controller.isGoogleLoadingAuth.value
+                          ? SizedBox(
+                              height: Get.height * 0.02,
+                              width: Get.width * 0.05,
+                              child: CircularProgressIndicator())
+                          : Container(
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.grey.shade400),
+                                  borderRadius: BorderRadius.circular(25)),
+                              height: Get.height * 0.06,
+                              width: Get.width,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  // functio to call google signup
+                                  googleUserSignUP(context);
+                                },
+                                style: ButtonStyle(
+                                  elevation: const MaterialStatePropertyAll(0),
+                                  shape: MaterialStatePropertyAll(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(25),
                                     ),
                                   ),
+                                  backgroundColor:
+                                      MaterialStatePropertyAll(Colors.white),
                                 ),
-                                TextSpan(
-                                  text: 'Sign Up with Google',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
+                                child: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      WidgetSpan(
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              right: Get.width * 0.02),
+                                          child: Image.asset(
+                                            'assets/images/google_sign_in.png',
+                                            height: Get.height * 0.026,
+                                            width: Get.width * 0.05,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: 'Sign Up with Google',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),

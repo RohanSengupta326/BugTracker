@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'dart:math';
+import 'dart:developer' as developer;
 
 import 'package:bug_tracker/models/currUserData/currUserData.dart';
 import 'package:bug_tracker/models/usersDetails/usersDetails.dart';
@@ -8,6 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AuthUserController extends GetxController {
@@ -22,6 +25,7 @@ class AuthUserController extends GetxController {
   RxBool isUserFetching = false.obs;
   RxBool isLoadingUserData = false.obs;
   RxBool isSaveUserDataLoading = false.obs;
+  RxBool isGoogleLoadingAuth = false.obs;
 
   List<UsersDetails> get users {
     return [..._users];
@@ -94,6 +98,70 @@ class AuthUserController extends GetxController {
       throw Dialogs.GENERIC_ERROR_MESSAGE;
     } catch (error) {
       isLoadingAuth.value = false;
+      throw Dialogs.GENERIC_ERROR_MESSAGE;
+    }
+  }
+
+  Future<void> googleUserSignUp(bool isLogin) async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    UserCredential userCredential;
+
+    try {
+      isGoogleLoadingAuth.value = true;
+
+      // interactive page pops up
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+      // authenticate user
+      final GoogleSignInAuthentication googleUserAuthentication =
+          await googleUser!.authentication;
+
+      // get user credentials
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleUserAuthentication.accessToken,
+        idToken: googleUserAuthentication.idToken,
+      );
+
+      // login / sign up with firebase into the app
+      userCredential = await _auth.signInWithCredential(credential);
+
+      if (userCredential.user == null) {
+        throw Dialogs.GENERIC_ERROR_MESSAGE;
+      }
+
+      if (!isLogin) {
+        final refPath = FirebaseStorage.instance
+            .ref()
+            .child('user-image')
+            .child("${userCredential.user!.uid} + .jpg");
+
+        await refPath.putFile(
+          File(googleUser.photoUrl ?? ''),
+          SettableMetadata(contentEncoding: 'identity'),
+          // doesnt compress image , so quality is maintained
+        );
+
+        final dpUrl = await refPath.getDownloadURL();
+
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .set(
+          {
+            'username': googleUser.displayName,
+            'email': googleUser.email,
+            'dpUrl': dpUrl,
+          },
+        );
+
+        await fetchAllUsers();
+        //new users signed up so update all users list
+      }
+
+      isGoogleLoadingAuth.value = false;
+    } catch (error) {
+      developer.log(error.toString());
+      isGoogleLoadingAuth.value = false;
       throw Dialogs.GENERIC_ERROR_MESSAGE;
     }
   }
