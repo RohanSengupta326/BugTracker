@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:device_preview/device_preview.dart';
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(
@@ -28,20 +29,29 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      // for device_preview package next 3 lines
+      useInheritedMediaQuery: true,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
+
       debugShowCheckedModeBanner: false,
       title: 'Bug Tracker',
       theme: ThemeData(
         primarySwatch: ConstColors.PRIMARY_SWATCH_COLOR,
       ),
-      home: StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: ((context, snapshot) {
-          if (snapshot.hasData) {
-            return HomePage();
-          } else {
-            return AuthPage();
-          }
-        }),
+      home: DevicePreview(
+        builder: (context) {
+          return StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: ((context, snapshot) {
+              if (snapshot.hasData) {
+                return HomePage();
+              } else {
+                return AuthPage();
+              }
+            }),
+          );
+        },
       ),
     );
   }

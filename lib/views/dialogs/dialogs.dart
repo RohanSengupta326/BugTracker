@@ -16,6 +16,9 @@ class Dialogs {
   static const String PROJECT_DELETE_CONFIRMATION =
       'The project will be deleted';
 
+  static const String VERIFY_EMAIL_MESSAGE =
+      'To confirm your email address tap the link in the email we sent you';
+
   // firebase signup/login error messages
   static const String EMAIL_EXISTS = 'Email already exists.\nLogIn Instead.';
   static const String INVALID_EMAIL = 'Email is not valid!';

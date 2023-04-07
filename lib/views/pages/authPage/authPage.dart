@@ -8,6 +8,7 @@ import 'package:bug_tracker/views/widgets/alertBoxWidget/alertBoxWidget.dart';
 import 'package:bug_tracker/views/widgets/uploadPhoto/uploadPhoto.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -105,13 +106,13 @@ class _AuthPageState extends State<AuthPage> {
               Align(
                 alignment: Alignment.topLeft,
                 child: Container(
-                  margin: EdgeInsets.only(left: Get.height * 0.03),
+                  margin: EdgeInsets.only(left: Get.width * 0.03),
                   child: Text(
                     'Welcome to ',
                     textAlign: TextAlign.start,
                     style: TextStyle(
                         color: ConstColors.APP_FONT_COLOR,
-                        fontSize: Get.height * 0.03,
+                        fontSize: 20,
                         fontWeight: FontWeight.w500),
                   ),
                 ),
@@ -120,19 +121,19 @@ class _AuthPageState extends State<AuthPage> {
               Align(
                 alignment: Alignment.topLeft,
                 child: Container(
-                  margin: EdgeInsets.only(left: Get.height * 0.03),
+                  margin: EdgeInsets.only(left: Get.width * 0.03),
                   child: Text(
-                    'BugTracker',
+                    'Bug Tracker',
                     textAlign: TextAlign.start,
                     style: TextStyle(
                         color: ConstColors.APP_FONT_COLOR,
-                        fontSize: Get.height * 0.04,
+                        fontSize: 30,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
 
-              SizedBox(height: Get.height * 0.05),
+              SizedBox(height: Get.height * 0.03),
 
               Container(
                 margin: EdgeInsets.symmetric(horizontal: Get.width * 0.03),
@@ -150,7 +151,6 @@ class _AuthPageState extends State<AuthPage> {
                       TextFormField(
                         style: TextStyle(
                           color: ConstColors.APP_FONT_COLOR,
-                          fontSize: Get.height * 0.018,
                         ),
                         cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
                         validator: (value) {
@@ -203,7 +203,6 @@ class _AuthPageState extends State<AuthPage> {
                           hintText: 'youremail@gmail.com',
                           hintStyle: TextStyle(
                             color: Colors.grey.shade400,
-                            fontSize: Get.height * 0.018,
                           ),
                         ),
                         onSaved: (value) {
@@ -217,7 +216,6 @@ class _AuthPageState extends State<AuthPage> {
                         TextFormField(
                           style: TextStyle(
                             color: ConstColors.APP_FONT_COLOR,
-                            fontSize: Get.height * 0.018,
                           ),
                           cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
                           validator: (value) {
@@ -267,7 +265,6 @@ class _AuthPageState extends State<AuthPage> {
                             hintText: 'Your Name',
                             hintStyle: TextStyle(
                               color: Colors.grey.shade400,
-                              fontSize: Get.height * 0.018,
                             ),
                           ),
                           onSaved: (value) {
@@ -279,8 +276,8 @@ class _AuthPageState extends State<AuthPage> {
                       ),
                       TextFormField(
                         style: TextStyle(
-                            color: ConstColors.APP_FONT_COLOR,
-                            fontSize: Get.height * 0.018),
+                          color: ConstColors.APP_FONT_COLOR,
+                        ),
                         cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
                         validator: (value) {
                           if (value!.isEmpty || value.length < 7) {
@@ -337,7 +334,6 @@ class _AuthPageState extends State<AuthPage> {
                           hintText: 'Password (min. 7 characters)',
                           hintStyle: TextStyle(
                             color: Colors.grey.shade400,
-                            fontSize: Get.height * 0.018,
                           ),
                         ),
                         obscureText: !isPasswordVisible.value,
@@ -353,7 +349,7 @@ class _AuthPageState extends State<AuthPage> {
                       if (controller.isLoadingAuth.value == false)
                         SizedBox(
                           height: Get.height * 0.06,
-                          width: Get.width,
+                          width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () {
                               isActiveSubmitButton.value ? onSubmitted() : null;
@@ -418,12 +414,10 @@ class _AuthPageState extends State<AuthPage> {
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: Get.height * 0.01),
+                                horizontal: Get.width * 0.01),
                             child: Text(
                               "or",
-                              style: TextStyle(
-                                  fontSize: Get.height * 0.018,
-                                  color: Colors.grey.shade400),
+                              style: TextStyle(color: Colors.grey.shade400),
                             ),
                           ),
                           Expanded(
@@ -437,8 +431,8 @@ class _AuthPageState extends State<AuthPage> {
                       ),
                       controller.isGoogleLoadingAuth.value
                           ? SizedBox(
-                              height: Get.height * 0.02,
-                              width: Get.width * 0.05,
+                              height: Get.height * 0.03,
+                              width: Get.width * 0.06,
                               child: CircularProgressIndicator())
                           : Container(
                               decoration: BoxDecoration(
@@ -446,7 +440,7 @@ class _AuthPageState extends State<AuthPage> {
                                       Border.all(color: Colors.grey.shade400),
                                   borderRadius: BorderRadius.circular(25)),
                               height: Get.height * 0.06,
-                              width: Get.width,
+                              width: double.infinity,
                               child: ElevatedButton(
                                 onPressed: () {
                                   // functio to call google signup

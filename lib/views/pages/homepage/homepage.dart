@@ -6,6 +6,7 @@ import 'package:bug_tracker/controllers/projectController/projectController.dart
 
 import 'package:bug_tracker/utils/appdrawer/appdrawer.dart';
 import 'package:bug_tracker/utils/project_list_viewer/project_list_viewer.dart';
+import 'package:bug_tracker/views/dialogs/dialogs.dart';
 import 'package:bug_tracker/views/pages/NewProjectForm/newProjectFormPage.dart';
 
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final projectController = Get.put(ProjectsController());
   final fetchAllUserController = Get.put(AuthUserController());
+  RxBool isEmailVerified = false.obs;
 
   Future<void> fetchDetails() async {
     projectController.fetchProject();
@@ -34,6 +36,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    return !isEmailVerified.value ? emailVerificatonPage() : homePage();
+  }
+
+  Scaffold homePage() {
     return Scaffold(
       drawer: AppDrawer(),
       appBar: AppBar(
@@ -110,4 +116,26 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+Scaffold emailVerificatonPage() {
+  return Scaffold(
+    body: Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(),
+          Text(
+            'Check your email',
+            style: TextStyle(fontSize: 20),
+          ),
+          Text(
+            Dialogs.VERIFY_EMAIL_MESSAGE,
+            style: Get.textTheme.bodyMedium,
+          ),
+        ],
+      ),
+    ),
+  );
 }
