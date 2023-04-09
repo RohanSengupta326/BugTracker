@@ -21,6 +21,8 @@ class _AuthPageState extends State<AuthPage> {
   final controller = Get.put(AuthUserController());
   final GlobalKey<FormState> _formKey = GlobalKey();
 
+  double responsiveFontSize = Get.width * 0.04;
+
   String _userEmail = '';
   String _userName = '';
   String _userPassword = '';
@@ -36,7 +38,7 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   void googleUserSignUP(BuildContext ctx) {
-    controller.googleUserSignUp(_isLogin.value).catchError((error) {
+    controller.googleUserSignUp().catchError((error) {
       showDialog(
         context: ctx,
         builder: (_) {
@@ -100,7 +102,7 @@ class _AuthPageState extends State<AuthPage> {
             children: [
               // design
               SizedBox(
-                height: Get.height * 0.1,
+                height: Get.height * 0.08,
               ),
 
               Align(
@@ -112,7 +114,7 @@ class _AuthPageState extends State<AuthPage> {
                     textAlign: TextAlign.start,
                     style: TextStyle(
                         color: ConstColors.APP_FONT_COLOR,
-                        fontSize: 20,
+                        fontSize: Get.width * 0.06,
                         fontWeight: FontWeight.w500),
                   ),
                 ),
@@ -127,7 +129,7 @@ class _AuthPageState extends State<AuthPage> {
                     textAlign: TextAlign.start,
                     style: TextStyle(
                         color: ConstColors.APP_FONT_COLOR,
-                        fontSize: 30,
+                        fontSize: Get.width * 0.08,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -150,6 +152,7 @@ class _AuthPageState extends State<AuthPage> {
                         UploadImage(imagePicker),
                       TextFormField(
                         style: TextStyle(
+                          fontSize: responsiveFontSize,
                           color: ConstColors.APP_FONT_COLOR,
                         ),
                         cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
@@ -202,6 +205,7 @@ class _AuthPageState extends State<AuthPage> {
                           ),
                           hintText: 'youremail@gmail.com',
                           hintStyle: TextStyle(
+                            fontSize: responsiveFontSize,
                             color: Colors.grey.shade400,
                           ),
                         ),
@@ -215,6 +219,7 @@ class _AuthPageState extends State<AuthPage> {
                       if (!_isLogin.value)
                         TextFormField(
                           style: TextStyle(
+                            fontSize: responsiveFontSize,
                             color: ConstColors.APP_FONT_COLOR,
                           ),
                           cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
@@ -264,6 +269,7 @@ class _AuthPageState extends State<AuthPage> {
                             ),
                             hintText: 'Your Name',
                             hintStyle: TextStyle(
+                              fontSize: responsiveFontSize,
                               color: Colors.grey.shade400,
                             ),
                           ),
@@ -276,6 +282,7 @@ class _AuthPageState extends State<AuthPage> {
                       ),
                       TextFormField(
                         style: TextStyle(
+                          fontSize: responsiveFontSize,
                           color: ConstColors.APP_FONT_COLOR,
                         ),
                         cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
@@ -333,6 +340,7 @@ class _AuthPageState extends State<AuthPage> {
                           isDense: true,
                           hintText: 'Password (min. 7 characters)',
                           hintStyle: TextStyle(
+                            fontSize: responsiveFontSize,
                             color: Colors.grey.shade400,
                           ),
                         ),
@@ -369,8 +377,12 @@ class _AuthPageState extends State<AuthPage> {
                             child: Text(
                               _isLogin.value ? 'LogIn' : 'SignUp',
                               style: isActiveSubmitButton.value
-                                  ? TextStyle(color: Colors.white)
-                                  : TextStyle(color: Colors.grey),
+                                  ? TextStyle(
+                                      fontSize: responsiveFontSize,
+                                      color: Colors.white)
+                                  : TextStyle(
+                                      fontSize: responsiveFontSize,
+                                      color: Colors.grey),
                             ),
                           ),
                         ),
@@ -384,7 +396,9 @@ class _AuthPageState extends State<AuthPage> {
                             _isLogin.value
                                 ? 'Dont\'t have an account ? '
                                 : 'Already have an account ?',
-                            style: TextStyle(color: ConstColors.APP_FONT_COLOR),
+                            style: TextStyle(
+                                fontSize: responsiveFontSize,
+                                color: ConstColors.APP_FONT_COLOR),
                           ),
                           TextButton(
                             style: const ButtonStyle(
@@ -397,6 +411,7 @@ class _AuthPageState extends State<AuthPage> {
                             },
                             child: Text(
                               _isLogin.value ? 'Register' : 'LogIn',
+                              style: TextStyle(fontSize: responsiveFontSize),
                             ),
                           ),
                         ],
@@ -417,7 +432,9 @@ class _AuthPageState extends State<AuthPage> {
                                 horizontal: Get.width * 0.01),
                             child: Text(
                               "or",
-                              style: TextStyle(color: Colors.grey.shade400),
+                              style: TextStyle(
+                                  fontSize: responsiveFontSize,
+                                  color: Colors.grey.shade400),
                             ),
                           ),
                           Expanded(
@@ -474,6 +491,7 @@ class _AuthPageState extends State<AuthPage> {
                                       TextSpan(
                                         text: 'Sign Up with Google',
                                         style: TextStyle(
+                                          fontSize: responsiveFontSize,
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                         ),

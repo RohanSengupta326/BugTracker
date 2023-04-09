@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return !isEmailVerified.value ? emailVerificatonPage() : homePage();
+    return /* !isEmailVerified.value ? emailVerificatonPage() :  */ homePage();
   }
 
   Scaffold homePage() {

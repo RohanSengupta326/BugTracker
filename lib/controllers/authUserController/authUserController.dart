@@ -102,10 +102,7 @@ class AuthUserController extends GetxController {
     }
   }
 
-  Future<void> googleUserSignUp(bool isLogin) async {
-    developer.log(
-        '------GOOGLE SIGNUP CONTROLLER FUNCTION ISLOGIN = ${isLogin.toString()}');
-
+  Future<void> googleUserSignUp() async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
     UserCredential userCredential;
 
@@ -132,7 +129,13 @@ class AuthUserController extends GetxController {
         throw Dialogs.GENERIC_ERROR_MESSAGE;
       }
 
-      if (!isLogin) {
+      // check if user already exists
+      final user = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .get();
+      if (!user.exists) {
+        developer.log('--NEW USER--');
         // if logging in then no need to save image and name
         await FirebaseFirestore.instance
             .collection('users')
@@ -162,6 +165,8 @@ class AuthUserController extends GetxController {
     currentUserData = [
       UserData('', ''),
     ];
+    await GoogleSignIn()
+        .disconnect(); // lets user choose mail again, before signing up
   }
 
   Future<void> fetchAllUsers() async {
