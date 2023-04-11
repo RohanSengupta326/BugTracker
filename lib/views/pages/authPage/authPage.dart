@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'dart:developer' as developer;
 
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
@@ -102,7 +102,7 @@ class _AuthPageState extends State<AuthPage> {
             children: [
               // design
               SizedBox(
-                height: Get.height * 0.08,
+                height: 50,
               ),
 
               Align(
@@ -119,7 +119,7 @@ class _AuthPageState extends State<AuthPage> {
                   ),
                 ),
               ),
-              SizedBox(height: Get.height * 0.01),
+              SizedBox(height: 5),
               Align(
                 alignment: Alignment.topLeft,
                 child: Container(
@@ -135,7 +135,7 @@ class _AuthPageState extends State<AuthPage> {
                 ),
               ),
 
-              SizedBox(height: Get.height * 0.03),
+              SizedBox(height: 25),
 
               Container(
                 margin: EdgeInsets.symmetric(horizontal: Get.width * 0.03),
@@ -167,8 +167,8 @@ class _AuthPageState extends State<AuthPage> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(
                               left: Get.width * 0.04,
-                              top: Get.height * 0.02,
-                              bottom: Get.height * 0.02,
+                              top: 15,
+                              bottom: 15,
                               right: Get.width * 0.04),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(25.0),
@@ -214,7 +214,7 @@ class _AuthPageState extends State<AuthPage> {
                         },
                       ),
                       SizedBox(
-                        height: Get.height * 0.01,
+                        height: 5,
                       ),
                       if (!_isLogin.value)
                         TextFormField(
@@ -234,8 +234,8 @@ class _AuthPageState extends State<AuthPage> {
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(
                                 left: Get.width * 0.04,
-                                top: Get.height * 0.02,
-                                bottom: Get.height * 0.02,
+                                top: 15,
+                                bottom: 15,
                                 right: Get.width * 0.04),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25.0),
@@ -278,7 +278,7 @@ class _AuthPageState extends State<AuthPage> {
                           },
                         ),
                       SizedBox(
-                        height: _isLogin.value ? 0 : Get.height * 0.01,
+                        height: _isLogin.value ? 0 : 5,
                       ),
                       TextFormField(
                         style: TextStyle(
@@ -305,8 +305,8 @@ class _AuthPageState extends State<AuthPage> {
                           ),
                           contentPadding: EdgeInsets.only(
                               left: Get.width * 0.04,
-                              top: Get.height * 0.02,
-                              bottom: Get.height * 0.02,
+                              top: 15,
+                              bottom: 15,
                               right: Get.width * 0.04),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(25.0),
@@ -349,14 +349,14 @@ class _AuthPageState extends State<AuthPage> {
                           _userPassword = value as String;
                         },
                       ),
-                      SizedBox(height: Get.height * 0.02),
+                      SizedBox(height: 15),
                       if (controller.isLoadingAuth.value == true)
                         const CircularProgressIndicator(
                           color: ConstColors.PRIMARY_SWATCH_COLOR,
                         ),
                       if (controller.isLoadingAuth.value == false)
                         SizedBox(
-                          height: Get.height * 0.06,
+                          height: 45,
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () {
@@ -387,18 +387,21 @@ class _AuthPageState extends State<AuthPage> {
                           ),
                         ),
                       SizedBox(
-                        height: Get.height * 0.001,
+                        height: 10,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            _isLogin.value
-                                ? 'Dont\'t have an account ? '
-                                : 'Already have an account ?',
-                            style: TextStyle(
-                                fontSize: responsiveFontSize,
-                                color: ConstColors.APP_FONT_COLOR),
+                          Flexible(
+                            child: Text(
+                              _isLogin.value
+                                  ? 'Dont\'t have an account ? '
+                                  : 'Already have an account ?',
+                              softWrap: true,
+                              style: TextStyle(
+                                  fontSize: responsiveFontSize,
+                                  color: ConstColors.APP_FONT_COLOR),
+                            ),
                           ),
                           TextButton(
                             style: const ButtonStyle(
@@ -407,7 +410,7 @@ class _AuthPageState extends State<AuthPage> {
                             ),
                             onPressed: () {
                               _isLogin.value = !_isLogin.value;
-                              log(_isLogin.value.toString());
+                              developer.log(_isLogin.value.toString());
                             },
                             child: Text(
                               _isLogin.value ? 'Register' : 'LogIn',
@@ -417,7 +420,7 @@ class _AuthPageState extends State<AuthPage> {
                         ],
                       ),
                       SizedBox(
-                        height: Get.height * 0.001,
+                        height: 5,
                       ),
                       Row(
                         children: [
@@ -444,11 +447,11 @@ class _AuthPageState extends State<AuthPage> {
                         ],
                       ),
                       SizedBox(
-                        height: Get.height * 0.02,
+                        height: 15,
                       ),
                       controller.isGoogleLoadingAuth.value
                           ? SizedBox(
-                              height: Get.height * 0.03,
+                              height: 25,
                               width: Get.width * 0.06,
                               child: CircularProgressIndicator())
                           : Container(
@@ -456,7 +459,7 @@ class _AuthPageState extends State<AuthPage> {
                                   border:
                                       Border.all(color: Colors.grey.shade400),
                                   borderRadius: BorderRadius.circular(25)),
-                              height: Get.height * 0.06,
+                              height: 45,
                               width: double.infinity,
                               child: ElevatedButton(
                                 onPressed: () {
@@ -482,8 +485,8 @@ class _AuthPageState extends State<AuthPage> {
                                               right: Get.width * 0.02),
                                           child: Image.asset(
                                             'assets/images/google_sign_in.png',
-                                            height: Get.height * 0.026,
-                                            width: Get.width * 0.05,
+                                            height: 18,
+                                            width: 18,
                                             fit: BoxFit.cover,
                                           ),
                                         ),
@@ -501,6 +504,9 @@ class _AuthPageState extends State<AuthPage> {
                                 ),
                               ),
                             ),
+                      SizedBox(
+                        height: 10,
+                      ),
                     ],
                   ),
                 ),
