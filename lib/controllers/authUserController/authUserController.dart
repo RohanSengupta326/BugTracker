@@ -8,6 +8,7 @@ import 'package:bug_tracker/views/dialogs/dialogs.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -29,6 +30,20 @@ class AuthUserController extends GetxController {
 
   List<UsersDetails> get users {
     return [..._users];
+  }
+
+  Future<void> sendVerificationMail() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      user!.sendEmailVerification();
+    } catch (error) {
+      throw Dialogs.GENERIC_ERROR_MESSAGE;
+    }
+  }
+
+  Future<bool> checkEmailVerified() async {
+    FirebaseAuth.instance.currentUser!.reload(); // reload user
+    return FirebaseAuth.instance.currentUser!.emailVerified;
   }
 
   Future<void> authUser(String email, String username, String password,
