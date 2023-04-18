@@ -451,9 +451,11 @@ class _AuthPageState extends State<AuthPage> {
                       ),
                       controller.isGoogleLoadingAuth.value
                           ? SizedBox(
-                              height: 25,
+                              height: 20,
                               width: Get.width * 0.06,
-                              child: CircularProgressIndicator())
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                              ))
                           : Container(
                               decoration: BoxDecoration(
                                   border:

@@ -18,6 +18,7 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(); // initializing firebase
+
   runApp(
     const MyApp(), // Wrap your app
   );
@@ -39,19 +40,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: ConstColors.PRIMARY_SWATCH_COLOR,
       ),
-      home: DevicePreview(
-        builder: (context) {
-          return StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: ((context, snapshot) {
-              if (snapshot.hasData) {
-                return HomePage();
-              } else {
-                return AuthPage();
-              }
-            }),
-          );
-        },
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: ((context, snapshot) {
+          if (snapshot.hasData) {
+            return HomePage();
+          } else {
+            return AuthPage();
+          }
+        }),
       ),
     );
   }
