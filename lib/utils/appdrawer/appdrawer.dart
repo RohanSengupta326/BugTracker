@@ -48,6 +48,7 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print('------------ ENTERING APP DRAWER ----------');
     return Drawer(
       child: Container(
         margin: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),

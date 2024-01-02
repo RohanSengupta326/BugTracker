@@ -37,7 +37,7 @@ class _AuthPageState extends State<AuthPage> {
     isValid ? isActiveSubmitButton.value = true : false;
   }
 
-  void googleUserSignUP(BuildContext ctx) {
+  void googleUserSignUP(BuildContext ctx) async {
     controller.googleUserSignUp().catchError((error) {
       showDialog(
         context: ctx,
@@ -48,7 +48,7 @@ class _AuthPageState extends State<AuthPage> {
     });
   }
 
-  void onSubmitted() {
+  void onSubmitted() async {
     FocusScope.of(Get.context!).unfocus();
 
     _formKey.currentState!.save();

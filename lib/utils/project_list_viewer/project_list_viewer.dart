@@ -33,7 +33,7 @@ class ProjectListViewer extends StatelessWidget {
 
       // boxConstraints provide the available width inside the widget tree where contributors names are displayed, using layoutbuilder
       if (currentWidthOfChipRow + chipWidth > boxConstraints.maxWidth) {
-        print('--------${(boxConstraints.maxWidth).toString()}------------');
+        // print('--------${(boxConstraints.maxWidth).toString()}------------');
         break;
       }
 

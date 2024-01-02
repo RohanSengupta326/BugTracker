@@ -14,7 +14,13 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../projectController/projectController.dart';
+
 class AuthUserController extends GetxController {
+  bool didUserSignIn = false;
+  // to check if user signed in or already signed in, based on that different way data will be loaded in homepage initstate.
+  final ProjectsController projectsController = Get.put(ProjectsController());
+
   final _auth = FirebaseAuth.instance;
   RxBool isLoadingAuth = false.obs;
 
@@ -37,6 +43,7 @@ class AuthUserController extends GetxController {
     UserCredential userCredential;
 
     try {
+      didUserSignIn = true;
       isLoadingAuth.value = true;
 
       if (isLogin) {
@@ -75,10 +82,11 @@ class AuthUserController extends GetxController {
             'dpUrl': dpUrl,
           },
         );
-
-        await fetchAllUsers();
-        //new users signed up so update all users list
       }
+      await fetchAllUsers();
+      await fetchUserData();
+      await projectsController.fetchProject();
+      //new users signed up so update all users list
 
       isLoadingAuth.value = false;
     } on FirebaseAuthException catch (error) {
@@ -108,6 +116,7 @@ class AuthUserController extends GetxController {
     UserCredential userCredential;
 
     try {
+      didUserSignIn = true;
       isGoogleLoadingAuth.value = true;
 
       // interactive page pops up
@@ -136,7 +145,7 @@ class AuthUserController extends GetxController {
           .doc(userCredential.user!.uid)
           .get();
       if (!user.exists) {
-        developer.log('--NEW USER--');
+        // print('--NEW USER--');
         // if logging in then no need to save image and name
         await FirebaseFirestore.instance
             .collection('users')
@@ -148,11 +157,12 @@ class AuthUserController extends GetxController {
             'dpUrl': googleUser.photoUrl ?? '',
           },
         );
-
-        developer.log('--------USER SIGN-IN DONE--------');
-        await fetchAllUsers();
-        //new users signed up so update all users list
       }
+      print('########## USER SIGN-IN DONE ##########');
+      await fetchAllUsers();
+      await fetchUserData();
+      await projectsController.fetchProject();
+      //new users signed up so update all users list
 
       isGoogleLoadingAuth.value = false;
     } catch (error) {
@@ -163,6 +173,7 @@ class AuthUserController extends GetxController {
   }
 
   Future<void> logOut() async {
+    didUserSignIn = false;
     _auth.signOut();
     currentUserData = [
       UserData('', ''),
@@ -190,7 +201,7 @@ class AuthUserController extends GetxController {
       }
 
       isUserFetching.value = false;
-      print('--------FETCHED ALL USERS--------');
+      // print('--------FETCHED ALL USERS--------');
     } catch (error) {
       throw Dialogs.GENERIC_ERROR_MESSAGE;
     }
@@ -198,6 +209,7 @@ class AuthUserController extends GetxController {
 
   Future<void> fetchUserData() async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
+    // print('######## $userId #######\n');
 
     try {
       isLoadingUserData.value = true;
@@ -206,15 +218,23 @@ class AuthUserController extends GetxController {
           .doc(userId)
           .get();
 
+      // print('------------ ${userData['username']} ----------\n');
+      // print('------------ ${userData['dpUrl']} ----------\n');
+
       currentUserData = [
         UserData(
-          userData['username'],
+          userData['username'] ?? '',
           userData['dpUrl'],
         ),
       ];
+
+      // print('------------ ${currentUserData[0].dpUrl} ----------');
+      // print('------------ ${currentUserData[0].username} ----------');
+
       isLoadingUserData.value = false;
     } catch (err) {
       isLoadingUserData.value = false;
+      print('-------- $err ---------');
       throw Dialogs.USER_DATA_FETCH;
     }
   }
