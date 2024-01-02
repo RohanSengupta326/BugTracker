@@ -1,3 +1,5 @@
+import 'dart:developer' as dev;
+
 import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:bug_tracker/models/usersDetails/usersDetails.dart';
@@ -18,7 +20,8 @@ class ProjectListViewer extends StatelessWidget {
       this.projectId});
 
   double currentWidthOfChipRow = 0;
-  List<Widget> currentContributors() {
+  int shortContributorsList = 0;
+  List<Widget> currentContributors(BoxConstraints boxConstraints) {
     // chip widget to show active contributors for particular projects
     List<Widget> names = [];
 
@@ -28,7 +31,9 @@ class ProjectListViewer extends StatelessWidget {
           (contributors[i].name.toString().length * ConstValues.FONT_SIZE_12) +
               ConstValues.VALUE_3;
 
-      if (currentWidthOfChipRow + chipWidth > 500) {
+      // boxConstraints provide the available width inside the widget tree where contributors names are displayed, using layoutbuilder
+      if (currentWidthOfChipRow + chipWidth > boxConstraints.maxWidth) {
+        print('--------${(boxConstraints.maxWidth).toString()}------------');
         break;
       }
 
@@ -44,6 +49,8 @@ class ProjectListViewer extends StatelessWidget {
 
       currentWidthOfChipRow += chipWidth;
     }
+    shortContributorsList = names.length;
+    // to store the length of the short list, to compare if all contributors names are fetched or theres no more space
     return names;
   }
 
@@ -69,51 +76,56 @@ class ProjectListViewer extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.all(ConstValues.PADDING),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    projectName,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: ConstValues.HEADING_FONT_SIZE,
-                      color: ConstColors.PRIMARY_SWATCH_COLOR,
+            child: LayoutBuilder(
+              builder: (buildContext, boxConstraints) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        projectName,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: ConstValues.HEADING_FONT_SIZE,
+                          color: ConstColors.PRIMARY_SWATCH_COLOR,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(
-                  height: ConstValues.VALUE_16 / 2,
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(projectDetails.length > 42
-                      ? ("${projectDetailShort.substring(0, 42)}... ")
-                      : projectDetails),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Row(
-                    children: [
-                      ...currentContributors(),
-                      (currentWidthOfChipRow + 200) > 500
-                          ? const Text(
-                              '...',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                              ),
-                            )
-                          : const Center(),
-                      // if no more space in row to show more names , show ...
-                    ],
-                  ),
-                )
-              ],
+                    const SizedBox(
+                      height: ConstValues.VALUE_16 / 2,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(projectDetails.length > 42
+                          ? ("${projectDetailShort.substring(0, 42)}... ")
+                          : projectDetails),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Row(
+                        children: [
+                          // boxConstraints provide the available width inside the widget tree where contributors names are displayed, using layoutbuilder
+                          ...currentContributors(boxConstraints),
+                          shortContributorsList < contributors.length
+                              ? const Text(
+                                  '...',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                )
+                              : const Center(),
+                          // if no more space in row to show more names , show '...'
+                        ],
+                      ),
+                    )
+                  ],
+                );
+              },
             ),
           ),
         ),
