@@ -12,12 +12,13 @@ import 'package:device_preview/device_preview.dart';
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent, // status bar color
+      statusBarColor: Colors.transparent, // status bar color of the app
     ),
   );
 
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); // initializing firebase
+  await Firebase.initializeApp();
+  // initializing firebase
 
   runApp(
     const MyApp(), // Wrap your app
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
       useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
+      // ________________________________________
 
       debugShowCheckedModeBanner: false,
       title: 'Bug Tracker',
@@ -43,6 +45,9 @@ class MyApp extends StatelessWidget {
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: ((context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          }
           if (snapshot.hasData) {
             return HomePage();
           } else {

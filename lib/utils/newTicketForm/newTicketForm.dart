@@ -4,7 +4,7 @@ import 'package:bug_tracker/consts/const_colors/constColors.dart';
 import 'package:bug_tracker/consts/const_values/ConstValues.dart';
 import 'package:bug_tracker/controllers/projectController/projectController.dart';
 import 'package:bug_tracker/utils/ticketStatusDropdown/ticketStatusDropdown.dart';
-import 'package:bug_tracker/utils/ticketpriorityDropDown/ticketPriorityDropDown.dart';
+import '../TicketpriorityDropDown/ticketPriorityDropDown.dart';
 import 'package:bug_tracker/utils/projectTicketTab/projectTicketTab.dart';
 import 'package:bug_tracker/views/dialogs/dialogs.dart';
 import 'package:bug_tracker/views/widgets/alertBoxWidget/alertBoxWidget.dart';

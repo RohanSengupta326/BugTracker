@@ -32,20 +32,6 @@ class AuthUserController extends GetxController {
     return [..._users];
   }
 
-  Future<void> sendVerificationMail() async {
-    try {
-      final user = FirebaseAuth.instance.currentUser;
-      user!.sendEmailVerification();
-    } catch (error) {
-      throw Dialogs.GENERIC_ERROR_MESSAGE;
-    }
-  }
-
-  Future<bool> checkEmailVerified() async {
-    FirebaseAuth.instance.currentUser!.reload(); // reload user
-    return FirebaseAuth.instance.currentUser!.emailVerified;
-  }
-
   Future<void> authUser(String email, String username, String password,
       bool isLogin, XFile? image) async {
     UserCredential userCredential;
@@ -163,13 +149,14 @@ class AuthUserController extends GetxController {
           },
         );
 
+        developer.log('--------USER SIGN-IN DONE--------');
         await fetchAllUsers();
         //new users signed up so update all users list
       }
 
       isGoogleLoadingAuth.value = false;
     } catch (error) {
-      developer.log(error.toString());
+      print(error.toString());
       isGoogleLoadingAuth.value = false;
       throw Dialogs.GENERIC_ERROR_MESSAGE;
     }
@@ -203,6 +190,7 @@ class AuthUserController extends GetxController {
       }
 
       isUserFetching.value = false;
+      print('--------FETCHED ALL USERS--------');
     } catch (error) {
       throw Dialogs.GENERIC_ERROR_MESSAGE;
     }

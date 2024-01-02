@@ -26,8 +26,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final projectController = Get.put(ProjectsController());
   final fetchAllUserController = Get.put(AuthUserController());
-  RxBool isEmailVerified = false.obs;
-  Timer? timer;
 
   Future<void> fetchDetails() async {
     projectController.fetchProject();
@@ -37,42 +35,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    isEmailVerified.value = FirebaseAuth.instance.currentUser!.emailVerified;
-    log(isEmailVerified.value.toString());
-
-    if (!isEmailVerified.value) {
-      fetchAllUserController.sendVerificationMail().catchError((error) {
-        Get.snackbar('Oops!', error, duration: Duration(seconds: 3));
-      });
-
-      timer = Timer.periodic(
-        Duration(seconds: 3),
-        (timer) async {
-          isEmailVerified.value =
-              await fetchAllUserController.checkEmailVerified();
-          if (isEmailVerified.value) timer.cancel();
-        },
-      );
-    }
-
     fetchDetails();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Obx(() {
-      return !isEmailVerified.value
-          ? emailVerificatonPage(fetchAllUserController)
-          : homePage();
-    });
   }
 
   Scaffold homePage() {
@@ -152,77 +116,9 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-}
 
-Scaffold emailVerificatonPage(AuthUserController fetchAllUserController) {
-  final screenWidth = Get.width;
-  final avatarSize = screenWidth * 0.4;
-
-  return Scaffold(
-    appBar: AppBar(
-      title: Text('Email Verification'),
-    ),
-    body: SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: screenWidth * 0.05,
-          vertical: 150,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: avatarSize / 2,
-              backgroundImage: const AssetImage(
-                  'assets/images/email.png'), // Replace with your image
-            ),
-            SizedBox(height: 15),
-            Text(
-              'Thank you for signing up!',
-              style: TextStyle(
-                fontSize: screenWidth * 0.06,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 15),
-            Text(
-              'We have sent a verification link to your email',
-              style: TextStyle(fontSize: screenWidth * 0.045),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 15),
-            Text(
-              'Please click on the verification link to complete your registration.',
-              style: TextStyle(fontSize: screenWidth * 0.045),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 15),
-            ElevatedButton(
-              onPressed: () {}, // Replace with your verification link function
-              child: Text(
-                'Resend Verification Email',
-                style: TextStyle(fontSize: screenWidth * 0.045),
-              ),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: screenWidth * 0.03,
-                ),
-              ),
-            ),
-            SizedBox(height: 30),
-            ElevatedButton(
-              style: const ButtonStyle(
-                  backgroundColor:
-                      MaterialStatePropertyAll(ConstColors.ERROR_COLOR)),
-              onPressed: () => fetchAllUserController.logOut(),
-              child: Text('LogOut'),
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
+  @override
+  Widget build(BuildContext context) {
+    return homePage();
+  }
 }

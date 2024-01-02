@@ -17,10 +17,21 @@ class ProjectListViewer extends StatelessWidget {
       required this.contributors,
       this.projectId});
 
+  double currentWidthOfChipRow = 0;
   List<Widget> currentContributors() {
     // chip widget to show active contributors for particular projects
     List<Widget> names = [];
+
+    // calculating size of the Chip widget , so if crossing the row width limit to show more contributors names on home screen, dont add more in list
     for (var i = 0; i < contributors.length; i++) {
+      double chipWidth =
+          (contributors[i].name.toString().length * ConstValues.FONT_SIZE_12) +
+              ConstValues.VALUE_3;
+
+      if (currentWidthOfChipRow + chipWidth > 500) {
+        break;
+      }
+
       names.add(Container(
         margin: EdgeInsets.only(right: ConstValues.VALUE_3),
         child: Chip(
@@ -30,6 +41,8 @@ class ProjectListViewer extends StatelessWidget {
           ),
         ),
       ));
+
+      currentWidthOfChipRow += chipWidth;
     }
     return names;
   }
@@ -80,15 +93,24 @@ class ProjectListViewer extends StatelessWidget {
                       : projectDetails),
                 ),
                 const SizedBox(
-                  height: ConstValues.VALUE_16,
+                  height: 10,
                 ),
                 Align(
                   alignment: Alignment.bottomLeft,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: currentContributors(),
-                    ),
+                  child: Row(
+                    children: [
+                      ...currentContributors(),
+                      (currentWidthOfChipRow + 200) > 500
+                          ? const Text(
+                              '...',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            )
+                          : const Center(),
+                      // if no more space in row to show more names , show ...
+                    ],
                   ),
                 )
               ],

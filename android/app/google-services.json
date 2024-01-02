@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "509920641403",
+    "firebase_url": "https://bugtracker-8e961-default-rtdb.firebaseio.com",
     "project_id": "bugtracker-8e961",
     "storage_bucket": "bugtracker-8e961.appspot.com"
   },
@@ -14,15 +15,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "509920641403-9ibegg8s0jp76rh2u4vsj6kq8iglr6de.apps.googleusercontent.com",
+          "client_id": "509920641403-hgabjvltn927cklferq224pkckhocmt9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.bug_tracker",
-            "certificate_hash": "2ee113558ed9499e5ac39554c1e39107cdc84364"
+            "certificate_hash": "9a8eac2e2d337d3c7e5e1fb05781c08a80dc1544"
           }
         },
         {
-          "client_id": "509920641403-aubu1dp1ir8770hjr9mlg157hufno9t6.apps.googleusercontent.com",
+          "client_id": "509920641403-r9lmgmflvktr7gh7g24fmjrg2nne6a9k.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
