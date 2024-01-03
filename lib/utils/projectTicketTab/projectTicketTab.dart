@@ -14,14 +14,14 @@ class ProjectTicketTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int projectIndex = controller.projects
-        .indexWhere((element) => element.projectId == fetchedProjectId);
-
     return Scaffold(
       body: Obx(
         () {
+          int projectIndex = controller.projects
+              .indexWhere((element) => element.projectId == fetchedProjectId);
           return controller.isTickeSaving.value ||
-                  controller.isTicketEditing.value
+                  controller.isTicketEditing.value ||
+                  controller.isTicketDeleteing.value
               ? Center(
                   child: CircularProgressIndicator(
                     color: Colors.blue,

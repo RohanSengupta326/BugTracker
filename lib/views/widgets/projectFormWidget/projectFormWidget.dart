@@ -27,106 +27,104 @@ class ProjectFormWidget extends StatelessWidget {
             // CODE TO SELECT CONTRIBUTORS
             ContributorDropdownWidget(),
 
-            Container(
-              child: TextFormField(
-                maxLines: 1,
-                style: TextStyle(color: Colors.black),
-                cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return Dialogs.EMPTY_FIELD;
-                  }
-                  return null;
-                },
-                initialValue: NewProjectFormPage.projectName,
-                key: ValueKey('Project Name'),
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide:
-                        BorderSide(color: ConstColors.PRIMARY_SWATCH_COLOR),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: ConstColors.PRIMARY_SWATCH_COLOR,
-                    ),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: ConstColors.ERROR_COLOR,
-                    ),
-                  ),
-                  focusColor: ConstColors.PRIMARY_SWATCH_COLOR,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: ConstColors.PRIMARY_SWATCH_COLOR,
-                    ),
-                  ),
-                  hintText: 'Project Name',
-                  hintStyle: TextStyle(
-                    color: ConstColors.HINT_COLOR,
+            TextFormField(
+              maxLines: 1,
+              style: TextStyle(color: Colors.black),
+              cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return Dialogs.EMPTY_FIELD;
+                }
+                return null;
+              },
+              initialValue: NewProjectFormPage.projectName,
+              key: ValueKey('Project Name'),
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(10),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide:
+                      BorderSide(color: ConstColors.PRIMARY_SWATCH_COLOR),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: ConstColors.PRIMARY_SWATCH_COLOR,
                   ),
                 ),
-                onSaved: (value) {
-                  NewProjectFormPage.projectName = value as String;
-                },
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: ConstColors.ERROR_COLOR,
+                  ),
+                ),
+                focusColor: ConstColors.PRIMARY_SWATCH_COLOR,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(
+                    color: ConstColors.PRIMARY_SWATCH_COLOR,
+                  ),
+                ),
+                hintText: 'Project Name',
+                hintStyle: TextStyle(
+                  color: ConstColors.HINT_COLOR,
+                ),
               ),
+              onSaved: (value) {
+                NewProjectFormPage.projectName = value as String;
+              },
             ),
+
             SizedBox(
               height: ConstValues.VALUE_16,
             ),
-            Container(
-              child: TextFormField(
-                maxLines: 20,
-                // more height space to write
-                style: TextStyle(color: ConstColors.APP_FONT_COLOR),
-                cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return Dialogs.EMPTY_FIELD;
-                  }
-                  return null;
-                },
-                key: ValueKey('Project Details'),
-                initialValue: NewProjectFormPage.projectDetails,
-                decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide:
-                        BorderSide(color: ConstColors.PRIMARY_SWATCH_COLOR),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: ConstColors.PRIMARY_SWATCH_COLOR,
-                    ),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: ConstColors.ERROR_COLOR,
-                    ),
-                  ),
-                  focusColor: ConstColors.PRIMARY_SWATCH_COLOR,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: ConstColors.PRIMARY_SWATCH_COLOR,
-                    ),
-                  ),
-                  hintText: 'Project Details',
-                  hintStyle: TextStyle(
-                    color: ConstColors.HINT_COLOR,
+            TextFormField(
+              maxLines: 23,
+              style: TextStyle(color: ConstColors.APP_FONT_COLOR),
+              cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return Dialogs.EMPTY_FIELD;
+                }
+                return null;
+              },
+              key: ValueKey('Project Details'),
+              initialValue: NewProjectFormPage.projectDetails,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(10),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide:
+                      BorderSide(color: ConstColors.PRIMARY_SWATCH_COLOR),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: ConstColors.PRIMARY_SWATCH_COLOR,
                   ),
                 ),
-                onSaved: (value) {
-                  NewProjectFormPage.projectDetails = value as String;
-                },
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: ConstColors.ERROR_COLOR,
+                  ),
+                ),
+                focusColor: ConstColors.PRIMARY_SWATCH_COLOR,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(
+                    color: ConstColors.PRIMARY_SWATCH_COLOR,
+                  ),
+                ),
+                hintText: 'Project Details',
+                hintStyle: TextStyle(
+                  color: ConstColors.HINT_COLOR,
+                ),
               ),
+              onSaved: (value) {
+                NewProjectFormPage.projectDetails = value as String;
+              },
             ),
             SizedBox(
               height: ConstValues.VALUE_16,

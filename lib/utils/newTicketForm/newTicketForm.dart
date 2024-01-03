@@ -160,11 +160,19 @@ class NewTicketForm extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
+                  // Theres a default TextFormField Size with no attributes mentioned.
+                  // wrapping TextFormField with SizedBox/container : if container height is smaller than default formfield height its bound to follow
+                  // container height, but if container is bigger it wont follow container height, it will stick to its default height.
+
+                  // then with maxLines=2, so textformfield want to show 2 lines at once, normally formfield would resize but here sizedbox predefined the
+                  // height so it cant. (if container height is smaller mentioned than the default formfield height)
+                  // and contentPadding simply gaps between text & border .
                   SizedBox(
-                    height: 30,
+                    height: 50,
                     child: TextFormField(
+                      maxLines: 2,
+
                       initialValue: ticketTitle,
-                      maxLines: 1,
                       style: TextStyle(color: Colors.black),
                       cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
                       validator: (value) {
@@ -176,6 +184,7 @@ class NewTicketForm extends StatelessWidget {
                       // initialValue: NewProjectFormPage.projectName,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(4),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15.0),
                           borderSide: BorderSide(
@@ -221,54 +230,54 @@ class NewTicketForm extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  SizedBox(
-                    height: 60,
-                    child: TextFormField(
-                      initialValue: ticketDesc,
-                      maxLines: 3,
-                      style: TextStyle(color: Colors.black),
-                      cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return Dialogs.EMPTY_FIELD;
-                        }
-                        return null;
-                      },
-                      // initialValue: NewProjectFormPage.projectName,
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(
-                              color: ConstColors.PRIMARY_SWATCH_COLOR),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(
-                            color: ConstColors.PRIMARY_SWATCH_COLOR,
-                          ),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(
-                            color: ConstColors.ERROR_COLOR,
-                          ),
-                        ),
-                        focusColor: ConstColors.PRIMARY_SWATCH_COLOR,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: ConstColors.PRIMARY_SWATCH_COLOR,
-                          ),
-                        ),
-                        hintStyle: TextStyle(
-                          color: ConstColors.HINT_COLOR,
+                  TextFormField(
+                    initialValue: ticketDesc,
+                    //when user is typing how many previous lines above will be shown is set by max lines
+                    maxLines: 3,
+                    style: TextStyle(color: Colors.black),
+                    cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return Dialogs.EMPTY_FIELD;
+                      }
+                      return null;
+                    },
+                    // initialValue: NewProjectFormPage.projectName,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      // gaps between text & border.
+                      contentPadding: EdgeInsets.all(4),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide:
+                            BorderSide(color: ConstColors.PRIMARY_SWATCH_COLOR),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: ConstColors.PRIMARY_SWATCH_COLOR,
                         ),
                       ),
-                      onSaved: (value) {
-                        ticketDesc = value as String;
-                      },
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: ConstColors.ERROR_COLOR,
+                        ),
+                      ),
+                      focusColor: ConstColors.PRIMARY_SWATCH_COLOR,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          color: ConstColors.PRIMARY_SWATCH_COLOR,
+                        ),
+                      ),
+                      hintStyle: TextStyle(
+                        color: ConstColors.HINT_COLOR,
+                      ),
                     ),
+                    onSaved: (value) {
+                      ticketDesc = value as String;
+                    },
                   ),
                   SizedBox(
                     height: 30,

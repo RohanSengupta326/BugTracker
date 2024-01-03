@@ -183,13 +183,7 @@ class NewProjectFormPage extends StatelessWidget {
               color: ConstColors.APPBAR_FONT_COLOR),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            ProjectFormWidget(),
-          ],
-        ),
-      ),
+      body: ProjectFormWidget(),
     );
   }
 }

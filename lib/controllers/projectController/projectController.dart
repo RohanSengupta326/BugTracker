@@ -19,6 +19,7 @@ class ProjectsController extends GetxController {
   RxBool isProjectSaving = false.obs;
   RxBool isProjectFetching = false.obs;
   RxBool isProjectDeleting = false.obs;
+  RxBool isTicketDeleteing = false.obs;
   RxBool isProjectEditing = false.obs;
   RxBool isTickeSaving = false.obs;
   RxBool isTicketEditing = false.obs;
@@ -352,6 +353,55 @@ class ProjectsController extends GetxController {
       isTicketEditing.value = false;
 
       rethrow;
+    }
+  }
+
+  Future<void> deleteTicket(
+      String deleteTicketProjId,
+      int deleteTicketIndex,
+      String ticketTitle,
+      String ticketDesc,
+      String ticketPriority,
+      String ticketStatus) async {
+    try {
+      isTicketDeleteing.value = true;
+
+      // deleting the particular ticket from list of tickets.
+      // FieldValue.arrayRemove finds the element from the array with the details & deletes that particular array element.
+      await FirebaseFirestore.instance
+          .collection('project-details')
+          .doc(deleteTicketProjId)
+          .update(
+        {
+          'ticketDetails': FieldValue.arrayRemove(
+            [
+              {
+                'ticketTitle': ticketTitle,
+                'ticketDescription': ticketDesc,
+                'ticketPriority': ticketPriority,
+                'ticketStatus': ticketStatus,
+              }
+            ],
+          ),
+        },
+      );
+
+      // locally delete the ticket too from list.
+      int projectIndex = _projects
+          .indexWhere((element) => element.projectId == deleteTicketProjId);
+      _projects[projectIndex].ticketDetails.removeAt(deleteTicketIndex);
+
+      isTicketDeleteing.value = false;
+    } catch (error) {
+      print('############# $error #############');
+      showDialog(
+        context: Get.context!,
+        builder: (_) {
+          return AlertBoxWidget(Dialogs.TICKET_NOT_DELETED);
+        },
+      );
+
+      isTicketDeleteing.value = false;
     }
   }
 }

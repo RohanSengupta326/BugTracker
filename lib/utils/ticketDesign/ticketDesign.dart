@@ -35,83 +35,86 @@ class TicketDesign extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
         ),
         margin: EdgeInsets.all(8),
-        child: Container(
-          padding: EdgeInsets.all(16),
-          height: 120,
-          width: double.infinity,
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  ticketTitle,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: LayoutBuilder(
+          builder: (buildContext, boxConstraints) {
+            return Container(
+              padding: EdgeInsets.all(16),
+              width: double.infinity,
+              child: Column(
                 children: [
-                  Flexible(
-                    flex: 1,
-                    child: FittedBox(
-                      child: Text(
-                        'Priority : ',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      color: ticketPriority.toLowerCase() == 'high'
-                          ? Colors.red.shade200
-                          : Colors.blue.shade200,
-                      child: Container(
-                          padding: EdgeInsets.all(5),
-                          child: Text(ticketPriority)),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Center(),
-                  ),
-                  Flexible(
-                    flex: 1,
+                  Align(
+                    alignment: Alignment.topLeft,
                     child: Text(
-                      'Status : ',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Flexible(
-                    flex: 2,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      color: ticketStatus.toLowerCase() == 'in-progress'
-                          ? Colors.green.shade400
-                          : ticketStatus == 'resolved'
-                              ? Colors.purple.shade200
-                              : Colors.amber.shade200,
-                      child: Container(
-                        padding: EdgeInsets.all(5),
-                        child: Text(ticketStatus),
+                      ticketTitle,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        flex: 1,
+                        child: FittedBox(
+                          child: Text(
+                            'Priority : ',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      Flexible(
+                        flex: 1,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          color: ticketPriority.toLowerCase() == 'high'
+                              ? Colors.red.shade200
+                              : Colors.blue.shade200,
+                          child: Container(
+                              padding: EdgeInsets.all(5),
+                              child: Text(ticketPriority)),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Center(),
+                      ),
+                      Flexible(
+                        flex: 1,
+                        child: Text(
+                          'Status : ',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Flexible(
+                        flex: 2,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          color: ticketStatus.toLowerCase() == 'in-progress'
+                              ? Colors.green.shade400
+                              : ticketStatus == 'resolved'
+                                  ? Colors.purple.shade200
+                                  : Colors.amber.shade200,
+                          child: Container(
+                            padding: EdgeInsets.all(5),
+                            child: Text(ticketStatus),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
-              )
-            ],
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

@@ -9,6 +9,10 @@ import 'package:bug_tracker/views/pages/DetailedTabPages/detailedTabPages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../models/ticketDetails/ticketDetails.dart';
+import '../../dialogs/dialogs.dart';
+import '../../widgets/confirmationAlertBoxWidget/confirmationAlertBoxWidget.dart';
+
 class TicketDetailPage extends StatelessWidget {
   final String fetchedProjectId;
   final int ticketIndex;
@@ -18,7 +22,7 @@ class TicketDetailPage extends StatelessWidget {
 
   List<ProjectDetailModel> _projects = [];
   late int projectIndex;
-  var ticketDetails;
+  TicketDetails ticketDetails = TicketDetails('', '', '', '');
 
   void fetchUpdatedProjects() {
     _projects = controller.projects;
@@ -27,10 +31,22 @@ class TicketDetailPage extends StatelessWidget {
     ticketDetails = _projects[projectIndex].ticketDetails[ticketIndex];
   }
 
+  void deleteTicket() async {
+    await controller.deleteTicket(
+        fetchedProjectId,
+        ticketIndex,
+        ticketDetails.ticketTitle,
+        ticketDetails.ticketDesc,
+        ticketDetails.ticketPriority,
+        ticketDetails.ticketStatus);
+    //
+    Get.back();
+  }
+
   @override
   Widget build(BuildContext context) {
     fetchUpdatedProjects();
-    // fetchProjectDetails in first build
+    // fetchProjectDetails in first build & when edited, fetch the project list again with updates.
 
     return Scaffold(
       appBar: AppBar(
@@ -53,6 +69,13 @@ class TicketDetailPage extends StatelessWidget {
               Icons.edit,
             ),
             iconSize: 20,
+          ),
+          IconButton(
+            icon: Icon(Icons.delete),
+            color: Colors.red,
+            onPressed: () {
+              deleteTicket();
+            },
           )
         ],
       ),
