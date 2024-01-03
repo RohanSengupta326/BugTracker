@@ -50,6 +50,7 @@ dependencies:
   google_sign_in: ^6.0.2
   device_preview: ^1.1.0
   firebase_core: ^2.9.0
+  flutter_markdown: ^0.6.15
 
 dev_dependencies:
   flutter_test:
