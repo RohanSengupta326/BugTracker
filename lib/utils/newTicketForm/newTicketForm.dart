@@ -32,7 +32,7 @@ class NewTicketForm extends StatelessWidget {
         .indexWhere((element) => element.projectId == fetchedProjectid);
 
     if (isEdit) {
-      log('-- EDIT  --');
+      print('################## EDIT #################');
 
       ticketTitle = controller
           .projects[projectIndex].ticketDetails[ticketIndex!].ticketTitle;
@@ -42,6 +42,11 @@ class NewTicketForm extends StatelessWidget {
           .projects[projectIndex].ticketDetails[ticketIndex!].ticketPriority;
       statusTicket = controller
           .projects[projectIndex].ticketDetails[ticketIndex!].ticketStatus;
+    } else {
+      ticketTitle = '';
+      ticketDesc = '';
+      priorityTicket = '';
+      statusTicket = '';
     }
   }
 
@@ -170,7 +175,7 @@ class NewTicketForm extends StatelessWidget {
                   SizedBox(
                     height: 50,
                     child: TextFormField(
-                      maxLines: 2,
+                      maxLines: 1,
 
                       initialValue: ticketTitle,
                       style: TextStyle(color: Colors.black),
