@@ -63,7 +63,6 @@ class ProjectListViewer extends StatelessWidget {
           left: ConstValues.MARGIN,
           right: ConstValues.MARGIN,
           top: ConstValues.MARGIN),
-      height: 152,
       child: GestureDetector(
         onTap: (() {
           Get.to(() => DetailedTabPages(

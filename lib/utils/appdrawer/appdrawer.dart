@@ -126,7 +126,6 @@ class AppDrawer extends StatelessWidget {
                                             .currentUserData[0].username
                                         : 'User',
                                     style: const TextStyle(
-                                        fontSize: ConstValues.HEADING_FONT_SIZE,
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold),
                                   );
