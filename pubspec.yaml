@@ -51,10 +51,25 @@ dependencies:
   device_preview: ^1.1.0
   firebase_core: ^2.9.0
   flutter_markdown: ^0.6.15
+  flutter_native_splash: ^2.2.19
+
+
+flutter_native_splash:
+  background_image: "assets/splash.png"
+
+android_12:
+  image: "assets/splash.png"  
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.13.1"
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/app_logo.png"
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

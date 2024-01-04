@@ -43,7 +43,6 @@ class ProjectDetailTab extends StatelessWidget {
             child: Container(
               margin: const EdgeInsets.only(left: 16, right: 16),
               child: MarkdownBody(
-                
                 data: projectDetails,
                 onTapLink: (text, href, title) => _launchUrl(href ?? ''),
               ),
