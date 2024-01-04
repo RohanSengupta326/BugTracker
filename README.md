@@ -4,7 +4,12 @@ Bug Tracker is a comprehensive project management solution tailored for organiza
 
 ## Screenshots :
 
-
+<p>
+ <img src="https://github.com/RohanSengupta326/BugTracker/assets/64458868/f1783315-c517-4111-82a4-8496d11ac563" alt="Splash View" width="200">
+ <img src="https://github.com/RohanSengupta326/BugTracker/assets/64458868/a809be81-8864-410c-98d7-568a6dcfc5a5" alt="Splash View" width="200">
+ <img src="https://github.com/RohanSengupta326/BugTracker/assets/64458868/7179feb5-125c-423d-8c91-69890258c2d7" alt="Splash View" width="200">
+ <img src="https://github.com/RohanSengupta326/BugTracker/assets/64458868/e89f3ba6-b87c-4f6e-a601-bb501db2209f" alt="Splash View" width="200">
+</p>
 
 
 ### Tech Stack Used : 
@@ -13,24 +18,12 @@ Bug Tracker is a comprehensive project management solution tailored for organiza
 - **Firebase**
 
 
-## Set-Up and run the Project :
+## Set Up and run the Project :
 
 #### Requirements : 
- 1. Flutter
+ 1. Flutter (version: 3.7.12 )
  2. Android Studio 
  3. Emulator/Real Device(Android)
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
 
 #### How to install : 
 
@@ -41,8 +34,9 @@ samples, guidance on mobile development, and a full API reference.
 - Clone this repository after forking using `git clone https://github.com/<your-username>/BugTracker.git`.
 - `cd BugTracker`.
 - `flutter pub get` to get all the dependencies.
-- run `flutter upgrade`
 - `flutter run` to run the project on connected device / emulator or, run from your IDE.
+
+
 
 
 # Privacy Policy  
