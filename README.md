@@ -1,8 +1,11 @@
 # Bug Tracker
 
-This is an app which keeps track of issues or tickets of a project on which developers are working on inside an organization. Admin assigns developers to certain projects to work on. Admin can keep track of the resolved and unresolved and work-in-progress issues on certain projects. 
+Bug Tracker is a comprehensive project management solution tailored for organizations striving for efficient and collaborative development. This app empowers administrators to seamlessly assign skilled developers to specific projects, monitor real-time progress, and effectively manage both resolved and unresolved issues. With intuitive features and a user-friendly interface, Bug Tracker promotes streamlined communication and fosters a cohesive work environment. Stay organized with detailed project insights, effortlessly track work-in-progress tasks, and enhance your overall project management experience. As we continue to evolve, expect more exciting features to further elevate your workflow and project efficiency. Try Bug Tracker today for a new level of project management excellence.
 
-This project is currently ongoing, many more features are to be added.
+## Screenshots :
+
+
+
 
 ### Tech Stack Used : 
 
