@@ -21,7 +21,7 @@ void main() async {
   // initializing firebase
 
   runApp(
-    const MyApp(), // Wrap your app
+    MyApp(), // Wrap your app
   );
 }
 
@@ -31,12 +31,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      // for device_preview package next 3 lines
-      useInheritedMediaQuery: true,
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
-      // ________________________________________
-
       debugShowCheckedModeBanner: false,
       title: 'Bug Tracker',
       theme: ThemeData(

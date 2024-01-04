@@ -27,7 +27,7 @@ class ProjectFormWidget extends StatelessWidget {
             children: <Widget>[
               // CODE TO SELECT CONTRIBUTORS
               ContributorDropdownWidget(),
-    
+
               TextFormField(
                 maxLines: 1,
                 style: TextStyle(color: Colors.black),
@@ -76,12 +76,12 @@ class ProjectFormWidget extends StatelessWidget {
                   NewProjectFormPage.projectName = value as String;
                 },
               ),
-    
+
               SizedBox(
                 height: ConstValues.VALUE_16,
               ),
               TextFormField(
-                maxLines: 23,
+                maxLines: Get.height < 412 ? 15 : 23,
                 style: TextStyle(color: ConstColors.APP_FONT_COLOR),
                 cursorColor: ConstColors.PRIMARY_SWATCH_COLOR,
                 validator: (value) {
