@@ -25,6 +25,7 @@ Bug Tracker is a comprehensive project management solution tailored for organiza
  2. Android Studio 
  3. Emulator/Real Device(Android)
 
+
 #### How to install : 
 
 1. Check the Official Docs link for installing Flutter : https://flutter.dev/docs/get-started/install 
