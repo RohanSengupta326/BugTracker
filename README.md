@@ -21,7 +21,7 @@ Bug Tracker is a comprehensive project management solution tailored for organiza
 ## Set Up and run the Project :
 
 #### Requirements : 
- 1. Flutter (version: 3.7.12 )
+ 1. Flutter
  2. Android Studio 
  3. Emulator/Real Device(Android)
 
@@ -34,6 +34,7 @@ Bug Tracker is a comprehensive project management solution tailored for organiza
 
 - Clone this repository after forking using `git clone https://github.com/<your-username>/BugTracker.git`.
 - `cd BugTracker`.
+- install the required Flutter version, globally or using fvm. ( Check the version of this project in : `.fvm/fvm_config.json` )
 - `flutter pub get` to get all the dependencies.
 - `flutter run` to run the project on connected device / emulator or, run from your IDE.
 
