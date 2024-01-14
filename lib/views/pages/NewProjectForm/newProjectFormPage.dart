@@ -59,13 +59,13 @@ class NewProjectFormPage extends StatelessWidget {
   void onSubmit(BuildContext ctx) {
     // SUBMIT CONTROLLER FUNCTION CALL TO SAVE IN FIREBASE
     if (savedProjectName == null) {
-      log("entering saving");
-      // if NOT editing project
-      log(selectedContributorsName.length.toString());
+      // log("entering saving");
+      // // if NOT editing project
+      // log(selectedContributorsName.length.toString());
 
-      for (var i = 0; i < selectedContributorsIndex.length; i++) {
-        log(selectedContributorsIndex[i].toString());
-      }
+      // for (var i = 0; i < selectedContributorsIndex.length; i++) {
+      //   log(selectedContributorsIndex[i].toString());
+      // }
 
       // if (selectedContributorsIndex.isNotEmpty)
       //   log(selectedContributorsName[0].name.toString());

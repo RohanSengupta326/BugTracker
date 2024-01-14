@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget homePage() {
-    // doesnt call fetchdetails everytime Obx runs, rather just once when app starts & refrechIndicator is pulled
+    // doesnt call fetchdetails everytime Obx runs, rather just once when app starts & refreshIndicator is pulled
     callFetchDetails ? fetchDetails() : null;
 
     // if page is refreshed , blankloadingpage will be shown as long as all data is being fetched.

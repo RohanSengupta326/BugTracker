@@ -1,14 +1,12 @@
 import 'dart:developer' as developer;
 
-import 'package:bug_tracker/consts/const_colors/constColors.dart';
-import 'package:bug_tracker/consts/const_values/ConstValues.dart';
-import 'package:bug_tracker/controllers/authUserController/authUserController.dart';
-import 'package:bug_tracker/views/dialogs/dialogs.dart';
-import 'package:bug_tracker/views/widgets/alertBoxWidget/alertBoxWidget.dart';
-import 'package:bug_tracker/views/widgets/uploadPhoto/uploadPhoto.dart';
+import '../../../consts/const_colors/constColors.dart';
+import '../../../controllers/authUserController/authUserController.dart';
+import '../../../views/dialogs/dialogs.dart';
+import '../../../views/widgets/alertBoxWidget/alertBoxWidget.dart';
+import '../../../views/widgets/uploadPhoto/uploadPhoto.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 

@@ -109,7 +109,7 @@ class ProjectsController extends GetxController {
       for (var i = 0; i < savedProjects.docs.length; i++) {
         savedContributors = [];
         savedTickets = [];
-        // for every project's for loop iteration dont store previous project's data is not stored
+        // for every project's for loop iteration dont store previous project's data.
 
         if (savedProjects.docs[i].data()['selectedContributors'] != []) {
           final List contributorsList =

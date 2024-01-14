@@ -83,7 +83,7 @@ class DetailedTabPages extends StatelessWidget {
                     color: Colors.black,
                   ),
                   onPressed: () {
-                    log("going to editing page");
+                    // log("going to editing page");
 
                     // log(fetchedProjectDescList[0].projectName.toString());
                     // log(fetchedProjectDescList[0].projectDetails.toString());

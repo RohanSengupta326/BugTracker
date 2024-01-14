@@ -118,7 +118,6 @@ class ProjectListViewer extends StatelessWidget {
                                   ),
                                 )
                               : const Center(),
-                          // if no more space in row to show more names , show '...'
                         ],
                       ),
                     )
